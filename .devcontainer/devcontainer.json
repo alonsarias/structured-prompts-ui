@@ -1,3 +1,36 @@
 {
-  "image": "mcr.microsoft.com/devcontainers/typescript-node:22"
+  "name": "spuig",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+  "runArgs": ["--name=spuig"],
+  "postCreateCommand": "npm install",
+  "customizations": {
+    "vscode": {
+      "extensions": ["esbenp.prettier-vscode"],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "prettier.arrowParens": "always",
+        "prettier.bracketSpacing": true,
+        "prettier.endOfLine": "lf",
+        "prettier.htmlWhitespaceSensitivity": "css",
+        "prettier.insertPragma": false,
+        "prettier.singleAttributePerLine": false,
+        "prettier.bracketSameLine": false,
+        "prettier.BracketSameLine": false,
+        "prettier.jsxSingleQuote": false,
+        "prettier.printWidth": 80,
+        "prettier.proseWrap": "preserve",
+        "prettier.quoteProps": "as-needed",
+        "prettier.requirePragma": false,
+        "prettier.semi": true,
+        "prettier.singleQuote": false,
+        "prettier.tabWidth": 2,
+        "prettier.trailingComma": "es5",
+        "prettier.useTabs": false,
+        "prettier.embeddedLanguageFormatting": "auto",
+        "prettier.vueIndentScriptAndStyle": false,
+        "prettier.experimentalTernaries": false
+      }
+    }
+  }
 }
