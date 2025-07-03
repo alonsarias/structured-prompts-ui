@@ -78,34 +78,22 @@ const SpuigPreview: React.FC<SpuigPreviewProps> = ({ spuigSyntax }) => {
       </Box>
 
       <Box sx={{ flexGrow: 1, overflow: 'auto' }}>
-        {spuigSyntax ? (
-          <SyntaxHighlighter
-            language="jsx"
-            style={oneLight}
-            customStyle={{
-              margin: 0,
-              height: '100%',
-              fontSize: '0.875rem',
-              fontFamily: '"Fira Code", "Consolas", "Monaco", monospace',
-            }}
-            showLineNumbers
-          >
-            {spuigSyntax}
-          </SyntaxHighlighter>
-        ) : (
-          <Box sx={{
-            p: 3,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+        <SyntaxHighlighter
+          language="jsx"
+          style={oneLight}
+          customStyle={{
+            margin: 0,
             height: '100%',
-            color: 'text.secondary',
-          }}>
-            <Typography variant="body2">
-              Add components to see the prompt here
-            </Typography>
-          </Box>
-        )}
+            fontSize: '0.875rem',
+            fontFamily: '"Fira Code", "Consolas", "Monaco", monospace',
+          }}
+          showLineNumbers
+        >
+          {spuigSyntax
+            ? `Convert the following structure into a component:\n\n${spuigSyntax}`
+            : '// Add components to see the prompt here'
+          }
+        </SyntaxHighlighter>
       </Box>
 
       {/* Usage Instructions */}
