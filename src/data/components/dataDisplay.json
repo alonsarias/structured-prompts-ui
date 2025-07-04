@@ -1,0 +1,1468 @@
+{
+  "category": "Data Display",
+  "components": [
+    {
+      "name": "Avatar",
+      "displayName": "Avatar",
+      "description": "Avatars are found throughout material design with uses in everything from tables to dialog menus.",
+      "category": "Data Display",
+      "acceptsChildren": true,
+      "acceptsText": true,
+      "props": [
+        {
+          "name": "alt",
+          "type": "string",
+          "required": false,
+          "description": "Used in combination with src or srcSet to provide an alt attribute for the rendered img element."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "Used to render icon or text elements within the Avatar if src is not set."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "div",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "imgProps",
+          "type": "object",
+          "required": false,
+          "description": "Attributes applied to the img element if the component is used to display an image."
+        },
+        {
+          "name": "sizes",
+          "type": "string",
+          "required": false,
+          "description": "The sizes attribute for the img element."
+        },
+        {
+          "name": "src",
+          "type": "string",
+          "required": false,
+          "description": "The src attribute for the img element."
+        },
+        {
+          "name": "srcSet",
+          "type": "string",
+          "required": false,
+          "description": "The srcSet attribute for the img element."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["circular", "rounded", "square"],
+          "defaultValue": "circular",
+          "description": "The shape of the avatar."
+        }
+      ]
+    },
+    {
+      "name": "Badge",
+      "displayName": "Badge",
+      "description": "Badge generates a small badge to the top-right of its children.",
+      "category": "Data Display",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "anchorOrigin",
+          "type": "object",
+          "required": false,
+          "defaultValue": "{ vertical: 'top', horizontal: 'right' }",
+          "description": "The anchor of the badge."
+        },
+        {
+          "name": "badgeContent",
+          "type": "node",
+          "required": false,
+          "description": "The content rendered within the badge."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The badge will be added relative to this node."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "enumValues": [
+            "default",
+            "primary",
+            "secondary",
+            "error",
+            "info",
+            "success",
+            "warning"
+          ],
+          "defaultValue": "default",
+          "description": "The color of the component."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "span",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "invisible",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the badge is invisible."
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "required": false,
+          "defaultValue": 99,
+          "description": "Max count to show."
+        },
+        {
+          "name": "overlap",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["circular", "rectangular"],
+          "defaultValue": "rectangular",
+          "description": "Wrapped shape the badge should overlap."
+        },
+        {
+          "name": "showZero",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "Controls whether the badge is hidden when badgeContent is zero."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["dot", "standard"],
+          "defaultValue": "standard",
+          "description": "The variant to use."
+        }
+      ]
+    },
+    {
+      "name": "Chip",
+      "displayName": "Chip",
+      "description": "Chips are compact elements that represent an input, attribute, or action.",
+      "category": "Data Display",
+      "acceptsChildren": false,
+      "acceptsText": true,
+      "props": [
+        {
+          "name": "avatar",
+          "type": "node",
+          "required": false,
+          "description": "Avatar element."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "This prop isn't supported. Use the component prop if you need to change the children structure."
+        },
+        {
+          "name": "clickable",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the chip will appear clickable, and will raise when hovered."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "enumValues": [
+            "default",
+            "primary",
+            "secondary",
+            "error",
+            "info",
+            "success",
+            "warning"
+          ],
+          "defaultValue": "default",
+          "description": "The color of the component."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "div",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "deleteIcon",
+          "type": "node",
+          "required": false,
+          "description": "Override the default delete icon element."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component is disabled."
+        },
+        {
+          "name": "icon",
+          "type": "node",
+          "required": false,
+          "description": "Icon element."
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "onClick",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the chip is clicked."
+        },
+        {
+          "name": "onDelete",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the delete icon is clicked."
+        },
+        {
+          "name": "size",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["medium", "small"],
+          "defaultValue": "medium",
+          "description": "The size of the component."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["filled", "outlined"],
+          "defaultValue": "filled",
+          "description": "The variant to use."
+        }
+      ]
+    },
+    {
+      "name": "Divider",
+      "displayName": "Divider",
+      "description": "A divider is a thin line that groups content in lists and layouts.",
+      "category": "Data Display",
+      "acceptsChildren": true,
+      "acceptsText": true,
+      "props": [
+        {
+          "name": "absolute",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "Absolutely position the element."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "hr",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "flexItem",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, a vertical divider will have the correct height when used in flex container."
+        },
+        {
+          "name": "light",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the divider will have a lighter color."
+        },
+        {
+          "name": "orientation",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["horizontal", "vertical"],
+          "defaultValue": "horizontal",
+          "description": "The component orientation."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "textAlign",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["center", "left", "right"],
+          "defaultValue": "center",
+          "description": "The text alignment."
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["fullWidth", "inset", "middle"],
+          "defaultValue": "fullWidth",
+          "description": "The variant to use."
+        }
+      ]
+    },
+    {
+      "name": "Icon",
+      "displayName": "Icon",
+      "description": "Icon component to display an icon from any icon font that supports ligatures.",
+      "category": "Data Display",
+      "acceptsChildren": true,
+      "acceptsText": true,
+      "props": [
+        {
+          "name": "baseClassName",
+          "type": "string",
+          "required": false,
+          "defaultValue": "material-icons",
+          "description": "The base class applied to the icon."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The name of the icon font ligature."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "enumValues": [
+            "inherit",
+            "action",
+            "disabled",
+            "primary",
+            "secondary",
+            "error",
+            "info",
+            "success",
+            "warning"
+          ],
+          "defaultValue": "inherit",
+          "description": "The color of the component."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "span",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "fontSize",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["inherit", "large", "medium", "small"],
+          "defaultValue": "medium",
+          "description": "The fontSize applied to the icon."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "List",
+      "displayName": "List",
+      "description": "Lists are continuous, vertical indexes of text or images.",
+      "category": "Data Display",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "validChildren": ["ListItem", "ListSubheader"],
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "ul",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "dense",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, compact vertical padding designed for keyboard and mouse input is used for the list and list items."
+        },
+        {
+          "name": "disablePadding",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, vertical padding is removed from the list."
+        },
+        {
+          "name": "subheader",
+          "type": "node",
+          "required": false,
+          "description": "The content of the subheader, normally a ListSubheader."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "ListItem",
+      "displayName": "List Item",
+      "description": "List items are continuous, vertical indexes of text or images.",
+      "category": "Data Display",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "validParents": ["List"],
+      "props": [
+        {
+          "name": "alignItems",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["center", "flex-start"],
+          "defaultValue": "center",
+          "description": "Defines the align-items style property."
+        },
+        {
+          "name": "autoFocus",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the list item is focused during the first mount."
+        },
+        {
+          "name": "button",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the list item is a button (using ButtonBase)."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component if disableGutters={false} the children will be wrapped in a div with gutters."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "li",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "dense",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, compact vertical padding designed for keyboard and mouse input is used."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component is disabled."
+        },
+        {
+          "name": "disableGutters",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the left and right padding is removed."
+        },
+        {
+          "name": "disablePadding",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, all padding is removed."
+        },
+        {
+          "name": "divider",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, a 1px light border is added to the bottom of the list item."
+        },
+        {
+          "name": "secondaryAction",
+          "type": "node",
+          "required": false,
+          "description": "The element to display at the end of ListItem."
+        },
+        {
+          "name": "selected",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component is selected."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "Table",
+      "displayName": "Table",
+      "description": "Tables display sets of data. They can be fully customized.",
+      "category": "Data Display",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "validChildren": ["TableHead", "TableBody", "TableFooter"],
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the table, normally TableHead and TableBody."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "table",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "padding",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["checkbox", "none", "normal"],
+          "defaultValue": "normal",
+          "description": "Allows TableCells to inherit padding of the Table."
+        },
+        {
+          "name": "size",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["medium", "small"],
+          "defaultValue": "medium",
+          "description": "Allows TableCells to inherit size of the Table."
+        },
+        {
+          "name": "stickyHeader",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "Set the header sticky."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "TableCell",
+      "displayName": "Table Cell",
+      "description": "The component renders a `<th>` element when the parent context is a header or otherwise a `<td>` element.",
+      "category": "Data Display",
+      "acceptsChildren": true,
+      "acceptsText": true,
+      "validParents": ["TableRow"],
+      "props": [
+        {
+          "name": "align",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["center", "inherit", "justify", "left", "right"],
+          "defaultValue": "inherit",
+          "description": "Set the text-align on the table cell content."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "padding",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["checkbox", "none", "normal"],
+          "description": "Sets the padding applied to the cell."
+        },
+        {
+          "name": "scope",
+          "type": "string",
+          "required": false,
+          "description": "Set scope attribute."
+        },
+        {
+          "name": "size",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["medium", "small"],
+          "description": "Specify the size of the cell."
+        },
+        {
+          "name": "sortDirection",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["asc", "desc", false],
+          "defaultValue": false,
+          "description": "Set aria-sort direction."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["body", "footer", "head"],
+          "description": "Specify the cell type."
+        }
+      ]
+    },
+    {
+      "name": "Tooltip",
+      "displayName": "Tooltip",
+      "description": "Tooltips display informative text when users hover over, focus on, or tap an element.",
+      "category": "Data Display",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "arrow",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, adds an arrow to the tooltip."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": true,
+          "description": "Tooltip reference element."
+        },
+        {
+          "name": "describeChild",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "Set to true if the title acts as an accessible description."
+        },
+        {
+          "name": "disableFocusListener",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "Do not respond to focus-visible events."
+        },
+        {
+          "name": "disableHoverListener",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "Do not respond to hover events."
+        },
+        {
+          "name": "disableInteractive",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "Makes a tooltip not interactive, i.e. it will close when the user hovers over the tooltip before the leaveDelay is expired."
+        },
+        {
+          "name": "disableTouchListener",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "Do not respond to long press touch events."
+        },
+        {
+          "name": "enterDelay",
+          "type": "number",
+          "required": false,
+          "defaultValue": 100,
+          "description": "The number of milliseconds to wait before showing the tooltip."
+        },
+        {
+          "name": "enterNextDelay",
+          "type": "number",
+          "required": false,
+          "defaultValue": 0,
+          "description": "The number of milliseconds to wait before showing the tooltip when one was already recently opened."
+        },
+        {
+          "name": "enterTouchDelay",
+          "type": "number",
+          "required": false,
+          "defaultValue": 700,
+          "description": "The number of milliseconds a user must touch the element before showing the tooltip."
+        },
+        {
+          "name": "followCursor",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the tooltip follows the cursor over the wrapped element."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "This prop is used to help implement the accessibility logic."
+        },
+        {
+          "name": "leaveDelay",
+          "type": "number",
+          "required": false,
+          "defaultValue": 0,
+          "description": "The number of milliseconds to wait before hiding the tooltip."
+        },
+        {
+          "name": "leaveTouchDelay",
+          "type": "number",
+          "required": false,
+          "defaultValue": 1500,
+          "description": "The number of milliseconds after the user stops touching an element before hiding the tooltip."
+        },
+        {
+          "name": "onClose",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the component requests to be closed."
+        },
+        {
+          "name": "onOpen",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the component requests to be open."
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the component is shown."
+        },
+        {
+          "name": "placement",
+          "type": "enum",
+          "required": false,
+          "enumValues": [
+            "bottom-end",
+            "bottom-start",
+            "bottom",
+            "left-end",
+            "left-start",
+            "left",
+            "right-end",
+            "right-start",
+            "right",
+            "top-end",
+            "top-start",
+            "top"
+          ],
+          "defaultValue": "bottom",
+          "description": "Tooltip placement."
+        },
+        {
+          "name": "PopperComponent",
+          "type": "string",
+          "required": false,
+          "description": "The component used to position the tooltip."
+        },
+        {
+          "name": "PopperProps",
+          "type": "object",
+          "required": false,
+          "description": "Props applied to the Popper element."
+        },
+        {
+          "name": "slotProps",
+          "type": "object",
+          "required": false,
+          "description": "The props used for each slot inside the Tooltip."
+        },
+        {
+          "name": "slots",
+          "type": "object",
+          "required": false,
+          "description": "The components used for each slot inside the Tooltip."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "title",
+          "type": "node",
+          "required": false,
+          "description": "Tooltip title. Zero-length titles string, undefined, null and false are never displayed."
+        },
+        {
+          "name": "TransitionComponent",
+          "type": "string",
+          "required": false,
+          "description": "The component used for the transition."
+        },
+        {
+          "name": "TransitionProps",
+          "type": "object",
+          "required": false,
+          "description": "Props applied to the transition element."
+        }
+      ]
+    },
+    {
+      "name": "Typography",
+      "displayName": "Typography",
+      "description": "Use typography to present your design and content as clearly and efficiently as possible.",
+      "category": "Data Display",
+      "acceptsChildren": true,
+      "acceptsText": true,
+      "props": [
+        {
+          "name": "align",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["center", "inherit", "justify", "left", "right"],
+          "defaultValue": "inherit",
+          "description": "Set the text-align on the component."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "enumValues": [
+            "inherit",
+            "primary",
+            "secondary",
+            "success",
+            "error",
+            "info",
+            "warning",
+            "text.primary",
+            "text.secondary",
+            "text.disabled"
+          ],
+          "defaultValue": "inherit",
+          "description": "The color of the component."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "gutterBottom",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the text will have a bottom margin."
+        },
+        {
+          "name": "noWrap",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the text will not wrap, but instead will truncate with a text overflow ellipsis."
+        },
+        {
+          "name": "paragraph",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the element will be a paragraph element."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "enumValues": [
+            "body1",
+            "body2",
+            "button",
+            "caption",
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6",
+            "inherit",
+            "overline",
+            "subtitle1",
+            "subtitle2"
+          ],
+          "defaultValue": "body1",
+          "description": "Applies the theme typography styles."
+        },
+        {
+          "name": "variantMapping",
+          "type": "object",
+          "required": false,
+          "description": "The component maps the variant prop to a range of different HTML element types."
+        }
+      ]
+    },
+    {
+      "name": "ListItemIcon",
+      "displayName": "List Item Icon",
+      "description": "A simple wrapper to apply List styles to an Icon or SvgIcon.",
+      "category": "Data Display",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component, normally Icon, SvgIcon, or a @mui/icons-material SVG icon element."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "ListItemText",
+      "displayName": "List Item Text",
+      "description": "ListItemText is used to display text content in list items with primary and secondary text options.",
+      "category": "Data Display",
+      "acceptsChildren": true,
+      "acceptsText": true,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "Alias for the primary prop."
+        },
+        {
+          "name": "disableTypography",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the children won't be wrapped by a Typography component."
+        },
+        {
+          "name": "inset",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the children are indented. This should be used if there is no left avatar or left icon."
+        },
+        {
+          "name": "primary",
+          "type": "node",
+          "required": false,
+          "description": "The main content element."
+        },
+        {
+          "name": "secondary",
+          "type": "node",
+          "required": false,
+          "description": "The secondary content element."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "ListItemButton",
+      "displayName": "List Item Button",
+      "description": "ListItemButton is an interactive list item component that can handle click events.",
+      "category": "Data Display",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "alignItems",
+          "type": "enum",
+          "required": false,
+          "defaultValue": "center",
+          "description": "Defines the align-items style property.",
+          "enumValues": ["center", "flex-start"]
+        },
+        {
+          "name": "autoFocus",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the list item is focused during the first mount."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component if a ListItemSecondaryAction is used it must be the last child."
+        },
+        {
+          "name": "dense",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, compact vertical padding designed for keyboard and mouse input is used."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component is disabled."
+        },
+        {
+          "name": "disableGutters",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the left and right padding is removed."
+        },
+        {
+          "name": "divider",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, a 1px light border is added to the bottom of the list item."
+        },
+        {
+          "name": "onClick",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the list item is clicked."
+        },
+        {
+          "name": "selected",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "Use to apply selected styling."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "ListSubheader",
+      "displayName": "List Subheader",
+      "description": "List Subheader is used to label sections of lists.",
+      "category": "Data Display",
+      "acceptsChildren": true,
+      "acceptsText": true,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "defaultValue": "default",
+          "description": "The color of the component.",
+          "enumValues": ["default", "inherit", "primary"]
+        },
+        {
+          "name": "disableGutters",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the List Subheader will not have gutters."
+        },
+        {
+          "name": "disableSticky",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the List Subheader will not stick to the top during scroll."
+        },
+        {
+          "name": "inset",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the List Subheader is indented."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "TableContainer",
+      "displayName": "Table Container",
+      "description": "A wrapper component for Table that provides scrolling behavior.",
+      "category": "Data Display",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component, normally Table."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "TableHead",
+      "displayName": "Table Head",
+      "description": "The table head section that contains the header row(s).",
+      "category": "Data Display",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component, normally TableRow."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "TableBody",
+      "displayName": "Table Body",
+      "description": "The table body section that contains the data rows.",
+      "category": "Data Display",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component, normally TableRow."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "TableRow",
+      "displayName": "Table Row",
+      "description": "A table row component that contains table cells.",
+      "category": "Data Display",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "Should be valid table row children such as TableCell."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "hover",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the table row will shade on hover."
+        },
+        {
+          "name": "selected",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the table row will have the selected shading."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "TableFooter",
+      "displayName": "Table Footer",
+      "description": "The table footer section.",
+      "category": "Data Display",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component, normally TableRow."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "TablePagination",
+      "displayName": "Table Pagination",
+      "description": "A TableCell based component for placing inside TableFooter for pagination.",
+      "category": "Data Display",
+      "acceptsChildren": false,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "count",
+          "type": "number",
+          "required": true,
+          "description": "The total number of rows."
+        },
+        {
+          "name": "onPageChange",
+          "type": "function",
+          "required": true,
+          "description": "Callback fired when the page is changed."
+        },
+        {
+          "name": "page",
+          "type": "number",
+          "required": true,
+          "description": "The zero-based index of the current page."
+        },
+        {
+          "name": "rowsPerPage",
+          "type": "number",
+          "required": true,
+          "description": "The number of rows per page."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component is disabled."
+        },
+        {
+          "name": "onRowsPerPageChange",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the number of rows per page is changed."
+        },
+        {
+          "name": "rowsPerPageOptions",
+          "type": "object",
+          "required": false,
+          "defaultValue": "[10, 25, 50, 100]",
+          "description": "Customizes the options of the rows per page select field."
+        },
+        {
+          "name": "showFirstButton",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, show the first-page button."
+        },
+        {
+          "name": "showLastButton",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, show the last-page button."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "TableSortLabel",
+      "displayName": "Table Sort Label",
+      "description": "A button based label for placing inside TableCell for column sorting.",
+      "category": "Data Display",
+      "acceptsChildren": true,
+      "acceptsText": true,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "Label contents, the arrow will be appended automatically."
+        },
+        {
+          "name": "active",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the label will have the active styling."
+        },
+        {
+          "name": "direction",
+          "type": "enum",
+          "required": false,
+          "defaultValue": "asc",
+          "description": "The current sort direction.",
+          "enumValues": ["asc", "desc"]
+        },
+        {
+          "name": "hideSortIcon",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "Hide sort icon when active is false."
+        },
+        {
+          "name": "onClick",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the button is clicked."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,559 @@
+{
+  "category": "Utils",
+  "components": [
+    {
+      "name": "ClickAwayListener",
+      "displayName": "Click Away Listener",
+      "description": "Listen for click events that occur somewhere in the document, outside of the element itself.",
+      "category": "Utils",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": true,
+          "description": "The wrapped element."
+        },
+        {
+          "name": "disableReactTree",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the React tree is ignored and only the DOM tree is considered."
+        },
+        {
+          "name": "mouseEvent",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["onClick", "onMouseDown", "onMouseUp", false],
+          "defaultValue": "onClick",
+          "description": "The mouse event to listen to."
+        },
+        {
+          "name": "onClickAway",
+          "type": "function",
+          "required": true,
+          "description": "Callback fired when a \"click away\" event is detected."
+        },
+        {
+          "name": "touchEvent",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["onTouchEnd", "onTouchStart", false],
+          "defaultValue": "onTouchEnd",
+          "description": "The touch event to listen to."
+        }
+      ]
+    },
+    {
+      "name": "CssBaseline",
+      "displayName": "CSS Baseline",
+      "description": "Kickstart an elegant, consistent, and simple baseline to build upon.",
+      "category": "Utils",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "You can wrap a node."
+        },
+        {
+          "name": "enableColorScheme",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "Enable color-scheme CSS property to use theme.palette.mode."
+        }
+      ]
+    },
+    {
+      "name": "Modal",
+      "displayName": "Modal",
+      "description": "The modal component provides a solid foundation for creating dialogs, popovers, lightboxes, or whatever else.",
+      "category": "Utils",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": true,
+          "description": "If true, the component is shown."
+        },
+        {
+          "name": "BackdropComponent",
+          "type": "string",
+          "required": false,
+          "description": "A backdrop component."
+        },
+        {
+          "name": "BackdropProps",
+          "type": "object",
+          "required": false,
+          "description": "Props applied to the Backdrop element."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "A single child content element."
+        },
+        {
+          "name": "closeAfterTransition",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "When set to true the Modal waits until a nested Transition completes before closing."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "div",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "container",
+          "type": "object",
+          "required": false,
+          "description": "A HTML element or function that returns one."
+        },
+        {
+          "name": "disableAutoFocus",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the modal will not automatically shift focus to itself when it opens."
+        },
+        {
+          "name": "disableEnforceFocus",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the modal will not prevent focus from leaving the modal while open."
+        },
+        {
+          "name": "disableEscapeKeyDown",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, hitting escape will not fire the onClose callback."
+        },
+        {
+          "name": "disablePortal",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "The children will be under the DOM hierarchy of the parent component."
+        },
+        {
+          "name": "disableRestoreFocus",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the modal will not restore focus to previously focused element after being closed."
+        },
+        {
+          "name": "disableScrollLock",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "Disable the scroll lock behavior."
+        },
+        {
+          "name": "hideBackdrop",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the backdrop is not rendered."
+        },
+        {
+          "name": "keepMounted",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "Always keep the children in the DOM."
+        },
+        {
+          "name": "onBackdropClick",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the backdrop is clicked."
+        },
+        {
+          "name": "onClose",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the component requests to be closed."
+        },
+        {
+          "name": "slotProps",
+          "type": "object",
+          "required": false,
+          "description": "The props used for each slot inside."
+        },
+        {
+          "name": "slots",
+          "type": "object",
+          "required": false,
+          "description": "The components used for each slot inside."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "NoSsr",
+      "displayName": "No SSR",
+      "description": "NoSsr purposely removes components from the subject of Server Side Rendering (SSR).",
+      "category": "Utils",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "You can wrap a node."
+        },
+        {
+          "name": "defer",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component will not only prevent server-side rendering."
+        },
+        {
+          "name": "fallback",
+          "type": "node",
+          "required": false,
+          "description": "The fallback content to display."
+        }
+      ]
+    },
+    {
+      "name": "Popover",
+      "displayName": "Popover",
+      "description": "A Popover can be used to display some content on top of another.",
+      "category": "Utils",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": true,
+          "description": "If true, the component is shown."
+        },
+        {
+          "name": "action",
+          "type": "object",
+          "required": false,
+          "description": "A ref for imperative actions."
+        },
+        {
+          "name": "anchorEl",
+          "type": "object",
+          "required": false,
+          "description": "A HTML element, or a function that returns one."
+        },
+        {
+          "name": "anchorOrigin",
+          "type": "object",
+          "required": false,
+          "defaultValue": "{ vertical: 'top', horizontal: 'left' }",
+          "description": "The anchor of the Popover."
+        },
+        {
+          "name": "anchorPosition",
+          "type": "object",
+          "required": false,
+          "description": "The anchor position of the Popover."
+        },
+        {
+          "name": "anchorReference",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["anchorEl", "anchorPosition", "none"],
+          "defaultValue": "anchorEl",
+          "description": "The reference to which the Popover will be anchored."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "container",
+          "type": "object",
+          "required": false,
+          "description": "A HTML element or function that returns one."
+        },
+        {
+          "name": "elevation",
+          "type": "number",
+          "required": false,
+          "defaultValue": 8,
+          "description": "Shadow depth, corresponds to dp in the spec."
+        },
+        {
+          "name": "marginThreshold",
+          "type": "number",
+          "required": false,
+          "defaultValue": 16,
+          "description": "Specifies how close to the edge of the window the popover can appear."
+        },
+        {
+          "name": "onClose",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the component requests to be closed."
+        },
+        {
+          "name": "PaperProps",
+          "type": "object",
+          "required": false,
+          "description": "Props applied to the Paper element."
+        },
+        {
+          "name": "slotProps",
+          "type": "object",
+          "required": false,
+          "description": "The props used for each slot inside."
+        },
+        {
+          "name": "slots",
+          "type": "object",
+          "required": false,
+          "description": "The components used for each slot inside."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "transformOrigin",
+          "type": "object",
+          "required": false,
+          "defaultValue": "{ vertical: 'top', horizontal: 'left' }",
+          "description": "The transform origin of the Popover."
+        },
+        {
+          "name": "TransitionComponent",
+          "type": "string",
+          "required": false,
+          "description": "The component used for the transition."
+        },
+        {
+          "name": "transitionDuration",
+          "type": "number",
+          "required": false,
+          "defaultValue": "auto",
+          "description": "Set to 'auto' to automatically calculate transition time based on height."
+        },
+        {
+          "name": "TransitionProps",
+          "type": "object",
+          "required": false,
+          "description": "Props applied to the transition element."
+        }
+      ]
+    },
+    {
+      "name": "Popper",
+      "displayName": "Popper",
+      "description": "Poppers rely on the 3rd party library Popper.js for positioning.",
+      "category": "Utils",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": true,
+          "description": "If true, the component is shown."
+        },
+        {
+          "name": "anchorEl",
+          "type": "object",
+          "required": false,
+          "description": "A HTML element, virtualElement, or a function that returns either."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "Popper render function or node."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "div",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "container",
+          "type": "object",
+          "required": false,
+          "description": "A HTML element or function that returns one."
+        },
+        {
+          "name": "disablePortal",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "The children will be under the DOM hierarchy of the parent component."
+        },
+        {
+          "name": "keepMounted",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "Always keep the children in the DOM."
+        },
+        {
+          "name": "modifiers",
+          "type": "object",
+          "required": false,
+          "description": "Popper.js is based on a \"plugin-like\" architecture."
+        },
+        {
+          "name": "placement",
+          "type": "enum",
+          "required": false,
+          "enumValues": [
+            "auto-end",
+            "auto-start",
+            "auto",
+            "bottom-end",
+            "bottom-start",
+            "bottom",
+            "left-end",
+            "left-start",
+            "left",
+            "right-end",
+            "right-start",
+            "right",
+            "top-end",
+            "top-start",
+            "top"
+          ],
+          "defaultValue": "bottom",
+          "description": "Popper placement."
+        },
+        {
+          "name": "popperOptions",
+          "type": "object",
+          "required": false,
+          "description": "Options provided to the Popper.js instance."
+        },
+        {
+          "name": "popperRef",
+          "type": "object",
+          "required": false,
+          "description": "A ref that points to the used popper instance."
+        },
+        {
+          "name": "slotProps",
+          "type": "object",
+          "required": false,
+          "description": "The props used for each slot inside."
+        },
+        {
+          "name": "slots",
+          "type": "object",
+          "required": false,
+          "description": "The components used for each slot inside."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "transition",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "Help supporting a react-transition-group/Transition component."
+        }
+      ]
+    },
+    {
+      "name": "Portal",
+      "displayName": "Portal",
+      "description": "The portal component renders its children into a new \"subtree\" outside of current component hierarchy.",
+      "category": "Utils",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The children to render into the container."
+        },
+        {
+          "name": "container",
+          "type": "object",
+          "required": false,
+          "description": "A HTML element or function that returns one."
+        },
+        {
+          "name": "disablePortal",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "The children will be under the DOM hierarchy of the parent component."
+        }
+      ]
+    },
+    {
+      "name": "TextareaAutosize",
+      "displayName": "Textarea Autosize",
+      "description": "A textarea component for React which grows with content.",
+      "category": "Utils",
+      "acceptsChildren": false,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "maxRows",
+          "type": "number",
+          "required": false,
+          "description": "Maximum number of rows to display."
+        },
+        {
+          "name": "minRows",
+          "type": "number",
+          "required": false,
+          "defaultValue": 1,
+          "description": "Minimum number of rows to display."
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false,
+          "description": "The short hint displayed in the textarea before the user enters a value."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the textarea element, required for a controlled component."
+        }
+      ]
+    }
+  ]
+}

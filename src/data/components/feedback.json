@@ -1,0 +1,578 @@
+{
+  "category": "Feedback",
+  "components": [
+    {
+      "name": "Alert",
+      "displayName": "Alert",
+      "description": "An alert displays a short, important message in a way that attracts the user's attention without interrupting the user's task.",
+      "category": "Feedback",
+      "acceptsChildren": true,
+      "acceptsText": true,
+      "props": [
+        {
+          "name": "action",
+          "type": "node",
+          "required": false,
+          "description": "The action to display. It renders after the message, at the end of the alert."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "closeText",
+          "type": "string",
+          "required": false,
+          "defaultValue": "Close",
+          "description": "Override the default label for the close popup icon button."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["error", "info", "success", "warning"],
+          "description": "The color of the component. Unless provided, the value is taken from the severity prop."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "div",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "icon",
+          "type": "node",
+          "required": false,
+          "description": "Override the icon displayed before the children."
+        },
+        {
+          "name": "iconMapping",
+          "type": "object",
+          "required": false,
+          "description": "The component maps the variant prop to a range of different icons."
+        },
+        {
+          "name": "onClose",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the component requests to be closed."
+        },
+        {
+          "name": "role",
+          "type": "string",
+          "required": false,
+          "defaultValue": "alert",
+          "description": "The ARIA role attribute of the element."
+        },
+        {
+          "name": "severity",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["error", "info", "success", "warning"],
+          "defaultValue": "success",
+          "description": "The severity of the alert."
+        },
+        {
+          "name": "slotProps",
+          "type": "object",
+          "required": false,
+          "description": "The props used for each slot inside."
+        },
+        {
+          "name": "slots",
+          "type": "object",
+          "required": false,
+          "description": "The components used for each slot inside."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["filled", "outlined", "standard"],
+          "defaultValue": "standard",
+          "description": "The variant to use."
+        }
+      ]
+    },
+    {
+      "name": "Backdrop",
+      "displayName": "Backdrop",
+      "description": "The Backdrop component narrows the user's focus to a particular element on the screen.",
+      "category": "Feedback",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "div",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "invisible",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the backdrop is invisible."
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": true,
+          "description": "If true, the component is shown."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "transitionDuration",
+          "type": "number",
+          "required": false,
+          "description": "The duration for the transition, in milliseconds."
+        }
+      ]
+    },
+    {
+      "name": "CircularProgress",
+      "displayName": "Circular Progress",
+      "description": "Circular progress indicators display progress by animating an indicator along an invisible circular track in a clockwise direction.",
+      "category": "Feedback",
+      "acceptsChildren": false,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "enumValues": [
+            "inherit",
+            "primary",
+            "secondary",
+            "error",
+            "info",
+            "success",
+            "warning"
+          ],
+          "defaultValue": "primary",
+          "description": "The color of the component."
+        },
+        {
+          "name": "disableShrink",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the shrink animation is disabled."
+        },
+        {
+          "name": "size",
+          "type": "number",
+          "required": false,
+          "defaultValue": 40,
+          "description": "The size of the component."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "thickness",
+          "type": "number",
+          "required": false,
+          "defaultValue": 3.6,
+          "description": "The thickness of the circle."
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "required": false,
+          "description": "The value of the progress indicator for the determinate variant."
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["determinate", "indeterminate"],
+          "defaultValue": "indeterminate",
+          "description": "The variant to use."
+        }
+      ]
+    },
+    {
+      "name": "Dialog",
+      "displayName": "Dialog",
+      "description": "Dialogs inform users about a task and can contain critical information, require decisions, or involve multiple tasks.",
+      "category": "Feedback",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "validChildren": ["DialogTitle", "DialogContent", "DialogActions"],
+      "props": [
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": true,
+          "description": "If true, the component is shown."
+        },
+        {
+          "name": "aria-describedby",
+          "type": "string",
+          "required": false,
+          "description": "The id(s) of the element(s) that describe the dialog."
+        },
+        {
+          "name": "aria-labelledby",
+          "type": "string",
+          "required": false,
+          "description": "The id(s) of the element(s) that label the dialog."
+        },
+        {
+          "name": "aria-modal",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": true,
+          "description": "Informs assistive technologies that the element is modal."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "Dialog children, usually the included sub-components."
+        },
+        {
+          "name": "fullScreen",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the dialog is full-screen."
+        },
+        {
+          "name": "fullWidth",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the dialog stretches to maxWidth."
+        },
+        {
+          "name": "maxWidth",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["xs", "sm", "md", "lg", "xl", false],
+          "defaultValue": "sm",
+          "description": "Determine the max-width of the dialog."
+        },
+        {
+          "name": "onClose",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the component requests to be closed."
+        },
+        {
+          "name": "PaperComponent",
+          "type": "string",
+          "required": false,
+          "description": "The component used to render the body of the dialog."
+        },
+        {
+          "name": "PaperProps",
+          "type": "object",
+          "required": false,
+          "description": "Props applied to the Paper element."
+        },
+        {
+          "name": "scroll",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["body", "paper"],
+          "defaultValue": "paper",
+          "description": "Determine the container for scrolling the dialog."
+        },
+        {
+          "name": "slotProps",
+          "type": "object",
+          "required": false,
+          "description": "The props used for each slot inside."
+        },
+        {
+          "name": "slots",
+          "type": "object",
+          "required": false,
+          "description": "The components used for each slot inside."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "TransitionComponent",
+          "type": "string",
+          "required": false,
+          "description": "The component used for the transition."
+        },
+        {
+          "name": "transitionDuration",
+          "type": "number",
+          "required": false,
+          "description": "The duration for the transition, in milliseconds."
+        },
+        {
+          "name": "TransitionProps",
+          "type": "object",
+          "required": false,
+          "description": "Props applied to the transition element."
+        }
+      ]
+    },
+    {
+      "name": "LinearProgress",
+      "displayName": "Linear Progress",
+      "description": "Linear progress indicators display progress by animating an indicator along the length of a fixed, visible track.",
+      "category": "Feedback",
+      "acceptsChildren": false,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "enumValues": [
+            "inherit",
+            "primary",
+            "secondary",
+            "error",
+            "info",
+            "success",
+            "warning"
+          ],
+          "defaultValue": "primary",
+          "description": "The color of the component."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "required": false,
+          "description": "The value of the progress indicator for the determinate and buffer variants."
+        },
+        {
+          "name": "valueBuffer",
+          "type": "number",
+          "required": false,
+          "description": "The value for the buffer variant."
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["buffer", "determinate", "indeterminate", "query"],
+          "defaultValue": "indeterminate",
+          "description": "The variant to use."
+        }
+      ]
+    },
+    {
+      "name": "Skeleton",
+      "displayName": "Skeleton",
+      "description": "Display a placeholder preview of your content before the data gets loaded to reduce load-time frustration.",
+      "category": "Feedback",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "animation",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["pulse", "wave", false],
+          "defaultValue": "pulse",
+          "description": "The animation."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "Optional children to infer width and height from."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "span",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "required": false,
+          "description": "Height of the skeleton."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["circular", "rectangular", "rounded", "text"],
+          "defaultValue": "text",
+          "description": "The type of content that will be rendered."
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "required": false,
+          "description": "Width of the skeleton."
+        }
+      ]
+    },
+    {
+      "name": "Snackbar",
+      "displayName": "Snackbar",
+      "description": "Snackbars provide brief messages about app processes. The component is also known as a toast.",
+      "category": "Feedback",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "action",
+          "type": "node",
+          "required": false,
+          "description": "The action to display. It renders after the message, at the end of the snackbar."
+        },
+        {
+          "name": "anchorOrigin",
+          "type": "object",
+          "required": false,
+          "defaultValue": "{ vertical: 'bottom', horizontal: 'left' }",
+          "description": "The anchor of the Snackbar."
+        },
+        {
+          "name": "autoHideDuration",
+          "type": "number",
+          "required": false,
+          "defaultValue": null,
+          "description": "The number of milliseconds to wait before automatically calling the onClose function."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "Replace the SnackbarContent component."
+        },
+        {
+          "name": "ClickAwayListenerProps",
+          "type": "object",
+          "required": false,
+          "description": "Props applied to the ClickAwayListener element."
+        },
+        {
+          "name": "ContentProps",
+          "type": "object",
+          "required": false,
+          "description": "Props applied to the SnackbarContent element."
+        },
+        {
+          "name": "disableWindowBlurListener",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the autoHideDuration timer will expire even if the window is not focused."
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "required": false,
+          "description": "When displaying multiple consecutive Snackbars from a parent rendering a single <Snackbar/>, add the key prop to ensure independent treatment of each message."
+        },
+        {
+          "name": "message",
+          "type": "node",
+          "required": false,
+          "description": "The message to display."
+        },
+        {
+          "name": "onClose",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the component requests to be closed."
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the component is shown."
+        },
+        {
+          "name": "resumeHideDuration",
+          "type": "number",
+          "required": false,
+          "description": "The number of milliseconds to wait before dismissing after user interaction."
+        },
+        {
+          "name": "slotProps",
+          "type": "object",
+          "required": false,
+          "description": "The props used for each slot inside."
+        },
+        {
+          "name": "slots",
+          "type": "object",
+          "required": false,
+          "description": "The components used for each slot inside."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "TransitionComponent",
+          "type": "string",
+          "required": false,
+          "description": "The component used for the transition."
+        },
+        {
+          "name": "transitionDuration",
+          "type": "number",
+          "required": false,
+          "description": "The duration for the transition, in milliseconds."
+        },
+        {
+          "name": "TransitionProps",
+          "type": "object",
+          "required": false,
+          "description": "Props applied to the transition element."
+        }
+      ]
+    }
+  ]
+}

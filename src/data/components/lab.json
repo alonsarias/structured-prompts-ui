@@ -1,0 +1,254 @@
+{
+  "category": "Lab",
+  "components": [
+    {
+      "name": "Masonry",
+      "displayName": "Masonry",
+      "description": "Masonry lays out contents of varying dimensions as blocks of the same width and different height with configurable gaps.",
+      "category": "Lab",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "columns",
+          "type": "number",
+          "required": false,
+          "defaultValue": 4,
+          "description": "Number of columns."
+        },
+        {
+          "name": "spacing",
+          "type": "number",
+          "required": false,
+          "defaultValue": 1,
+          "description": "Defines the space between children. It is a factor of the theme spacing."
+        },
+        {
+          "name": "defaultColumns",
+          "type": "number",
+          "required": false,
+          "description": "The default number of columns of the component. This is provided for server-side rendering."
+        },
+        {
+          "name": "defaultHeight",
+          "type": "number",
+          "required": false,
+          "description": "The default height of the component in px. This is provided for server-side rendering."
+        },
+        {
+          "name": "defaultSpacing",
+          "type": "number",
+          "required": false,
+          "description": "The default spacing of the component. Like spacing, it is a factor of the theme spacing. This is provided for server-side rendering."
+        },
+        {
+          "name": "sequential",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the sequential order is used instead of adding to the shortest column."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "Timeline",
+      "displayName": "Timeline",
+      "description": "The timeline displays a list of events in chronological order.",
+      "category": "Lab",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "position",
+          "type": "enum",
+          "required": false,
+          "defaultValue": "right",
+          "description": "The position where the timeline content should appear relative to the time axis.",
+          "enumValues": ["left", "right", "alternate", "alternate-reverse"]
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "TimelineItem",
+      "displayName": "Timeline Item",
+      "description": "Individual timeline item component.",
+      "category": "Lab",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "position",
+          "type": "enum",
+          "required": false,
+          "description": "The position where the TimelineContent should appear relative to the time axis.",
+          "enumValues": ["left", "right"]
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "TimelineContent",
+      "displayName": "Timeline Content",
+      "description": "The content of the timeline item.",
+      "category": "Lab",
+      "acceptsChildren": true,
+      "acceptsText": true,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "TimelineSeparator",
+      "displayName": "Timeline Separator",
+      "description": "The separator of the timeline item, including the dot and connector.",
+      "category": "Lab",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "TimelineDot",
+      "displayName": "Timeline Dot",
+      "description": "The dot representing the event in the timeline.",
+      "category": "Lab",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "defaultValue": "grey",
+          "description": "The color of the component.",
+          "enumValues": [
+            "inherit",
+            "grey",
+            "primary",
+            "secondary",
+            "error",
+            "info",
+            "success",
+            "warning"
+          ]
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "defaultValue": "filled",
+          "description": "The variant to use.",
+          "enumValues": ["filled", "outlined"]
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "TimelineConnector",
+      "displayName": "Timeline Connector",
+      "description": "The connector between timeline items.",
+      "category": "Lab",
+      "acceptsChildren": false,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "TimelineOppositeContent",
+      "displayName": "Timeline Opposite Content",
+      "description": "The content displayed on the opposite side of the timeline.",
+      "category": "Lab",
+      "acceptsChildren": true,
+      "acceptsText": true,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,415 @@
+{
+  "category": "Surfaces",
+  "components": [
+    {
+      "name": "Accordion",
+      "displayName": "Accordion",
+      "description": "Accordions contain creation flows and allow lightweight editing of an element.",
+      "category": "Surfaces",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "validChildren": ["AccordionSummary", "AccordionDetails"],
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "defaultExpanded",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, expands the accordion by default."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component is disabled."
+        },
+        {
+          "name": "disableGutters",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, it removes the margin between two expanded accordion items and the increase of height."
+        },
+        {
+          "name": "expanded",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, expands the accordion, otherwise collapse it."
+        },
+        {
+          "name": "onChange",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the expand/collapse state is changed."
+        },
+        {
+          "name": "slotProps",
+          "type": "object",
+          "required": false,
+          "description": "The props used for each slot inside."
+        },
+        {
+          "name": "slots",
+          "type": "object",
+          "required": false,
+          "description": "The components used for each slot inside."
+        },
+        {
+          "name": "square",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, rounded corners are disabled."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "TransitionComponent",
+          "type": "string",
+          "required": false,
+          "description": "The component used for the collapse effect."
+        },
+        {
+          "name": "TransitionProps",
+          "type": "object",
+          "required": false,
+          "description": "Props applied to the transition element."
+        }
+      ]
+    },
+    {
+      "name": "AppBar",
+      "displayName": "App Bar",
+      "description": "The App Bar displays information and actions relating to the current screen.",
+      "category": "Surfaces",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "enumValues": [
+            "default",
+            "inherit",
+            "primary",
+            "secondary",
+            "transparent",
+            "error",
+            "info",
+            "success",
+            "warning"
+          ],
+          "defaultValue": "primary",
+          "description": "The color of the component."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "header",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "enableColorOnDark",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the color prop is applied in dark mode."
+        },
+        {
+          "name": "position",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["absolute", "fixed", "relative", "static", "sticky"],
+          "defaultValue": "fixed",
+          "description": "The positioning type."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "Card",
+      "displayName": "Card",
+      "description": "Cards contain content and actions about a single subject.",
+      "category": "Surfaces",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "validChildren": [
+        "CardHeader",
+        "CardMedia",
+        "CardContent",
+        "CardActions"
+      ],
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "raised",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the card will use raised styling."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "CardActions",
+      "displayName": "Card Actions",
+      "description": "Card Actions component to display actions in a card.",
+      "category": "Surfaces",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "validParents": ["Card"],
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "disableSpacing",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the actions do not have additional margin."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "CardContent",
+      "displayName": "Card Content",
+      "description": "Card Content component to display content in a card.",
+      "category": "Surfaces",
+      "acceptsChildren": true,
+      "acceptsText": true,
+      "validParents": ["Card"],
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "div",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "CardHeader",
+      "displayName": "Card Header",
+      "description": "Card Header component to display a header in a card.",
+      "category": "Surfaces",
+      "acceptsChildren": false,
+      "acceptsText": false,
+      "validParents": ["Card"],
+      "props": [
+        {
+          "name": "action",
+          "type": "node",
+          "required": false,
+          "description": "The action to display in the card header."
+        },
+        {
+          "name": "avatar",
+          "type": "node",
+          "required": false,
+          "description": "The Avatar element to display."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "div",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "disableTypography",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, subheader and title won't be wrapped by a Typography component."
+        },
+        {
+          "name": "subheader",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component subheader."
+        },
+        {
+          "name": "subheaderTypographyProps",
+          "type": "object",
+          "required": false,
+          "description": "These props will be forwarded to the subheader (as long as disableTypography is not true)."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "title",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component title."
+        },
+        {
+          "name": "titleTypographyProps",
+          "type": "object",
+          "required": false,
+          "description": "These props will be forwarded to the title (as long as disableTypography is not true)."
+        }
+      ]
+    },
+    {
+      "name": "CardMedia",
+      "displayName": "Card Media",
+      "description": "Card Media component to display media in a card.",
+      "category": "Surfaces",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "validParents": ["Card"],
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component, often used to display overlay content."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "div",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "required": false,
+          "description": "Height of the media."
+        },
+        {
+          "name": "image",
+          "type": "string",
+          "required": false,
+          "description": "Image to be displayed as a background image."
+        },
+        {
+          "name": "src",
+          "type": "string",
+          "required": false,
+          "description": "An alias for image property."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "Paper",
+      "displayName": "Paper",
+      "description": "The Paper component is a container that renders with elevation and appropriate background color according to the current theme.",
+      "category": "Surfaces",
+      "acceptsChildren": true,
+      "acceptsText": true,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "div",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "elevation",
+          "type": "number",
+          "required": false,
+          "defaultValue": 1,
+          "description": "Shadow depth, corresponds to dp in the spec."
+        },
+        {
+          "name": "square",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, rounded corners are disabled."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["elevation", "outlined"],
+          "defaultValue": "elevation",
+          "description": "The variant to use."
+        }
+      ]
+    }
+  ]
+}

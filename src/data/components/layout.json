@@ -1,0 +1,546 @@
+{
+  "category": "Layout",
+  "components": [
+    {
+      "name": "Box",
+      "displayName": "Box",
+      "description": "The Box component is a generic, theme-aware container with access to CSS utilities from MUI System.",
+      "category": "Layout",
+      "acceptsChildren": true,
+      "acceptsText": true,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "div",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "Container",
+      "displayName": "Container",
+      "description": "The container centers your content horizontally. It's the most basic layout element.",
+      "category": "Layout",
+      "acceptsChildren": true,
+      "acceptsText": true,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "div",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "disableGutters",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the left and right padding is removed."
+        },
+        {
+          "name": "fixed",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "Set the max-width to match the min-width of the current breakpoint."
+        },
+        {
+          "name": "maxWidth",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["xs", "sm", "md", "lg", "xl", false],
+          "defaultValue": "lg",
+          "description": "Determine the max-width of the container."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "Grid",
+      "displayName": "Grid",
+      "description": "The Grid component works well for a layout with known columns.",
+      "category": "Layout",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "columns",
+          "type": "number",
+          "required": false,
+          "defaultValue": 12,
+          "description": "The number of columns."
+        },
+        {
+          "name": "columnSpacing",
+          "type": "number",
+          "required": false,
+          "description": "Defines the horizontal space between the type item components."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "div",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "container",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component will have the flex container behavior."
+        },
+        {
+          "name": "direction",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["column-reverse", "column", "row-reverse", "row"],
+          "defaultValue": "row",
+          "description": "Defines the flex-direction style property."
+        },
+        {
+          "name": "lg",
+          "type": "number",
+          "required": false,
+          "description": "If a number, it sets the number of columns the grid item uses for lg and wider screens."
+        },
+        {
+          "name": "lgOffset",
+          "type": "number",
+          "required": false,
+          "description": "If a number, it sets the margin-left equals to the number of columns for lg and wider screens."
+        },
+        {
+          "name": "md",
+          "type": "number",
+          "required": false,
+          "description": "If a number, it sets the number of columns the grid item uses for md and wider screens."
+        },
+        {
+          "name": "mdOffset",
+          "type": "number",
+          "required": false,
+          "description": "If a number, it sets the margin-left equals to the number of columns for md and wider screens."
+        },
+        {
+          "name": "rowSpacing",
+          "type": "number",
+          "required": false,
+          "description": "Defines the vertical space between the type item components."
+        },
+        {
+          "name": "size",
+          "type": "number",
+          "required": false,
+          "description": "If a number, it sets the number of columns the grid item uses."
+        },
+        {
+          "name": "sm",
+          "type": "number",
+          "required": false,
+          "description": "If a number, it sets the number of columns the grid item uses for sm and wider screens."
+        },
+        {
+          "name": "smOffset",
+          "type": "number",
+          "required": false,
+          "description": "If a number, it sets the margin-left equals to the number of columns for sm and wider screens."
+        },
+        {
+          "name": "spacing",
+          "type": "number",
+          "required": false,
+          "defaultValue": 0,
+          "description": "Defines the space between the type item components."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "wrap",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["nowrap", "wrap-reverse", "wrap"],
+          "defaultValue": "wrap",
+          "description": "Defines the flex-wrap style property."
+        },
+        {
+          "name": "xl",
+          "type": "number",
+          "required": false,
+          "description": "If a number, it sets the number of columns the grid item uses for xl and wider screens."
+        },
+        {
+          "name": "xlOffset",
+          "type": "number",
+          "required": false,
+          "description": "If a number, it sets the margin-left equals to the number of columns for xl and wider screens."
+        },
+        {
+          "name": "xs",
+          "type": "number",
+          "required": false,
+          "description": "If a number, it sets the number of columns the grid item uses for xs and wider screens."
+        },
+        {
+          "name": "xsOffset",
+          "type": "number",
+          "required": false,
+          "description": "If a number, it sets the margin-left equals to the number of columns for xs and wider screens."
+        }
+      ]
+    },
+    {
+      "name": "GridLegacy",
+      "displayName": "Grid (Legacy)",
+      "description": "The legacy Grid component (deprecated, use Grid instead).",
+      "category": "Layout",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "alignContent",
+          "type": "enum",
+          "required": false,
+          "enumValues": [
+            "stretch",
+            "center",
+            "flex-start",
+            "flex-end",
+            "space-between",
+            "space-around"
+          ],
+          "defaultValue": "stretch",
+          "description": "Defines the align-content style property."
+        },
+        {
+          "name": "alignItems",
+          "type": "enum",
+          "required": false,
+          "enumValues": [
+            "flex-start",
+            "center",
+            "flex-end",
+            "stretch",
+            "baseline"
+          ],
+          "defaultValue": "stretch",
+          "description": "Defines the align-items style property."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "div",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "container",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component will have the flex container behavior."
+        },
+        {
+          "name": "direction",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["row", "row-reverse", "column", "column-reverse"],
+          "defaultValue": "row",
+          "description": "Defines the flex-direction style property."
+        },
+        {
+          "name": "item",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component will have the flex item behavior."
+        },
+        {
+          "name": "justifyContent",
+          "type": "enum",
+          "required": false,
+          "enumValues": [
+            "flex-start",
+            "center",
+            "flex-end",
+            "space-between",
+            "space-around",
+            "space-evenly"
+          ],
+          "defaultValue": "flex-start",
+          "description": "Defines the justify-content style property."
+        },
+        {
+          "name": "lg",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["auto", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, false],
+          "defaultValue": false,
+          "description": "If a number, it sets the number of columns the grid item uses."
+        },
+        {
+          "name": "md",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["auto", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, false],
+          "defaultValue": false,
+          "description": "If a number, it sets the number of columns the grid item uses."
+        },
+        {
+          "name": "sm",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["auto", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, false],
+          "defaultValue": false,
+          "description": "If a number, it sets the number of columns the grid item uses."
+        },
+        {
+          "name": "spacing",
+          "type": "number",
+          "required": false,
+          "defaultValue": 0,
+          "description": "Defines the space between the type item components."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "wrap",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["nowrap", "wrap", "wrap-reverse"],
+          "defaultValue": "wrap",
+          "description": "Defines the flex-wrap style property."
+        },
+        {
+          "name": "xl",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["auto", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, false],
+          "defaultValue": false,
+          "description": "If a number, it sets the number of columns the grid item uses."
+        },
+        {
+          "name": "xs",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["auto", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, false],
+          "defaultValue": false,
+          "description": "If a number, it sets the number of columns the grid item uses."
+        },
+        {
+          "name": "zeroMinWidth",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, it sets min-width: 0 on the item."
+        }
+      ]
+    },
+    {
+      "name": "Stack",
+      "displayName": "Stack",
+      "description": "The Stack component manages layout of immediate children along the vertical or horizontal axis with optional spacing and/or dividers between each child.",
+      "category": "Layout",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "div",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "direction",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["column-reverse", "column", "row-reverse", "row"],
+          "defaultValue": "column",
+          "description": "Defines the flex-direction style property."
+        },
+        {
+          "name": "divider",
+          "type": "node",
+          "required": false,
+          "description": "Add an element between each child."
+        },
+        {
+          "name": "spacing",
+          "type": "number",
+          "required": false,
+          "defaultValue": 0,
+          "description": "Defines the space between immediate children."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "useFlexGap",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the CSS flexbox gap is used instead of applying margin to children."
+        }
+      ]
+    },
+    {
+      "name": "ImageList",
+      "displayName": "Image List",
+      "description": "Image lists display a collection of images in an organized grid.",
+      "category": "Layout",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "validChildren": ["ImageListItem"],
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component, normally ImageListItems."
+        },
+        {
+          "name": "cols",
+          "type": "number",
+          "required": false,
+          "defaultValue": 2,
+          "description": "Number of columns."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "ul",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "gap",
+          "type": "number",
+          "required": false,
+          "defaultValue": 4,
+          "description": "The gap between items in px."
+        },
+        {
+          "name": "rowHeight",
+          "type": "number",
+          "required": false,
+          "defaultValue": "auto",
+          "description": "The height of one row in px."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["masonry", "quilted", "standard", "woven"],
+          "defaultValue": "standard",
+          "description": "The variant to use."
+        }
+      ]
+    },
+    {
+      "name": "ImageListItem",
+      "displayName": "Image List Item",
+      "description": "Individual item in an image list.",
+      "category": "Layout",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "validParents": ["ImageList"],
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component, normally an img."
+        },
+        {
+          "name": "cols",
+          "type": "number",
+          "required": false,
+          "defaultValue": 1,
+          "description": "Width of the item in number of grid columns."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "li",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "rows",
+          "type": "number",
+          "required": false,
+          "defaultValue": 1,
+          "description": "Height of the item in number of grid rows."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    }
+  ]
+}

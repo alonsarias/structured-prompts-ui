@@ -1,0 +1,1015 @@
+{
+  "category": "Navigation",
+  "components": [
+    {
+      "name": "BottomNavigation",
+      "displayName": "Bottom Navigation",
+      "description": "Bottom navigation bars display three to five destinations at the bottom of a screen.",
+      "category": "Navigation",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "validChildren": ["BottomNavigationAction"],
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "div",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "onChange",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the value changes."
+        },
+        {
+          "name": "showLabels",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, all BottomNavigationActions will show their labels."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the currently selected BottomNavigationAction."
+        }
+      ]
+    },
+    {
+      "name": "BottomNavigationAction",
+      "displayName": "Bottom Navigation Action",
+      "description": "Bottom navigation action component used within bottom navigation.",
+      "category": "Navigation",
+      "acceptsChildren": false,
+      "acceptsText": false,
+      "validParents": ["BottomNavigation"],
+      "props": [
+        {
+          "name": "icon",
+          "type": "node",
+          "required": false,
+          "description": "The icon to display."
+        },
+        {
+          "name": "label",
+          "type": "node",
+          "required": false,
+          "description": "The label element."
+        },
+        {
+          "name": "showLabel",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the BottomNavigationAction will show its label."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "You can provide your own value. Otherwise, we fallback to the child position index."
+        }
+      ]
+    },
+    {
+      "name": "Breadcrumbs",
+      "displayName": "Breadcrumbs",
+      "description": "Breadcrumbs consist of a list of links that help a user visualize a page's location within the hierarchical structure of a website.",
+      "category": "Navigation",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "nav",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "expandText",
+          "type": "string",
+          "required": false,
+          "defaultValue": "Show path",
+          "description": "Override the default label for the expand button."
+        },
+        {
+          "name": "itemsAfterCollapse",
+          "type": "number",
+          "required": false,
+          "defaultValue": 1,
+          "description": "If max items is exceeded, the number of items to show after the ellipsis."
+        },
+        {
+          "name": "itemsBeforeCollapse",
+          "type": "number",
+          "required": false,
+          "defaultValue": 1,
+          "description": "If max items is exceeded, the number of items to show before the ellipsis."
+        },
+        {
+          "name": "maxItems",
+          "type": "number",
+          "required": false,
+          "defaultValue": 8,
+          "description": "Specifies the maximum number of breadcrumbs to display."
+        },
+        {
+          "name": "separator",
+          "type": "node",
+          "required": false,
+          "defaultValue": "/",
+          "description": "Custom separator node."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "Drawer",
+      "displayName": "Drawer",
+      "description": "Navigation drawers provide access to destinations in your app.",
+      "category": "Navigation",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "anchor",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["bottom", "left", "right", "top"],
+          "defaultValue": "left",
+          "description": "Side from which the drawer will appear."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "elevation",
+          "type": "number",
+          "required": false,
+          "defaultValue": 16,
+          "description": "Shadow depth, corresponds to dp in the spec."
+        },
+        {
+          "name": "hideBackdrop",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the backdrop is not rendered."
+        },
+        {
+          "name": "hysteresis",
+          "type": "number",
+          "required": false,
+          "defaultValue": 0.52,
+          "description": "Affects how far the drawer must be opened/closed to change its state."
+        },
+        {
+          "name": "minFlingVelocity",
+          "type": "number",
+          "required": false,
+          "defaultValue": 450,
+          "description": "Defines, from which (average) velocity on, the swipe is defined as a fast swipe."
+        },
+        {
+          "name": "ModalProps",
+          "type": "object",
+          "required": false,
+          "description": "Props applied to the Modal element."
+        },
+        {
+          "name": "onClose",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the component requests to be closed."
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component is shown."
+        },
+        {
+          "name": "PaperProps",
+          "type": "object",
+          "required": false,
+          "description": "Props applied to the Paper element."
+        },
+        {
+          "name": "SlideProps",
+          "type": "object",
+          "required": false,
+          "description": "Props applied to the Slide element."
+        },
+        {
+          "name": "slotProps",
+          "type": "object",
+          "required": false,
+          "description": "The props used for each slot inside."
+        },
+        {
+          "name": "slots",
+          "type": "object",
+          "required": false,
+          "description": "The components used for each slot inside."
+        },
+        {
+          "name": "swipeAreaWidth",
+          "type": "number",
+          "required": false,
+          "defaultValue": 20,
+          "description": "The width of the left most (or right most) area in px that the drawer can be swiped open from."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "transitionDuration",
+          "type": "number",
+          "required": false,
+          "description": "The duration for the transition, in milliseconds."
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["permanent", "persistent", "temporary"],
+          "defaultValue": "temporary",
+          "description": "The variant to use."
+        }
+      ]
+    },
+    {
+      "name": "Link",
+      "displayName": "Link",
+      "description": "The Link component allows you to easily customize anchor elements with your theme colors and typography styles.",
+      "category": "Navigation",
+      "acceptsChildren": true,
+      "acceptsText": true,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "enumValues": [
+            "inherit",
+            "primary",
+            "secondary",
+            "error",
+            "info",
+            "success",
+            "warning"
+          ],
+          "defaultValue": "primary",
+          "description": "The color of the link."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "a",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "href",
+          "type": "string",
+          "required": false,
+          "description": "The URL to link to when the link is clicked."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "underline",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["always", "hover", "none"],
+          "defaultValue": "always",
+          "description": "Controls when the link should have an underline."
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "enumValues": [
+            "body1",
+            "body2",
+            "button",
+            "caption",
+            "h1",
+            "h2",
+            "h3",
+            "h4",
+            "h5",
+            "h6",
+            "inherit",
+            "overline",
+            "subtitle1",
+            "subtitle2"
+          ],
+          "defaultValue": "inherit",
+          "description": "Applies the theme typography styles."
+        }
+      ]
+    },
+    {
+      "name": "Menu",
+      "displayName": "Menu",
+      "description": "Menus display a list of choices on temporary surfaces.",
+      "category": "Navigation",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "validChildren": ["MenuItem"],
+      "props": [
+        {
+          "name": "anchorEl",
+          "type": "object",
+          "required": false,
+          "description": "A HTML element, or a function that returns one."
+        },
+        {
+          "name": "anchorOrigin",
+          "type": "object",
+          "required": false,
+          "defaultValue": "{ vertical: 'top', horizontal: 'left' }",
+          "description": "The anchor of the Menu."
+        },
+        {
+          "name": "autoFocus",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": true,
+          "description": "If true (Default) will focus the [role=\"menu\"] if no focusable child is found."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "Menu contents, normally MenuItems."
+        },
+        {
+          "name": "disableAutoFocusItem",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "When opening the menu will not focus the active item but the [role=\"menu\"] unless autoFocus is false."
+        },
+        {
+          "name": "MenuListProps",
+          "type": "object",
+          "required": false,
+          "description": "Props applied to the MenuList element."
+        },
+        {
+          "name": "onClose",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the component requests to be closed."
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": true,
+          "description": "If true, the component is shown."
+        },
+        {
+          "name": "PopoverClasses",
+          "type": "object",
+          "required": false,
+          "description": "classes prop applied to the Popover element."
+        },
+        {
+          "name": "slotProps",
+          "type": "object",
+          "required": false,
+          "description": "The props used for each slot inside."
+        },
+        {
+          "name": "slots",
+          "type": "object",
+          "required": false,
+          "description": "The components used for each slot inside."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "transformOrigin",
+          "type": "object",
+          "required": false,
+          "defaultValue": "{ vertical: 'top', horizontal: 'left' }",
+          "description": "The transform origin of the Menu."
+        },
+        {
+          "name": "transitionDuration",
+          "type": "number",
+          "required": false,
+          "defaultValue": "auto",
+          "description": "The length of the transition in ms, or 'auto'"
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["menu", "selectedMenu"],
+          "defaultValue": "selectedMenu",
+          "description": "The variant to use."
+        }
+      ]
+    },
+    {
+      "name": "MenuItem",
+      "displayName": "Menu Item",
+      "description": "Menu item component used within menus.",
+      "category": "Navigation",
+      "acceptsChildren": true,
+      "acceptsText": true,
+      "validParents": ["Menu", "Select"],
+      "props": [
+        {
+          "name": "autoFocus",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the list item is focused during the first mount."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "li",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "dense",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, compact vertical padding designed for keyboard and mouse input is used."
+        },
+        {
+          "name": "disableGutters",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the left and right padding is removed."
+        },
+        {
+          "name": "divider",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, a 1px light border is added to the bottom of the menu item."
+        },
+        {
+          "name": "onClick",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the menu item is clicked."
+        },
+        {
+          "name": "selected",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component is selected."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the menu item."
+        }
+      ]
+    },
+    {
+      "name": "Pagination",
+      "displayName": "Pagination",
+      "description": "The Pagination component enables the user to select a specific page from a range of pages.",
+      "category": "Navigation",
+      "acceptsChildren": false,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "boundaryCount",
+          "type": "number",
+          "required": false,
+          "defaultValue": 1,
+          "description": "Number of always visible pages at the beginning and end."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["primary", "secondary", "standard"],
+          "defaultValue": "standard",
+          "description": "The active color."
+        },
+        {
+          "name": "count",
+          "type": "number",
+          "required": false,
+          "defaultValue": 1,
+          "description": "The total number of pages."
+        },
+        {
+          "name": "defaultPage",
+          "type": "number",
+          "required": false,
+          "defaultValue": 1,
+          "description": "The page selected by default when the component is uncontrolled."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component is disabled."
+        },
+        {
+          "name": "getItemAriaLabel",
+          "type": "function",
+          "required": false,
+          "description": "Accepts a function which returns a string value that provides a user-friendly name for the current page."
+        },
+        {
+          "name": "hideNextButton",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, hide the next-page button."
+        },
+        {
+          "name": "hidePrevButton",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, hide the previous-page button."
+        },
+        {
+          "name": "onChange",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the page is changed."
+        },
+        {
+          "name": "page",
+          "type": "number",
+          "required": false,
+          "description": "The current page."
+        },
+        {
+          "name": "renderItem",
+          "type": "function",
+          "required": false,
+          "description": "Render the item."
+        },
+        {
+          "name": "shape",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["circular", "rounded"],
+          "defaultValue": "circular",
+          "description": "The shape of the pagination items."
+        },
+        {
+          "name": "showFirstButton",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, show the first-page button."
+        },
+        {
+          "name": "showLastButton",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, show the last-page button."
+        },
+        {
+          "name": "siblingCount",
+          "type": "number",
+          "required": false,
+          "defaultValue": 1,
+          "description": "Number of always visible pages before and after the current page."
+        },
+        {
+          "name": "size",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["large", "medium", "small"],
+          "defaultValue": "medium",
+          "description": "The size of the component."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["outlined", "text"],
+          "defaultValue": "text",
+          "description": "The variant to use."
+        }
+      ]
+    },
+    {
+      "name": "SpeedDial",
+      "displayName": "Speed Dial",
+      "description": "When pressed, a floating action button can display three to six related actions in the form of a Speed Dial.",
+      "category": "Navigation",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "validChildren": ["SpeedDialAction"],
+      "props": [
+        {
+          "name": "ariaLabel",
+          "type": "string",
+          "required": true,
+          "description": "The aria-label of the button element."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "SpeedDialActions to display when the SpeedDial is open."
+        },
+        {
+          "name": "direction",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["down", "left", "right", "up"],
+          "defaultValue": "up",
+          "description": "The direction the actions open relative to the floating action button."
+        },
+        {
+          "name": "FabProps",
+          "type": "object",
+          "required": false,
+          "description": "Props applied to the Fab element."
+        },
+        {
+          "name": "hidden",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the SpeedDial is hidden."
+        },
+        {
+          "name": "icon",
+          "type": "node",
+          "required": false,
+          "description": "The icon to display in the SpeedDial Fab."
+        },
+        {
+          "name": "onClose",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the component requests to be closed."
+        },
+        {
+          "name": "onOpen",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the component requests to be open."
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the component is shown."
+        },
+        {
+          "name": "openIcon",
+          "type": "node",
+          "required": false,
+          "description": "The icon to display in the SpeedDial Fab when the SpeedDial is open."
+        },
+        {
+          "name": "slotProps",
+          "type": "object",
+          "required": false,
+          "description": "The props used for each slot inside."
+        },
+        {
+          "name": "slots",
+          "type": "object",
+          "required": false,
+          "description": "The components used for each slot inside."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "TransitionComponent",
+          "type": "string",
+          "required": false,
+          "description": "The component used for the transition."
+        },
+        {
+          "name": "transitionDuration",
+          "type": "number",
+          "required": false,
+          "description": "The duration for the transition, in milliseconds."
+        },
+        {
+          "name": "TransitionProps",
+          "type": "object",
+          "required": false,
+          "description": "Props applied to the transition element."
+        }
+      ]
+    },
+    {
+      "name": "Stepper",
+      "displayName": "Stepper",
+      "description": "Steppers convey progress through numbered steps. It provides a wizard-like workflow.",
+      "category": "Navigation",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "validChildren": ["Step"],
+      "props": [
+        {
+          "name": "activeStep",
+          "type": "number",
+          "required": false,
+          "defaultValue": 0,
+          "description": "Set the active step (zero based index)."
+        },
+        {
+          "name": "alternativeLabel",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If set to 'true' and orientation is horizontal, then the step label will be positioned under the icon."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "Two or more Step components."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "div",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "connector",
+          "type": "node",
+          "required": false,
+          "description": "An element to be placed between each step."
+        },
+        {
+          "name": "nonLinear",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If set the Stepper will not assist in controlling steps for linear flow."
+        },
+        {
+          "name": "orientation",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["horizontal", "vertical"],
+          "defaultValue": "horizontal",
+          "description": "The component orientation (layout flow direction)."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "Tabs",
+      "displayName": "Tabs",
+      "description": "Tabs make it easy to explore and switch between different views.",
+      "category": "Navigation",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "validChildren": ["Tab"],
+      "props": [
+        {
+          "name": "action",
+          "type": "object",
+          "required": false,
+          "description": "Callback fired when the component mounts."
+        },
+        {
+          "name": "allowScrollButtonsMobile",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the scroll buttons aren't forced hidden on mobile."
+        },
+        {
+          "name": "aria-label",
+          "type": "string",
+          "required": false,
+          "description": "The label for the Tabs as a string."
+        },
+        {
+          "name": "aria-labelledby",
+          "type": "string",
+          "required": false,
+          "description": "An id or list of ids separated by a space that label the Tabs."
+        },
+        {
+          "name": "centered",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the tabs are centered."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "div",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "indicatorColor",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["primary", "secondary"],
+          "defaultValue": "primary",
+          "description": "Determines the color of the indicator."
+        },
+        {
+          "name": "onChange",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the value changes."
+        },
+        {
+          "name": "orientation",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["horizontal", "vertical"],
+          "defaultValue": "horizontal",
+          "description": "The component orientation (layout flow direction)."
+        },
+        {
+          "name": "ScrollButtonComponent",
+          "type": "string",
+          "required": false,
+          "description": "The component used to render the scroll buttons."
+        },
+        {
+          "name": "scrollButtons",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["auto", false, true],
+          "defaultValue": "auto",
+          "description": "Determine behavior of scroll buttons when tabs are set to scroll."
+        },
+        {
+          "name": "selectionFollowsFocus",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true the selected tab changes on focus."
+        },
+        {
+          "name": "slotProps",
+          "type": "object",
+          "required": false,
+          "description": "The props used for each slot inside."
+        },
+        {
+          "name": "slots",
+          "type": "object",
+          "required": false,
+          "description": "The components used for each slot inside."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "TabIndicatorProps",
+          "type": "object",
+          "required": false,
+          "description": "Props applied to the tab indicator element."
+        },
+        {
+          "name": "TabScrollButtonProps",
+          "type": "object",
+          "required": false,
+          "description": "Props applied to the TabScrollButton element."
+        },
+        {
+          "name": "textColor",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["inherit", "primary", "secondary"],
+          "defaultValue": "primary",
+          "description": "Determines the color of the Tab."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the currently selected Tab."
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["fullWidth", "scrollable", "standard"],
+          "defaultValue": "standard",
+          "description": "Determines additional display behavior of the tabs."
+        },
+        {
+          "name": "visibleScrollbar",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the scrollbar is visible."
+        }
+      ]
+    }
+  ]
+}

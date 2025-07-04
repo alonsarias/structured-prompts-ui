@@ -1,0 +1,2872 @@
+{
+  "category": "Inputs",
+  "components": [
+    {
+      "name": "Autocomplete",
+      "displayName": "Autocomplete",
+      "description": "The autocomplete is a normal text input enhanced by a panel of suggested options.",
+      "category": "Inputs",
+      "acceptsChildren": false,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "options",
+          "type": "object",
+          "required": true,
+          "description": "Array of options."
+        },
+        {
+          "name": "value",
+          "type": "object",
+          "required": false,
+          "description": "The value of the autocomplete."
+        },
+        {
+          "name": "onChange",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the value changes."
+        },
+        {
+          "name": "renderInput",
+          "type": "function",
+          "required": true,
+          "description": "Render the input."
+        },
+        {
+          "name": "multiple",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the Autocomplete allows multiple selections."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component is disabled."
+        },
+        {
+          "name": "freeSolo",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the Autocomplete is free solo, meaning that the user input is not bound to provided options."
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component is in a loading state."
+        },
+        {
+          "name": "size",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["small", "medium"],
+          "defaultValue": "medium",
+          "description": "The size of the component."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "Button",
+      "displayName": "Button",
+      "description": "Buttons allow users to take actions, and make choices, with a single tap.",
+      "category": "Inputs",
+      "acceptsChildren": true,
+      "acceptsText": true,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "enumValues": [
+            "inherit",
+            "primary",
+            "secondary",
+            "success",
+            "error",
+            "info",
+            "warning"
+          ],
+          "defaultValue": "primary",
+          "description": "The color of the component."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component is disabled."
+        },
+        {
+          "name": "disableElevation",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, no elevation is used."
+        },
+        {
+          "name": "disableFocusRipple",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the keyboard focus ripple is disabled."
+        },
+        {
+          "name": "disableRipple",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the ripple effect is disabled."
+        },
+        {
+          "name": "endIcon",
+          "type": "node",
+          "required": false,
+          "description": "Element placed after the children."
+        },
+        {
+          "name": "fullWidth",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the button will take up the full width of its container."
+        },
+        {
+          "name": "href",
+          "type": "string",
+          "required": false,
+          "description": "The URL to link to when the button is clicked."
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the loading indicator is visible and the button is disabled."
+        },
+        {
+          "name": "loadingIndicator",
+          "type": "node",
+          "required": false,
+          "description": "Element placed before the children if the button is in loading state."
+        },
+        {
+          "name": "loadingPosition",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["center", "end", "start"],
+          "defaultValue": "center",
+          "description": "The loading indicator can be positioned on the start, end, or the center of the button."
+        },
+        {
+          "name": "size",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["small", "medium", "large"],
+          "defaultValue": "medium",
+          "description": "The size of the component."
+        },
+        {
+          "name": "startIcon",
+          "type": "node",
+          "required": false,
+          "description": "Element placed before the children."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["contained", "outlined", "text"],
+          "defaultValue": "text",
+          "description": "The variant to use."
+        }
+      ]
+    },
+    {
+      "name": "ButtonGroup",
+      "displayName": "Button Group",
+      "description": "The ButtonGroup component can be used to group related buttons.",
+      "category": "Inputs",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "validChildren": ["Button"],
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "enumValues": [
+            "inherit",
+            "primary",
+            "secondary",
+            "error",
+            "info",
+            "success",
+            "warning"
+          ],
+          "defaultValue": "primary",
+          "description": "The color of the component."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component is disabled."
+        },
+        {
+          "name": "disableElevation",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, no elevation is used."
+        },
+        {
+          "name": "disableFocusRipple",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the button keyboard focus ripple is disabled."
+        },
+        {
+          "name": "disableRipple",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the button ripple effect is disabled."
+        },
+        {
+          "name": "fullWidth",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the buttons will take up the full width of its container."
+        },
+        {
+          "name": "orientation",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["horizontal", "vertical"],
+          "defaultValue": "horizontal",
+          "description": "The component orientation (layout flow direction)."
+        },
+        {
+          "name": "size",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["small", "medium", "large"],
+          "defaultValue": "medium",
+          "description": "The size of the component."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["contained", "outlined", "text"],
+          "defaultValue": "outlined",
+          "description": "The variant to use."
+        }
+      ]
+    },
+    {
+      "name": "Checkbox",
+      "displayName": "Checkbox",
+      "description": "Checkboxes allow the user to select one or more items from a set.",
+      "category": "Inputs",
+      "acceptsChildren": false,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "checked",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the component is checked."
+        },
+        {
+          "name": "checkedIcon",
+          "type": "node",
+          "required": false,
+          "description": "The icon to display when the component is checked."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "enumValues": [
+            "default",
+            "primary",
+            "secondary",
+            "error",
+            "info",
+            "success",
+            "warning"
+          ],
+          "defaultValue": "primary",
+          "description": "The color of the component."
+        },
+        {
+          "name": "defaultChecked",
+          "type": "boolean",
+          "required": false,
+          "description": "The default checked state. Use when the component is not controlled."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component is disabled."
+        },
+        {
+          "name": "disableRipple",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the ripple effect is disabled."
+        },
+        {
+          "name": "icon",
+          "type": "node",
+          "required": false,
+          "description": "The icon to display when the component is unchecked."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The id of the input element."
+        },
+        {
+          "name": "indeterminate",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component appears indeterminate."
+        },
+        {
+          "name": "indeterminateIcon",
+          "type": "node",
+          "required": false,
+          "description": "The icon to display when the component is indeterminate."
+        },
+        {
+          "name": "inputProps",
+          "type": "object",
+          "required": false,
+          "description": "Attributes applied to the input element."
+        },
+        {
+          "name": "inputRef",
+          "type": "object",
+          "required": false,
+          "description": "Pass a ref to the input element."
+        },
+        {
+          "name": "onChange",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the state is changed."
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the input element is required."
+        },
+        {
+          "name": "size",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["small", "medium"],
+          "defaultValue": "medium",
+          "description": "The size of the component."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the component."
+        }
+      ]
+    },
+    {
+      "name": "Fab",
+      "displayName": "Floating Action Button",
+      "description": "A floating action button (FAB) performs the primary, or most common, action on a screen.",
+      "category": "Inputs",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component, normally an Icon."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "enumValues": [
+            "default",
+            "inherit",
+            "primary",
+            "secondary",
+            "error",
+            "info",
+            "success",
+            "warning"
+          ],
+          "defaultValue": "default",
+          "description": "The color of the component."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component is disabled."
+        },
+        {
+          "name": "disableFocusRipple",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the keyboard focus ripple is disabled."
+        },
+        {
+          "name": "disableRipple",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the ripple effect is disabled."
+        },
+        {
+          "name": "href",
+          "type": "string",
+          "required": false,
+          "description": "The URL to link to when the button is clicked."
+        },
+        {
+          "name": "size",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["small", "medium", "large"],
+          "defaultValue": "large",
+          "description": "The size of the component."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["circular", "extended"],
+          "defaultValue": "circular",
+          "description": "The variant to use."
+        }
+      ]
+    },
+    {
+      "name": "FormControl",
+      "displayName": "Form Control",
+      "description": "Provides context such as filled/focused/error/required for form inputs.",
+      "category": "Inputs",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "enumValues": [
+            "primary",
+            "secondary",
+            "error",
+            "info",
+            "success",
+            "warning"
+          ],
+          "defaultValue": "primary",
+          "description": "The color of the component."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "div",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the label, input and helper text should be displayed in a disabled state."
+        },
+        {
+          "name": "error",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the label is displayed in an error state."
+        },
+        {
+          "name": "focused",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the component is displayed in focused state."
+        },
+        {
+          "name": "fullWidth",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component will take up the full width of its container."
+        },
+        {
+          "name": "hiddenLabel",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the label is hidden."
+        },
+        {
+          "name": "margin",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["dense", "none", "normal"],
+          "defaultValue": "none",
+          "description": "If dense or normal, will adjust vertical spacing of this and contained components."
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the label will indicate that the input is required."
+        },
+        {
+          "name": "size",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["medium", "small"],
+          "defaultValue": "medium",
+          "description": "The size of the component."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["filled", "outlined", "standard"],
+          "defaultValue": "outlined",
+          "description": "The variant to use."
+        }
+      ]
+    },
+    {
+      "name": "RadioGroup",
+      "displayName": "Radio Group",
+      "description": "The Radio Group allows the user to select one option from a set.",
+      "category": "Inputs",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "validChildren": ["Radio", "FormControlLabel"],
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "required": false,
+          "description": "The default value. Use when the component is not controlled."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name used to reference the value of the control."
+        },
+        {
+          "name": "onChange",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when a radio button is selected."
+        },
+        {
+          "name": "row",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "Display group of elements in a compact row."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "Value of the selected radio button."
+        }
+      ]
+    },
+    {
+      "name": "Rating",
+      "displayName": "Rating",
+      "description": "Ratings provide insight regarding others' opinions and experiences, and can allow the user to submit a rating of their own.",
+      "category": "Inputs",
+      "acceptsChildren": false,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "defaultValue",
+          "type": "number",
+          "required": false,
+          "defaultValue": null,
+          "description": "The default value. Use when the component is not controlled."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component is disabled."
+        },
+        {
+          "name": "emptyIcon",
+          "type": "node",
+          "required": false,
+          "description": "The icon to display when empty."
+        },
+        {
+          "name": "emptyLabelText",
+          "type": "string",
+          "required": false,
+          "defaultValue": "Empty",
+          "description": "The label read when the rating input is empty."
+        },
+        {
+          "name": "getLabelText",
+          "type": "function",
+          "required": false,
+          "description": "Accepts a function which returns a string value that provides a user-friendly name for the current value of the rating."
+        },
+        {
+          "name": "highlightSelectedOnly",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, only the selected icon will be highlighted."
+        },
+        {
+          "name": "icon",
+          "type": "node",
+          "required": false,
+          "description": "The icon to display."
+        },
+        {
+          "name": "IconContainerComponent",
+          "type": "string",
+          "required": false,
+          "description": "The component containing the icon."
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "required": false,
+          "defaultValue": 5,
+          "description": "Maximum rating."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name attribute of the radio input elements."
+        },
+        {
+          "name": "onChange",
+          "type": "function",
+          "required": false,
+          "description": "Callback function that is fired when the rating changes."
+        },
+        {
+          "name": "onChangeActive",
+          "type": "function",
+          "required": false,
+          "description": "Callback function that is fired when the hover state changes."
+        },
+        {
+          "name": "precision",
+          "type": "number",
+          "required": false,
+          "defaultValue": 1,
+          "description": "The minimum increment value change allowed."
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "Removes all hover effects and pointer events."
+        },
+        {
+          "name": "size",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["small", "medium", "large"],
+          "defaultValue": "medium",
+          "description": "The size of the component."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "required": false,
+          "description": "The rating value."
+        }
+      ]
+    },
+    {
+      "name": "Select",
+      "displayName": "Select",
+      "description": "Select components are used for collecting user provided information from a list of options.",
+      "category": "Inputs",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "validChildren": ["MenuItem"],
+      "props": [
+        {
+          "name": "autoWidth",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the width of the popover will automatically be set according to the items inside the menu."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The option elements to populate the select with."
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component is initially open."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "required": false,
+          "description": "The default value. Use when the component is not controlled."
+        },
+        {
+          "name": "displayEmpty",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, a value is displayed even if no items are selected."
+        },
+        {
+          "name": "IconComponent",
+          "type": "string",
+          "required": false,
+          "description": "The icon that displays the arrow."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The id of the wrapper element or the select element when native."
+        },
+        {
+          "name": "input",
+          "type": "node",
+          "required": false,
+          "description": "An Input element; does not have to be a material-ui specific Input."
+        },
+        {
+          "name": "inputProps",
+          "type": "object",
+          "required": false,
+          "description": "Attributes applied to the input element."
+        },
+        {
+          "name": "label",
+          "type": "node",
+          "required": false,
+          "description": "The label content."
+        },
+        {
+          "name": "labelId",
+          "type": "string",
+          "required": false,
+          "description": "The ID of an element that acts as an additional label."
+        },
+        {
+          "name": "MenuProps",
+          "type": "object",
+          "required": false,
+          "description": "Props applied to the Menu element."
+        },
+        {
+          "name": "multiple",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, value must be an array and the menu will support multiple selections."
+        },
+        {
+          "name": "native",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component uses a native select element."
+        },
+        {
+          "name": "onChange",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when a menu item is selected."
+        },
+        {
+          "name": "onClose",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the component requests to be closed."
+        },
+        {
+          "name": "onOpen",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the component requests to be opened."
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the component is shown."
+        },
+        {
+          "name": "renderValue",
+          "type": "function",
+          "required": false,
+          "description": "Render the selected value."
+        },
+        {
+          "name": "SelectDisplayProps",
+          "type": "object",
+          "required": false,
+          "description": "Props applied to the clickable div element."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The input value."
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["filled", "outlined", "standard"],
+          "defaultValue": "outlined",
+          "description": "The variant to use."
+        }
+      ]
+    },
+    {
+      "name": "Slider",
+      "displayName": "Slider",
+      "description": "Sliders allow users to make selections from a range of values.",
+      "category": "Inputs",
+      "acceptsChildren": false,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "aria-label",
+          "type": "string",
+          "required": false,
+          "description": "The label of the slider."
+        },
+        {
+          "name": "aria-labelledby",
+          "type": "string",
+          "required": false,
+          "description": "The id of the element containing a label for the slider."
+        },
+        {
+          "name": "aria-valuetext",
+          "type": "string",
+          "required": false,
+          "description": "A string value that provides a user-friendly name for the current value of the slider."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "enumValues": [
+            "primary",
+            "secondary",
+            "error",
+            "info",
+            "success",
+            "warning"
+          ],
+          "defaultValue": "primary",
+          "description": "The color of the component."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "span",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "defaultValue",
+          "type": "number",
+          "required": false,
+          "description": "The default value. Use when the component is not controlled."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component is disabled."
+        },
+        {
+          "name": "disableSwap",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the active thumb doesn't swap when moving pointer over a thumb while dragging another thumb."
+        },
+        {
+          "name": "getAriaLabel",
+          "type": "function",
+          "required": false,
+          "description": "Accepts a function which returns a string value that provides a user-friendly name for the thumb labels of the slider."
+        },
+        {
+          "name": "getAriaValueText",
+          "type": "function",
+          "required": false,
+          "description": "Accepts a function which returns a string value that provides a user-friendly name for the current value of the slider."
+        },
+        {
+          "name": "isRtl",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true the Slider will be rendered right-to-left."
+        },
+        {
+          "name": "marks",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "Marks indicate predetermined values to which the user can move the slider."
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "required": false,
+          "defaultValue": 100,
+          "description": "The maximum allowed value of the slider."
+        },
+        {
+          "name": "min",
+          "type": "number",
+          "required": false,
+          "defaultValue": 0,
+          "description": "The minimum allowed value of the slider."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "Name attribute of the hidden input element."
+        },
+        {
+          "name": "onChange",
+          "type": "function",
+          "required": false,
+          "description": "Callback function that is fired when the slider's value changed."
+        },
+        {
+          "name": "onChangeCommitted",
+          "type": "function",
+          "required": false,
+          "description": "Callback function that is fired when the mouseup is triggered."
+        },
+        {
+          "name": "orientation",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["horizontal", "vertical"],
+          "defaultValue": "horizontal",
+          "description": "The component orientation."
+        },
+        {
+          "name": "scale",
+          "type": "function",
+          "required": false,
+          "description": "A transformation function, to change the scale of the slider."
+        },
+        {
+          "name": "size",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["small", "medium"],
+          "defaultValue": "medium",
+          "description": "The size of the slider."
+        },
+        {
+          "name": "step",
+          "type": "number",
+          "required": false,
+          "defaultValue": 1,
+          "description": "The granularity with which the slider can step through values."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "track",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["normal", false, "inverted"],
+          "defaultValue": "normal",
+          "description": "The track presentation."
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "required": false,
+          "description": "The value of the slider."
+        },
+        {
+          "name": "valueLabelDisplay",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["on", "auto", "off"],
+          "defaultValue": "off",
+          "description": "Controls when the value label is displayed."
+        },
+        {
+          "name": "valueLabelFormat",
+          "type": "string",
+          "required": false,
+          "description": "The format function the value label's value."
+        }
+      ]
+    },
+    {
+      "name": "Switch",
+      "displayName": "Switch",
+      "description": "Switches toggle the state of a single setting on or off.",
+      "category": "Inputs",
+      "acceptsChildren": false,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "checked",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the component is checked."
+        },
+        {
+          "name": "checkedIcon",
+          "type": "node",
+          "required": false,
+          "description": "The icon to display when the component is checked."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "enumValues": [
+            "default",
+            "primary",
+            "secondary",
+            "error",
+            "info",
+            "success",
+            "warning"
+          ],
+          "defaultValue": "primary",
+          "description": "The color of the component."
+        },
+        {
+          "name": "defaultChecked",
+          "type": "boolean",
+          "required": false,
+          "description": "The default checked state. Use when the component is not controlled."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component is disabled."
+        },
+        {
+          "name": "disableRipple",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the ripple effect is disabled."
+        },
+        {
+          "name": "edge",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["end", "start", false],
+          "defaultValue": false,
+          "description": "If given, uses a negative margin to counteract the padding on one side."
+        },
+        {
+          "name": "icon",
+          "type": "node",
+          "required": false,
+          "description": "The icon to display when the component is unchecked."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The id of the input element."
+        },
+        {
+          "name": "inputProps",
+          "type": "object",
+          "required": false,
+          "description": "Attributes applied to the input element."
+        },
+        {
+          "name": "inputRef",
+          "type": "object",
+          "required": false,
+          "description": "Pass a ref to the input element."
+        },
+        {
+          "name": "onChange",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the state is changed."
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the input element is required."
+        },
+        {
+          "name": "size",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["medium", "small"],
+          "defaultValue": "medium",
+          "description": "The size of the component."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the component."
+        }
+      ]
+    },
+    {
+      "name": "TextField",
+      "displayName": "Text Field",
+      "description": "Text fields let users enter and edit text.",
+      "category": "Inputs",
+      "acceptsChildren": false,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "autoComplete",
+          "type": "string",
+          "required": false,
+          "description": "This prop helps users to fill forms faster, especially on mobile devices."
+        },
+        {
+          "name": "autoFocus",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the input element is focused during the first mount."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "enumValues": [
+            "primary",
+            "secondary",
+            "error",
+            "info",
+            "success",
+            "warning"
+          ],
+          "defaultValue": "primary",
+          "description": "The color of the component."
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "required": false,
+          "description": "The default value. Use when the component is not controlled."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component is disabled."
+        },
+        {
+          "name": "error",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the label is displayed in an error state."
+        },
+        {
+          "name": "fullWidth",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the input will take up the full width of its container."
+        },
+        {
+          "name": "helperText",
+          "type": "node",
+          "required": false,
+          "description": "The helper text content."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The id of the input element."
+        },
+        {
+          "name": "inputProps",
+          "type": "object",
+          "required": false,
+          "description": "Attributes applied to the input element."
+        },
+        {
+          "name": "inputRef",
+          "type": "object",
+          "required": false,
+          "description": "Pass a ref to the input element."
+        },
+        {
+          "name": "label",
+          "type": "node",
+          "required": false,
+          "description": "The label content."
+        },
+        {
+          "name": "margin",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["dense", "none", "normal"],
+          "defaultValue": "none",
+          "description": "If dense or normal, will adjust vertical spacing of this and contained components."
+        },
+        {
+          "name": "maxRows",
+          "type": "number",
+          "required": false,
+          "description": "Maximum number of rows to display when multiline option is set to true."
+        },
+        {
+          "name": "minRows",
+          "type": "number",
+          "required": false,
+          "description": "Minimum number of rows to display when multiline option is set to true."
+        },
+        {
+          "name": "multiline",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, a textarea element is rendered instead of an input."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "Name attribute of the input element."
+        },
+        {
+          "name": "onChange",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the value is changed."
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false,
+          "description": "The short hint displayed in the input before the user enters a value."
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the label is displayed as required and the input element is required."
+        },
+        {
+          "name": "rows",
+          "type": "number",
+          "required": false,
+          "description": "Number of rows to display when multiline option is set to true."
+        },
+        {
+          "name": "select",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the input element is rendered as a select."
+        },
+        {
+          "name": "SelectProps",
+          "type": "object",
+          "required": false,
+          "description": "Props applied to the Select element."
+        },
+        {
+          "name": "size",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["medium", "small"],
+          "defaultValue": "medium",
+          "description": "The size of the component."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "defaultValue": "text",
+          "description": "Type of the input element."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the input element, required for a controlled component."
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["filled", "outlined", "standard"],
+          "defaultValue": "outlined",
+          "description": "The variant to use."
+        }
+      ]
+    },
+    {
+      "name": "TransferList",
+      "displayName": "Transfer List",
+      "description": "Transfer lists allow the user to move one or more list items between lists.",
+      "category": "Inputs",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "checked",
+          "type": "object",
+          "required": false,
+          "description": "The items that are checked."
+        },
+        {
+          "name": "left",
+          "type": "object",
+          "required": false,
+          "description": "The items in the left list."
+        },
+        {
+          "name": "onCheckedChange",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the checked items change."
+        },
+        {
+          "name": "onLeftChange",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the left list changes."
+        },
+        {
+          "name": "onRightChange",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the right list changes."
+        },
+        {
+          "name": "right",
+          "type": "object",
+          "required": false,
+          "description": "The items in the right list."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "ToggleButton",
+      "displayName": "Toggle Button",
+      "description": "Toggle buttons can be used to group related options.",
+      "category": "Inputs",
+      "acceptsChildren": true,
+      "acceptsText": true,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "enumValues": [
+            "standard",
+            "primary",
+            "secondary",
+            "error",
+            "info",
+            "success",
+            "warning"
+          ],
+          "defaultValue": "standard",
+          "description": "The color of the button when it is selected."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component is disabled."
+        },
+        {
+          "name": "disableFocusRipple",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the keyboard focus ripple is disabled."
+        },
+        {
+          "name": "disableRipple",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the ripple effect is disabled."
+        },
+        {
+          "name": "fullWidth",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the button will take up the full width of its container."
+        },
+        {
+          "name": "onChange",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the state is changed."
+        },
+        {
+          "name": "onClick",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the button is clicked."
+        },
+        {
+          "name": "selected",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the button is rendered in an active state."
+        },
+        {
+          "name": "size",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["small", "medium", "large"],
+          "defaultValue": "medium",
+          "description": "The size of the component."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "description": "The value to associate with the button when selected in a ToggleButtonGroup."
+        }
+      ]
+    },
+    {
+      "name": "FormControlLabel",
+      "displayName": "Form Control Label",
+      "description": "Drop-in replacement for Radio, Switch and Checkbox components with an extra label.",
+      "category": "Inputs",
+      "acceptsChildren": false,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "control",
+          "type": "node",
+          "required": true,
+          "description": "A control element. For instance, it can be a Radio, a Switch or a Checkbox."
+        },
+        {
+          "name": "label",
+          "type": "node",
+          "required": false,
+          "description": "A text or an element to be used in an enclosing label element."
+        },
+        {
+          "name": "checked",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the component appears selected."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the control is disabled."
+        },
+        {
+          "name": "disableTypography",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the label is rendered as it is passed without an additional typography node."
+        },
+        {
+          "name": "labelPlacement",
+          "type": "enum",
+          "required": false,
+          "defaultValue": "end",
+          "description": "The position of the label.",
+          "enumValues": ["bottom", "end", "start", "top"]
+        },
+        {
+          "name": "onChange",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the state is changed."
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the label will indicate that the input is required."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the component."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "FormGroup",
+      "displayName": "Form Group",
+      "description": "FormGroup wraps controls such as Checkbox and Switch. It provides compact row layout.",
+      "category": "Inputs",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "row",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "Display group of elements in a compact row."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "FormHelperText",
+      "displayName": "Form Helper Text",
+      "description": "Helper text to give context about a field's input, such as how the input will be used.",
+      "category": "Inputs",
+      "acceptsChildren": true,
+      "acceptsText": true,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the helper text should be displayed in a disabled state."
+        },
+        {
+          "name": "error",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, helper text should be displayed in an error state."
+        },
+        {
+          "name": "filled",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the helper text should use filled classes key."
+        },
+        {
+          "name": "focused",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the helper text should be displayed in a focused state."
+        },
+        {
+          "name": "margin",
+          "type": "enum",
+          "required": false,
+          "description": "If dense or normal, will adjust vertical spacing of this and contained components.",
+          "enumValues": ["dense", "normal"]
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the helper text should use required classes key."
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "description": "The variant to use.",
+          "enumValues": ["filled", "outlined", "standard"]
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "FormLabel",
+      "displayName": "Form Label",
+      "description": "A label for a form control.",
+      "category": "Inputs",
+      "acceptsChildren": true,
+      "acceptsText": true,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "description": "The color of the component.",
+          "enumValues": [
+            "error",
+            "info",
+            "primary",
+            "secondary",
+            "success",
+            "warning"
+          ]
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the label should be displayed in a disabled state."
+        },
+        {
+          "name": "error",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the label is displayed in an error state."
+        },
+        {
+          "name": "filled",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the label should use filled classes key."
+        },
+        {
+          "name": "focused",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the input of this label is focused."
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the label will indicate that the input is required."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "Input",
+      "displayName": "Input",
+      "description": "The Input component is a lower-level form input with no styling.",
+      "category": "Inputs",
+      "acceptsChildren": false,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "autoComplete",
+          "type": "string",
+          "required": false,
+          "description": "This prop helps users to fill forms faster, especially on mobile devices."
+        },
+        {
+          "name": "autoFocus",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the input element is focused during the first mount."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "defaultValue": "primary",
+          "description": "The color of the component.",
+          "enumValues": ["primary", "secondary"]
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "required": false,
+          "description": "The default value. Use when the component is not controlled."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the component is disabled."
+        },
+        {
+          "name": "endAdornment",
+          "type": "node",
+          "required": false,
+          "description": "End InputAdornment for this component."
+        },
+        {
+          "name": "error",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the input will indicate an error."
+        },
+        {
+          "name": "fullWidth",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the input will take up the full width of its container."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The id of the input element."
+        },
+        {
+          "name": "inputProps",
+          "type": "object",
+          "required": false,
+          "description": "Attributes applied to the input element."
+        },
+        {
+          "name": "margin",
+          "type": "enum",
+          "required": false,
+          "description": "If dense, will adjust vertical spacing.",
+          "enumValues": ["dense", "none"]
+        },
+        {
+          "name": "multiline",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, a textarea element is rendered instead of an input."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "Name attribute of the input element."
+        },
+        {
+          "name": "onChange",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the value is changed."
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false,
+          "description": "The short hint displayed in the input before the user enters a value."
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "description": "It prevents the user from changing the value of the field."
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the input element is required."
+        },
+        {
+          "name": "rows",
+          "type": "string",
+          "required": false,
+          "description": "Number of rows to display when multiline option is set to true."
+        },
+        {
+          "name": "startAdornment",
+          "type": "node",
+          "required": false,
+          "description": "Start InputAdornment for this component."
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "defaultValue": "text",
+          "description": "Type of the input element."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the input element."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "InputAdornment",
+      "displayName": "Input Adornment",
+      "description": "This component can be used to add a prefix, a suffix, or an action to an Input.",
+      "category": "Inputs",
+      "acceptsChildren": true,
+      "acceptsText": true,
+      "props": [
+        {
+          "name": "position",
+          "type": "enum",
+          "required": true,
+          "description": "The position this adornment should appear relative to the Input.",
+          "enumValues": ["end", "start"]
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component, normally an IconButton or string."
+        },
+        {
+          "name": "disablePointerEvents",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "Disable pointer events on the root."
+        },
+        {
+          "name": "disableTypography",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If children is a string then disable wrapping in a Typography component."
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "description": "The variant to use.",
+          "enumValues": ["filled", "outlined", "standard"]
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "InputBase",
+      "displayName": "Input Base",
+      "description": "InputBase contains as few styles as possible. It aims to be a simple building block for creating an input.",
+      "category": "Inputs",
+      "acceptsChildren": false,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "autoComplete",
+          "type": "string",
+          "required": false,
+          "description": "This prop helps users to fill forms faster, especially on mobile devices."
+        },
+        {
+          "name": "autoFocus",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the input element is focused during the first mount."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "description": "The color of the component.",
+          "enumValues": ["primary", "secondary"]
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "required": false,
+          "description": "The default value. Use when the component is not controlled."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the component is disabled."
+        },
+        {
+          "name": "endAdornment",
+          "type": "node",
+          "required": false,
+          "description": "End InputAdornment for this component."
+        },
+        {
+          "name": "error",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the input will indicate an error."
+        },
+        {
+          "name": "fullWidth",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the input will take up the full width of its container."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The id of the input element."
+        },
+        {
+          "name": "inputComponent",
+          "type": "string",
+          "required": false,
+          "defaultValue": "input",
+          "description": "The component used for the input element."
+        },
+        {
+          "name": "inputProps",
+          "type": "object",
+          "required": false,
+          "description": "Attributes applied to the input element."
+        },
+        {
+          "name": "margin",
+          "type": "enum",
+          "required": false,
+          "description": "If dense, will adjust vertical spacing.",
+          "enumValues": ["dense", "none"]
+        },
+        {
+          "name": "multiline",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, a textarea element is rendered."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "Name attribute of the input element."
+        },
+        {
+          "name": "onChange",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the value is changed."
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false,
+          "description": "The short hint displayed in the input before the user enters a value."
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "description": "It prevents the user from changing the value of the field."
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the input element is required."
+        },
+        {
+          "name": "rows",
+          "type": "string",
+          "required": false,
+          "description": "Number of rows to display when multiline option is set to true."
+        },
+        {
+          "name": "startAdornment",
+          "type": "node",
+          "required": false,
+          "description": "Start InputAdornment for this component."
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "defaultValue": "text",
+          "description": "Type of the input element."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the input element."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "InputLabel",
+      "displayName": "Input Label",
+      "description": "A label for form inputs. It supports standard, outlined and filled variants.",
+      "category": "Inputs",
+      "acceptsChildren": true,
+      "acceptsText": true,
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "description": "The color of the component.",
+          "enumValues": ["primary", "secondary"]
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the component is disabled."
+        },
+        {
+          "name": "disableAnimation",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the transition animation is disabled."
+        },
+        {
+          "name": "error",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the component is displayed in an error state."
+        },
+        {
+          "name": "focused",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the component is displayed in focused state."
+        },
+        {
+          "name": "margin",
+          "type": "enum",
+          "required": false,
+          "description": "If dense, will adjust vertical spacing.",
+          "enumValues": ["dense"]
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the label will indicate that the input is required."
+        },
+        {
+          "name": "shrink",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the label is shrunk."
+        },
+        {
+          "name": "size",
+          "type": "enum",
+          "required": false,
+          "description": "The size of the component.",
+          "enumValues": ["normal", "small"]
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "description": "The variant to use.",
+          "enumValues": ["filled", "outlined", "standard"]
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "OutlinedInput",
+      "displayName": "Outlined Input",
+      "description": "The OutlinedInput component is a styled version of the InputBase component.",
+      "category": "Inputs",
+      "acceptsChildren": false,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "autoComplete",
+          "type": "string",
+          "required": false,
+          "description": "This prop helps users to fill forms faster, especially on mobile devices."
+        },
+        {
+          "name": "autoFocus",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the input element is focused during the first mount."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "description": "The color of the component.",
+          "enumValues": ["primary", "secondary"]
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "required": false,
+          "description": "The default value. Use when the component is not controlled."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the component is disabled."
+        },
+        {
+          "name": "endAdornment",
+          "type": "node",
+          "required": false,
+          "description": "End InputAdornment for this component."
+        },
+        {
+          "name": "error",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the input will indicate an error."
+        },
+        {
+          "name": "fullWidth",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the input will take up the full width of its container."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The id of the input element."
+        },
+        {
+          "name": "inputComponent",
+          "type": "string",
+          "required": false,
+          "defaultValue": "input",
+          "description": "The component used for the input element."
+        },
+        {
+          "name": "inputProps",
+          "type": "object",
+          "required": false,
+          "description": "Attributes applied to the input element."
+        },
+        {
+          "name": "label",
+          "type": "node",
+          "required": false,
+          "description": "The label of the input. It is only used for layout."
+        },
+        {
+          "name": "margin",
+          "type": "enum",
+          "required": false,
+          "description": "If dense, will adjust vertical spacing.",
+          "enumValues": ["dense", "none"]
+        },
+        {
+          "name": "maxRows",
+          "type": "string",
+          "required": false,
+          "description": "Maximum number of rows to display when multiline option is set to true."
+        },
+        {
+          "name": "minRows",
+          "type": "string",
+          "required": false,
+          "description": "Minimum number of rows to display when multiline option is set to true."
+        },
+        {
+          "name": "multiline",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, a textarea element is rendered."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "Name attribute of the input element."
+        },
+        {
+          "name": "notched",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the outline is notched to accommodate the label."
+        },
+        {
+          "name": "onChange",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the value is changed."
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false,
+          "description": "The short hint displayed in the input before the user enters a value."
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "description": "It prevents the user from changing the value of the field."
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the input element is required."
+        },
+        {
+          "name": "rows",
+          "type": "string",
+          "required": false,
+          "description": "Number of rows to display when multiline option is set to true."
+        },
+        {
+          "name": "startAdornment",
+          "type": "node",
+          "required": false,
+          "description": "Start InputAdornment for this component."
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "defaultValue": "text",
+          "description": "Type of the input element."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the input element."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "FilledInput",
+      "displayName": "Filled Input",
+      "description": "The FilledInput component is a styled version of the InputBase component.",
+      "category": "Inputs",
+      "acceptsChildren": false,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "autoComplete",
+          "type": "string",
+          "required": false,
+          "description": "This prop helps users to fill forms faster, especially on mobile devices."
+        },
+        {
+          "name": "autoFocus",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the input element is focused during the first mount."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "description": "The color of the component.",
+          "enumValues": ["primary", "secondary"]
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "required": false,
+          "description": "The default value. Use when the component is not controlled."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the component is disabled."
+        },
+        {
+          "name": "disableUnderline",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the underline is disabled."
+        },
+        {
+          "name": "endAdornment",
+          "type": "node",
+          "required": false,
+          "description": "End InputAdornment for this component."
+        },
+        {
+          "name": "error",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the input will indicate an error."
+        },
+        {
+          "name": "fullWidth",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the input will take up the full width of its container."
+        },
+        {
+          "name": "hiddenLabel",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the label is hidden."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The id of the input element."
+        },
+        {
+          "name": "inputComponent",
+          "type": "string",
+          "required": false,
+          "defaultValue": "input",
+          "description": "The component used for the input element."
+        },
+        {
+          "name": "inputProps",
+          "type": "object",
+          "required": false,
+          "description": "Attributes applied to the input element."
+        },
+        {
+          "name": "margin",
+          "type": "enum",
+          "required": false,
+          "description": "If dense, will adjust vertical spacing.",
+          "enumValues": ["dense", "none"]
+        },
+        {
+          "name": "maxRows",
+          "type": "string",
+          "required": false,
+          "description": "Maximum number of rows to display when multiline option is set to true."
+        },
+        {
+          "name": "minRows",
+          "type": "string",
+          "required": false,
+          "description": "Minimum number of rows to display when multiline option is set to true."
+        },
+        {
+          "name": "multiline",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, a textarea element is rendered."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "Name attribute of the input element."
+        },
+        {
+          "name": "onChange",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the value is changed."
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false,
+          "description": "The short hint displayed in the input before the user enters a value."
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "description": "It prevents the user from changing the value of the field."
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the input element is required."
+        },
+        {
+          "name": "rows",
+          "type": "string",
+          "required": false,
+          "description": "Number of rows to display when multiline option is set to true."
+        },
+        {
+          "name": "startAdornment",
+          "type": "node",
+          "required": false,
+          "description": "Start InputAdornment for this component."
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "defaultValue": "text",
+          "description": "Type of the input element."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the input element."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "Radio",
+      "displayName": "Radio",
+      "description": "Radio buttons allow the user to select one option from a set.",
+      "category": "Inputs",
+      "acceptsChildren": false,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "checked",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the component is checked."
+        },
+        {
+          "name": "checkedIcon",
+          "type": "node",
+          "required": false,
+          "description": "The icon to display when the component is checked."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "defaultValue": "primary",
+          "description": "The color of the component.",
+          "enumValues": [
+            "default",
+            "primary",
+            "secondary",
+            "error",
+            "info",
+            "success",
+            "warning"
+          ]
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component is disabled."
+        },
+        {
+          "name": "disableRipple",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the ripple effect is disabled."
+        },
+        {
+          "name": "icon",
+          "type": "node",
+          "required": false,
+          "description": "The icon to display when the component is unchecked."
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The id of the input element."
+        },
+        {
+          "name": "inputProps",
+          "type": "object",
+          "required": false,
+          "description": "Attributes applied to the input element."
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "Name attribute of the input element."
+        },
+        {
+          "name": "onChange",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the state is changed."
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "If true, the input element is required."
+        },
+        {
+          "name": "size",
+          "type": "enum",
+          "required": false,
+          "defaultValue": "medium",
+          "description": "The size of the component.",
+          "enumValues": ["small", "medium"]
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the component."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "IconButton",
+      "displayName": "Icon Button",
+      "description": "Icon buttons are commonly found in app bars and toolbars. Icons are also appropriate for toggle buttons that allow a single choice to be selected or deselected, such as adding or removing a star to an item.",
+      "category": "Inputs",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "The icon to display."
+        },
+        {
+          "name": "classes",
+          "type": "object",
+          "required": false,
+          "description": "Override or extend the styles applied to the component."
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "required": false,
+          "defaultValue": "default",
+          "description": "The color of the component. It supports both default and custom theme colors.",
+          "enumValues": [
+            "inherit",
+            "default",
+            "primary",
+            "secondary",
+            "error",
+            "info",
+            "success",
+            "warning"
+          ]
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component is disabled."
+        },
+        {
+          "name": "disableFocusRipple",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the keyboard focus ripple is disabled."
+        },
+        {
+          "name": "disableRipple",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the ripple effect is disabled."
+        },
+        {
+          "name": "edge",
+          "type": "enum",
+          "required": false,
+          "defaultValue": false,
+          "description": "If given, uses a negative margin to counteract the padding on one side.",
+          "enumValues": ["start", "end", false]
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the loading indicator is visible and the button is disabled."
+        },
+        {
+          "name": "loadingIndicator",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Element placed before the children if the button is in loading state."
+        },
+        {
+          "name": "size",
+          "type": "enum",
+          "required": false,
+          "defaultValue": "medium",
+          "description": "The size of the component.",
+          "enumValues": ["small", "medium", "large"]
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    }
+  ]
+}
