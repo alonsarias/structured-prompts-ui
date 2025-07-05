@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   ThemeProvider,
-  createTheme,
   CssBaseline,
   AppBar,
   Toolbar,
@@ -21,29 +20,11 @@ import {
 } from '@mui/icons-material';
 
 import { useSpuigBuilder } from './hooks/useSpuigBuilder';
+import { theme } from './theme';
 import ComponentSelector from './components/ComponentSelector';
 import ComponentTree from './components/ComponentTree';
 import PropertyEditor from './components/PropertyEditor';
 import SpuigPreview from './components/SpuigPreview';
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#1976d2',
-    },
-    secondary: {
-      main: '#dc004e',
-    },
-  },
-  typography: {
-    h4: {
-      fontWeight: 600,
-    },
-    h6: {
-      fontWeight: 600,
-    },
-  },
-});
 
 function App() {
   const [addingChildTo, setAddingChildTo] = useState<string | null>(null);
