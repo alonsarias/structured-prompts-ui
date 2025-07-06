@@ -62,15 +62,23 @@ function App() {
       {/* App Bar */}
       <AppBar position="static" elevation={1}>
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Structured Prompting for UI Generation
-          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
+            <Box
+              component="img"
+              src="/spuig.svg"
+              alt="SPUIG Logo"
+              sx={{
+                height: 32,
+                width: 32,
+              }}
+            />
+          </Box>
 
           <Stack direction="row" spacing={1} alignItems="center">
             <Tooltip title="Undo">
               <span>
                 <IconButton
-                  color="inherit"
+                  color="secondary"
                   onClick={undo}
                   disabled={!canUndo}
                   size="small"
@@ -83,7 +91,7 @@ function App() {
             <Tooltip title="Redo">
               <span>
                 <IconButton
-                  color="inherit"
+                  color="secondary"
                   onClick={redo}
                   disabled={!canRedo}
                   size="small"
@@ -95,7 +103,7 @@ function App() {
 
             <Tooltip title="Clear all components">
               <IconButton
-                color="inherit"
+                color="primary"
                 onClick={clearAll}
                 size="small"
               >

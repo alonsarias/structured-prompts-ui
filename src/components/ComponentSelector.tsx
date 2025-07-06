@@ -141,6 +141,7 @@ const ComponentSelector: React.FC<ComponentSelectorProps> = ({
         {/* Add Button */}
         <Button
           variant="contained"
+          color='secondary'
           startIcon={<AddIcon />}
           onClick={handleAddComponent}
           disabled={!selectedComponent}

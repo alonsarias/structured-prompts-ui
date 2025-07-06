@@ -162,6 +162,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
                   onAddChild(component.id);
                 }}
                 sx={{ p: 0.25 }}
+                color="secondary"
               >
                 <AddIcon fontSize="small" />
               </IconButton>
@@ -176,7 +177,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
                 onDeleteComponent(component.id);
               }}
               sx={{ p: 0.25 }}
-              color="error"
+              color="primary"
             >
               <DeleteIcon fontSize="small" />
             </IconButton>
@@ -275,7 +276,7 @@ const ComponentTree: React.FC<ComponentTreeProps> = ({
         <Box sx={{ p: 1, borderTop: '1px solid', borderColor: 'divider' }}>
           <Typography
             variant="caption"
-            color="primary"
+            color="text.secondary"
             sx={{ cursor: 'pointer' }}
             onClick={() => onSelectComponent(null)}
           >
