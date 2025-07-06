@@ -101,13 +101,13 @@ const SpuigPreview: React.FC<SpuigPreviewProps> = ({ spuigSyntax }) => {
       {spuigSyntax && (
         <Box sx={{
           p: 2,
-          borderTop: '1px solid',
+          borderRadius: 1,
           borderColor: 'divider',
-          backgroundColor: 'background.default',
+          backgroundColor: 'background.paper',
         }}>
           <Typography variant="caption" color="text.secondary">
             <strong>Usage:</strong> Copy this prompt and use it in AI to generate components.
-            The syntax uses indentation to represent component hierarchy and props for configuration.
+            The prompt uses indentation to represent component hierarchy and props for configuration.
           </Typography>
         </Box>
       )}

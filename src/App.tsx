@@ -130,14 +130,14 @@ function App() {
               />
 
               {addingChildTo && (
-                <Box sx={{ p: 1, bgcolor: 'info.dark', borderRadius: 1, border: '1px solid', borderColor: 'info.main' }}>
-                  <Typography variant="caption" color="info.contrastText">
+                <Box sx={{ p: 1, bgcolor: 'background.paper', borderRadius: 1, border: '1px solid', borderColor: 'action.active' }}>
+                  <Typography variant="caption" color="text.secondary">
                     Adding child to selected component
                   </Typography>
                   <Button
                     size="small"
                     onClick={() => setAddingChildTo(null)}
-                    sx={{ ml: 1, color: 'info.contrastText' }}
+                    sx={{ ml: 1, color: 'text.secondary' }}
                   >
                     Cancel
                   </Button>
