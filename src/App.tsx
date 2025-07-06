@@ -119,7 +119,7 @@ function App() {
       </AppBar>
 
       {/* Main Content */}
-      <Container maxWidth="xl" sx={{ py: 2, height: 'calc(100vh - 64px)' }}>
+      <Container maxWidth={false} sx={{ py: 2, height: 'calc(100vh - 64px)' }}>
         <Box sx={{ display: 'flex', gap: 2, height: '100%' }}>
           {/* Left Panel - Component Selector */}
           <Box sx={{ flex: '0 0 300px', display: 'flex', flexDirection: 'column' }}>
@@ -130,7 +130,7 @@ function App() {
               />
 
               {addingChildTo && (
-                <Box sx={{ p: 1, bgcolor: 'info.light', borderRadius: 1 }}>
+                <Box sx={{ p: 1, bgcolor: 'info.dark', borderRadius: 1, border: '1px solid', borderColor: 'info.main' }}>
                   <Typography variant="caption" color="info.contrastText">
                     Adding child to selected component
                   </Typography>

@@ -69,12 +69,12 @@ const TreeNode: React.FC<TreeNodeProps> = ({
           px: 1,
           ml: level * 2,
           borderRadius: 1,
-          backgroundColor: isSelected ? 'primary.50' : 'transparent',
+          backgroundColor: isSelected ? 'action.selected' : 'transparent',
           border: isSelected ? '1px solid' : '1px solid transparent',
           borderColor: isSelected ? 'primary.main' : 'transparent',
           cursor: 'pointer',
           '&:hover': {
-            backgroundColor: isSelected ? 'primary.50' : 'grey.50',
+            backgroundColor: isSelected ? 'action.selected' : 'action.hover',
           },
         }}
         onClick={() => onSelectComponent(component.id)}

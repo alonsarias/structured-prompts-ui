@@ -121,7 +121,7 @@ const ComponentSelector: React.FC<ComponentSelectorProps> = ({
 
         {/* Selected Component Details */}
         {selectedComponent && (
-          <Box sx={{ p: 2, bgcolor: 'grey.50', borderRadius: 1 }}>
+          <Box sx={{ p: 2, bgcolor: 'background.default', borderRadius: 1, border: '1px solid', borderColor: 'divider' }}>
             <Typography variant="subtitle2" gutterBottom>
               {selectedComponent.displayName}
             </Typography>

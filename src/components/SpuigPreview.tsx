@@ -14,7 +14,7 @@ import {
   Download as DownloadIcon,
 } from '@mui/icons-material';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 interface SpuigPreviewProps {
   spuigSyntax: string;
@@ -80,12 +80,13 @@ const SpuigPreview: React.FC<SpuigPreviewProps> = ({ spuigSyntax }) => {
       <Box sx={{ flexGrow: 1, overflow: 'auto' }}>
         <SyntaxHighlighter
           language="jsx"
-          style={oneLight}
+          style={oneDark}
           customStyle={{
             margin: 0,
             height: '100%',
             fontSize: '0.875rem',
             fontFamily: '"Fira Code", "Consolas", "Monaco", monospace',
+            backgroundColor: 'transparent',
           }}
           showLineNumbers
         >
@@ -102,7 +103,7 @@ const SpuigPreview: React.FC<SpuigPreviewProps> = ({ spuigSyntax }) => {
           p: 2,
           borderTop: '1px solid',
           borderColor: 'divider',
-          backgroundColor: 'grey.50',
+          backgroundColor: 'background.default',
         }}>
           <Typography variant="caption" color="text.secondary">
             <strong>Usage:</strong> Copy this prompt and use it in AI to generate components.
