@@ -15,8 +15,8 @@ import {
 import {
   Undo as UndoIcon,
   Redo as RedoIcon,
-  Clear as ClearIcon,
   GitHub as GitHubIcon,
+  DeleteSweep as DeleteSweepIcon,
 } from '@mui/icons-material';
 
 import { useSpuigBuilder } from './hooks/useSpuigBuilder';
@@ -107,7 +107,7 @@ function App() {
                 onClick={clearAll}
                 size="small"
               >
-                <ClearIcon />
+                <DeleteSweepIcon />
               </IconButton>
             </Tooltip>
 
