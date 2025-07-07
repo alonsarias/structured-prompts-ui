@@ -191,6 +191,8 @@ function App() {
           transform: 'translateX(-50%)',
           bgcolor: 'background.default',
           p: 2,
+          border: '1px solid',
+          borderColor: 'divider',
           borderRadius: 2,
           boxShadow: 2,
           maxWidth: 400,
