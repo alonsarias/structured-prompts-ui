@@ -47,7 +47,7 @@ const ComponentSelector: React.FC<ComponentSelectorProps> = ({
   };
 
   return (
-    <Paper elevation={1} sx={{ p: 2 }}>
+    <Paper elevation={1} sx={{ p: 2, minHeight: '100%' }}>
       <Typography variant="h6" gutterBottom>
         Add Component
       </Typography>
