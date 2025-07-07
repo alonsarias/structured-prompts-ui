@@ -23,9 +23,15 @@ interface SpuigPreviewProps {
 const SpuigPreview: React.FC<SpuigPreviewProps> = ({ spuigSyntax }) => {
   const [copySuccess, setCopySuccess] = useState(false);
 
+  const getFullPrompt = () => {
+    return spuigSyntax
+      ? `Convert the following structure into a component:\n\n${spuigSyntax}`
+      : '';
+  };
+
   const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(spuigSyntax);
+      await navigator.clipboard.writeText(getFullPrompt());
       setCopySuccess(true);
     } catch (err) {
       console.error('Failed to copy to clipboard:', err);
@@ -33,11 +39,11 @@ const SpuigPreview: React.FC<SpuigPreviewProps> = ({ spuigSyntax }) => {
   };
 
   const handleDownload = () => {
-    const blob = new Blob([spuigSyntax], { type: 'text/plain' });
+    const blob = new Blob([getFullPrompt()], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'spuig-syntax.txt';
+    a.download = 'spuig-prompt.txt';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
