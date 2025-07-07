@@ -41,6 +41,10 @@ function App() {
     removeComponent,
     updateComponent,
     setSelectedComponentId,
+    moveComponentUpHandler,
+    moveComponentDownHandler,
+    canMoveUp,
+    canMoveDown,
     undo,
     redo,
     canUndo,
@@ -182,6 +186,10 @@ function App() {
               onSelectComponent={setSelectedComponentId}
               onDeleteComponent={removeComponent}
               onAddChild={handleAddChild}
+              onMoveComponentUp={moveComponentUpHandler}
+              onMoveComponentDown={moveComponentDownHandler}
+              canMoveUp={canMoveUp}
+              canMoveDown={canMoveDown}
               validationErrors={validationErrors}
             />
           </Box>

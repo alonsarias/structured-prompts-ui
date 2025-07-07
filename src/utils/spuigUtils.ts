@@ -335,3 +335,115 @@ export const addChildToComponent = (
     };
   });
 };
+
+export const moveComponentUp = (
+  components: SpuigComponent[],
+  componentId: string
+): SpuigComponent[] => {
+  // Helper function to move within an array
+  const moveUpInArray = (arr: SpuigComponent[]) => {
+    const index = arr.findIndex((comp) => comp.id === componentId);
+    if (index > 0) {
+      const newArr = [...arr];
+      [newArr[index - 1], newArr[index]] = [newArr[index], newArr[index - 1]];
+      return newArr;
+    }
+    return arr;
+  };
+
+  // Check if component is at root level
+  const rootIndex = components.findIndex((comp) => comp.id === componentId);
+  if (rootIndex > 0) {
+    return moveUpInArray(components);
+  }
+
+  // Search in children
+  return components.map((component) => ({
+    ...component,
+    children: component.children.some((child) => child.id === componentId)
+      ? moveUpInArray(component.children)
+      : moveComponentUp(component.children, componentId),
+  }));
+};
+
+export const moveComponentDown = (
+  components: SpuigComponent[],
+  componentId: string
+): SpuigComponent[] => {
+  // Helper function to move within an array
+  const moveDownInArray = (arr: SpuigComponent[]) => {
+    const index = arr.findIndex((comp) => comp.id === componentId);
+    if (index >= 0 && index < arr.length - 1) {
+      const newArr = [...arr];
+      [newArr[index], newArr[index + 1]] = [newArr[index + 1], newArr[index]];
+      return newArr;
+    }
+    return arr;
+  };
+
+  // Check if component is at root level
+  const rootIndex = components.findIndex((comp) => comp.id === componentId);
+  if (rootIndex >= 0 && rootIndex < components.length - 1) {
+    return moveDownInArray(components);
+  }
+
+  // Search in children
+  return components.map((component) => ({
+    ...component,
+    children: component.children.some((child) => child.id === componentId)
+      ? moveDownInArray(component.children)
+      : moveComponentDown(component.children, componentId),
+  }));
+};
+
+export const canMoveComponentUp = (
+  components: SpuigComponent[],
+  componentId: string
+): boolean => {
+  // Check if component is at root level
+  const rootIndex = components.findIndex((comp) => comp.id === componentId);
+  if (rootIndex > 0) {
+    return true;
+  }
+
+  // Search in children
+  for (const component of components) {
+    const childIndex = component.children.findIndex(
+      (child) => child.id === componentId
+    );
+    if (childIndex > 0) {
+      return true;
+    }
+    if (canMoveComponentUp(component.children, componentId)) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
+export const canMoveComponentDown = (
+  components: SpuigComponent[],
+  componentId: string
+): boolean => {
+  // Check if component is at root level
+  const rootIndex = components.findIndex((comp) => comp.id === componentId);
+  if (rootIndex >= 0 && rootIndex < components.length - 1) {
+    return true;
+  }
+
+  // Search in children
+  for (const component of components) {
+    const childIndex = component.children.findIndex(
+      (child) => child.id === componentId
+    );
+    if (childIndex >= 0 && childIndex < component.children.length - 1) {
+      return true;
+    }
+    if (canMoveComponentDown(component.children, componentId)) {
+      return true;
+    }
+  }
+
+  return false;
+};

@@ -8,6 +8,10 @@ import {
   updateComponentById,
   addChildToComponent,
   createEmptyComponent,
+  moveComponentUp,
+  moveComponentDown,
+  canMoveComponentUp,
+  canMoveComponentDown,
 } from "../utils/spuigUtils";
 
 export const useSpuigBuilder = () => {
@@ -114,6 +118,28 @@ export const useSpuigBuilder = () => {
     [components, saveToHistory]
   );
 
+  const moveComponentUpHandler = useCallback(
+    (componentId: string) => {
+      if (canMoveComponentUp(components, componentId)) {
+        const newComponents = moveComponentUp(components, componentId);
+        saveToHistory(components);
+        setComponents(newComponents);
+      }
+    },
+    [components, saveToHistory]
+  );
+
+  const moveComponentDownHandler = useCallback(
+    (componentId: string) => {
+      if (canMoveComponentDown(components, componentId)) {
+        const newComponents = moveComponentDown(components, componentId);
+        saveToHistory(components);
+        setComponents(newComponents);
+      }
+    },
+    [components, saveToHistory]
+  );
+
   const undo = useCallback(() => {
     if (historyIndex > 0) {
       setHistoryIndex(historyIndex - 1);
@@ -151,6 +177,16 @@ export const useSpuigBuilder = () => {
     updateComponent,
     moveComponent,
     setSelectedComponentId,
+    moveComponentUpHandler,
+    moveComponentDownHandler,
+
+    // Helpers
+    canMoveUp: selectedComponentId
+      ? canMoveComponentUp(components, selectedComponentId)
+      : false,
+    canMoveDown: selectedComponentId
+      ? canMoveComponentDown(components, selectedComponentId)
+      : false,
 
     // History
     undo,

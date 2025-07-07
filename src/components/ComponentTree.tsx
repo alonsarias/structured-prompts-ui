@@ -16,6 +16,8 @@ import {
   ChevronRight as ChevronRightIcon,
   Error as ErrorIcon,
   Warning as WarningIcon,
+  KeyboardArrowUp as KeyboardArrowUpIcon,
+  KeyboardArrowDown as KeyboardArrowDownIcon,
 } from '@mui/icons-material';
 import type { SpuigComponent, ValidationError } from '../types';
 import { getMuiComponentByName } from '../data/muiComponents';
@@ -26,6 +28,10 @@ interface ComponentTreeProps {
   onSelectComponent: (id: string | null) => void;
   onDeleteComponent: (id: string) => void;
   onAddChild: (parentId: string) => void;
+  onMoveComponentUp: (componentId: string) => void;
+  onMoveComponentDown: (componentId: string) => void;
+  canMoveUp: boolean;
+  canMoveDown: boolean;
   validationErrors: ValidationError[];
 }
 
@@ -36,6 +42,10 @@ interface TreeNodeProps {
   onSelectComponent: (id: string) => void;
   onDeleteComponent: (id: string) => void;
   onAddChild: (parentId: string) => void;
+  onMoveComponentUp: (componentId: string) => void;
+  onMoveComponentDown: (componentId: string) => void;
+  canMoveUp: boolean;
+  canMoveDown: boolean;
   validationErrors: ValidationError[];
   expanded: boolean;
   onToggleExpanded: () => void;
@@ -48,6 +58,10 @@ const TreeNode: React.FC<TreeNodeProps> = ({
   onSelectComponent,
   onDeleteComponent,
   onAddChild,
+  onMoveComponentUp,
+  onMoveComponentDown,
+  canMoveUp,
+  canMoveDown,
   validationErrors,
   expanded,
   onToggleExpanded,
@@ -153,6 +167,46 @@ const TreeNode: React.FC<TreeNodeProps> = ({
 
         {/* Actions */}
         <Stack direction="row" spacing={0.5}>
+          {/* Move Up Button */}
+          {isSelected && (
+            <Tooltip title="Move up">
+              <span>
+                <IconButton
+                  size="small"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onMoveComponentUp(component.id);
+                  }}
+                  sx={{ p: 0.25 }}
+                  color="secondary"
+                  disabled={!canMoveUp}
+                >
+                  <KeyboardArrowUpIcon fontSize="small" />
+                </IconButton>
+              </span>
+            </Tooltip>
+          )}
+
+          {/* Move Down Button */}
+          {isSelected && (
+            <Tooltip title="Move down">
+              <span>
+                <IconButton
+                  size="small"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onMoveComponentDown(component.id);
+                  }}
+                  sx={{ p: 0.25 }}
+                  color="secondary"
+                  disabled={!canMoveDown}
+                >
+                  <KeyboardArrowDownIcon fontSize="small" />
+                </IconButton>
+              </span>
+            </Tooltip>
+          )}
+
           {muiComponent?.acceptsChildren && (
             <Tooltip title="Add child component">
               <IconButton
@@ -197,6 +251,10 @@ const TreeNode: React.FC<TreeNodeProps> = ({
               onSelectComponent={onSelectComponent}
               onDeleteComponent={onDeleteComponent}
               onAddChild={onAddChild}
+              onMoveComponentUp={onMoveComponentUp}
+              onMoveComponentDown={onMoveComponentDown}
+              canMoveUp={canMoveUp}
+              canMoveDown={canMoveDown}
               validationErrors={validationErrors}
             />
           ))}
@@ -225,6 +283,10 @@ const ComponentTree: React.FC<ComponentTreeProps> = ({
   onSelectComponent,
   onDeleteComponent,
   onAddChild,
+  onMoveComponentUp,
+  onMoveComponentDown,
+  canMoveUp,
+  canMoveDown,
   validationErrors,
 }) => {
   const globalErrors = validationErrors.filter(error => error.type === 'invalid-hierarchy');
@@ -266,6 +328,10 @@ const ComponentTree: React.FC<ComponentTreeProps> = ({
             onSelectComponent={onSelectComponent}
             onDeleteComponent={onDeleteComponent}
             onAddChild={onAddChild}
+            onMoveComponentUp={onMoveComponentUp}
+            onMoveComponentDown={onMoveComponentDown}
+            canMoveUp={canMoveUp}
+            canMoveDown={canMoveDown}
             validationErrors={validationErrors}
           />
         ))}
