@@ -14,7 +14,7 @@ import {
   Download as DownloadIcon,
 } from '@mui/icons-material';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 interface SpuigPreviewProps {
   spuigSyntax: string;
@@ -86,7 +86,7 @@ const SpuigPreview: React.FC<SpuigPreviewProps> = ({ spuigSyntax }) => {
       <Box sx={{ flexGrow: 1, overflow: 'auto' }}>
         <SyntaxHighlighter
           language="jsx"
-          style={oneDark}
+          style={vscDarkPlus}
           customStyle={{
             margin: 0,
             height: '100%',
