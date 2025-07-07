@@ -854,6 +854,305 @@
       ]
     },
     {
+      "name": "Tab",
+      "displayName": "Tab",
+      "description": "Individual tab element that when clicked displays its corresponding panel.",
+      "category": "Navigation",
+      "acceptsChildren": false,
+      "acceptsText": true,
+      "validParents": ["Tabs", "TabList"],
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "component",
+          "type": "string",
+          "required": false,
+          "defaultValue": "div",
+          "description": "The component used for the root node."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component is disabled."
+        },
+        {
+          "name": "disableFocusRipple",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the keyboard focus ripple is disabled."
+        },
+        {
+          "name": "disableRipple",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the ripple effect is disabled."
+        },
+        {
+          "name": "icon",
+          "type": "node",
+          "required": false,
+          "description": "The icon to display."
+        },
+        {
+          "name": "iconPosition",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["bottom", "end", "start", "top"],
+          "defaultValue": "top",
+          "description": "The position of the icon relative to the label."
+        },
+        {
+          "name": "label",
+          "type": "node",
+          "required": false,
+          "description": "The label element."
+        },
+        {
+          "name": "onClick",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the tab is clicked."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "You can provide your own value. Otherwise, it falls back to the child position index."
+        },
+        {
+          "name": "wrapped",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the text will wrap."
+        }
+      ]
+    },
+    {
+      "name": "TabContext",
+      "displayName": "Tab Context",
+      "description": "Top-level component that wraps the Tab List and Tab Panel components for accessible tab implementation.",
+      "category": "Navigation",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "validChildren": ["TabList", "TabPanel"],
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "description": "The value of the currently selected Tab."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        }
+      ]
+    },
+    {
+      "name": "TabList",
+      "displayName": "Tab List",
+      "description": "Container that houses the tabs and handles focus and keyboard navigation between tabs (from @mui/lab).",
+      "category": "Navigation",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "validChildren": ["Tab"],
+      "validParents": ["TabContext"],
+      "props": [
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "A list of Tab elements."
+        },
+        {
+          "name": "allowScrollButtonsMobile",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the scroll buttons aren't forced hidden on mobile."
+        },
+        {
+          "name": "aria-label",
+          "type": "string",
+          "required": false,
+          "description": "The label for the Tabs as a string."
+        },
+        {
+          "name": "aria-labelledby",
+          "type": "string",
+          "required": false,
+          "description": "An id or list of ids separated by a space that label the Tabs."
+        },
+        {
+          "name": "centered",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the tabs are centered."
+        },
+        {
+          "name": "onChange",
+          "type": "function",
+          "required": false,
+          "description": "Callback fired when the value changes."
+        },
+        {
+          "name": "orientation",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["horizontal", "vertical"],
+          "defaultValue": "horizontal",
+          "description": "The component orientation (layout flow direction)."
+        },
+        {
+          "name": "scrollButtons",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["auto", false, true],
+          "defaultValue": "auto",
+          "description": "Determine behavior of scroll buttons when tabs are set to scroll."
+        },
+        {
+          "name": "selectionFollowsFocus",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true the selected tab changes on focus."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        },
+        {
+          "name": "variant",
+          "type": "enum",
+          "required": false,
+          "enumValues": ["fullWidth", "scrollable", "standard"],
+          "defaultValue": "standard",
+          "description": "Determines additional display behavior of the tabs."
+        },
+        {
+          "name": "visibleScrollbar",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the scrollbar is visible."
+        }
+      ]
+    },
+    {
+      "name": "TabPanel",
+      "displayName": "Tab Panel",
+      "description": "Card that hosts the content associated with a tab (from @mui/lab).",
+      "category": "Navigation",
+      "acceptsChildren": true,
+      "acceptsText": true,
+      "validParents": ["TabContext"],
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "description": "The value of the corresponding Tab. Must use the index of the Tab when no value was passed to Tab."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "keepMounted",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "Always keep the children in the DOM."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
+      "name": "TabScrollButton",
+      "displayName": "Tab Scroll Button",
+      "description": "Component used to render scroll buttons for scrollable tabs.",
+      "category": "Navigation",
+      "acceptsChildren": true,
+      "acceptsText": false,
+      "validParents": ["Tabs", "TabList"],
+      "props": [
+        {
+          "name": "direction",
+          "type": "enum",
+          "required": true,
+          "enumValues": ["left", "right"],
+          "description": "The direction the button should indicate."
+        },
+        {
+          "name": "orientation",
+          "type": "enum",
+          "required": true,
+          "enumValues": ["horizontal", "vertical"],
+          "description": "The component orientation (layout flow direction)."
+        },
+        {
+          "name": "children",
+          "type": "node",
+          "required": false,
+          "description": "The content of the component."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "defaultValue": false,
+          "description": "If true, the component is disabled."
+        },
+        {
+          "name": "slotProps",
+          "type": "object",
+          "required": false,
+          "description": "The extra props for the slot components."
+        },
+        {
+          "name": "slots",
+          "type": "object",
+          "required": false,
+          "description": "The components used for each slot inside."
+        },
+        {
+          "name": "sx",
+          "type": "object",
+          "required": false,
+          "description": "The system prop that allows defining system overrides as well as additional CSS styles."
+        }
+      ]
+    },
+    {
       "name": "Tabs",
       "displayName": "Tabs",
       "description": "Tabs make it easy to explore and switch between different views.",
