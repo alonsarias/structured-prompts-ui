@@ -11,12 +11,14 @@ import {
   Tooltip,
   Button,
   Stack,
+  Alert,
 } from '@mui/material';
 import {
   Undo as UndoIcon,
   Redo as RedoIcon,
   GitHub as GitHubIcon,
   DeleteSweep as DeleteSweepIcon,
+  RocketLaunch as RocketLaunchIcon,
 } from '@mui/icons-material';
 
 import { useSpuigBuilder } from './hooks/useSpuigBuilder';
@@ -209,25 +211,20 @@ function App() {
 
       {/* Help Text */}
       {components.length === 0 && (
-        <Box sx={{
-          position: 'fixed',
-          bottom: 20,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          bgcolor: 'background.default',
-          p: 2,
-          border: '1px solid',
-          borderColor: 'divider',
-          borderRadius: 2,
-          boxShadow: 2,
-          maxWidth: 400,
-          textAlign: 'center',
-        }}>
-          <Typography variant="body2" color="text.secondary">
-            Start by selecting a component from the left panel.
-            Build your component hierarchy and see the prompt generated in real-time.
-          </Typography>
-        </Box>
+        <Alert
+          severity="info"
+          icon={<RocketLaunchIcon color="primary" />}
+          sx={{
+            position: 'fixed',
+            bottom: 20,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            maxWidth: 400,
+          }}
+        >
+          Start by selecting a component from the left panel.
+          Build your component hierarchy and see the prompt generated in real-time.
+        </Alert>
       )}
     </ThemeProvider>
   );
