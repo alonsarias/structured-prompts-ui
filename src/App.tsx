@@ -209,23 +209,6 @@ function App() {
         </Box>
       </Container>
 
-      {/* Help Text */}
-      {components.length === 0 && (
-        <Alert
-          severity="info"
-          icon={<RocketLaunchIcon color="primary" />}
-          sx={{
-            position: 'fixed',
-            bottom: 20,
-            left: '50%',
-            transform: 'translateX(-50%)',
-            maxWidth: 400,
-          }}
-        >
-          Start by selecting a component from the left panel.
-          Build your component hierarchy and see the prompt generated in real-time.
-        </Alert>
-      )}
     </ThemeProvider>
   );
 }
