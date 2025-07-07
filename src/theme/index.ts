@@ -235,6 +235,50 @@ export const theme = createTheme({
       color: "#6d6d8d",
     },
   },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          background: `
+            radial-gradient(ellipse at top, rgba(110, 206, 250, 0.08) 0%, transparent 50%),
+            radial-gradient(ellipse at bottom right, rgba(180, 104, 230, 0.06) 0%, transparent 50%),
+            linear-gradient(135deg, rgba(110, 206, 250, 0.02) 0%, rgba(180, 104, 230, 0.02) 100%),
+            #0a0a1a
+          `,
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          // Fallback for browsers without backdrop-filter support
+          "@supports not (backdrop-filter: blur(20px))": {
+            background: "#0a0a1a",
+          },
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          background: `
+            linear-gradient(135deg,
+              rgba(110, 206, 250, 0.05) 0%,
+              rgba(180, 104, 230, 0.03) 50%,
+              rgba(21, 21, 40, 0.8) 100%
+            )
+          `,
+          backdropFilter: "blur(16px)",
+          WebkitBackdropFilter: "blur(16px)",
+          border: "1px solid rgba(180, 104, 230, 0.1)",
+          boxShadow: `
+            0 8px 32px rgba(0, 0, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.05)
+          `,
+          // Fallback for browsers without backdrop-filter support
+          "@supports not (backdrop-filter: blur(16px))": {
+            background: "rgba(21, 21, 40, 0.95)",
+          },
+        },
+      },
+    },
+  },
 });
 
 export default theme;

@@ -103,7 +103,7 @@ const SpuigPreview: React.FC<SpuigPreviewProps> = ({ spuigSyntax }) => {
           p: 2,
           borderRadius: 1,
           borderColor: 'divider',
-          backgroundColor: 'background.paper',
+          backgroundColor: 'background.default',
         }}>
           <Typography variant="caption" color="text.secondary">
             <strong>Usage:</strong> Copy this prompt and use it in AI to generate components.
@@ -116,7 +116,7 @@ const SpuigPreview: React.FC<SpuigPreviewProps> = ({ spuigSyntax }) => {
         open={copySuccess}
         autoHideDuration={3000}
         onClose={handleCloseCopySnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       >
         <Alert onClose={handleCloseCopySnackbar} severity="success" sx={{ width: '100%' }}>
           Prompt copied to clipboard!
