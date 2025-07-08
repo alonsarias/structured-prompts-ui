@@ -70,13 +70,13 @@ const SpuigPreview: React.FC<SpuigPreviewProps> = ({ spuigSyntax }) => {
 
         <Stack direction="row" spacing={1}>
           <Tooltip title="Copy to clipboard">
-            <IconButton onClick={handleCopy} size="small" color="secondary">
+            <IconButton onClick={handleCopy} size="small" color="inherit">
               <CopyIcon />
             </IconButton>
           </Tooltip>
 
           <Tooltip title="Download as file">
-            <IconButton onClick={handleDownload} size="small" color="secondary">
+            <IconButton onClick={handleDownload} size="small" color="inherit">
               <DownloadIcon />
             </IconButton>
           </Tooltip>

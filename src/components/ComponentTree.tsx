@@ -178,7 +178,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
                     onMoveComponentUp(component.id);
                   }}
                   sx={{ p: 0.25 }}
-                  color="secondary"
+                  color="inherit"
                   disabled={!canMoveUp}
                 >
                   <KeyboardArrowUpIcon fontSize="small" />
@@ -198,7 +198,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
                     onMoveComponentDown(component.id);
                   }}
                   sx={{ p: 0.25 }}
-                  color="secondary"
+                  color="inherit"
                   disabled={!canMoveDown}
                 >
                   <KeyboardArrowDownIcon fontSize="small" />
@@ -216,7 +216,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
                   onAddChild(component.id);
                 }}
                 sx={{ p: 0.25 }}
-                color="secondary"
+                color="inherit"
               >
                 <AddIcon fontSize="small" />
               </IconButton>
@@ -231,7 +231,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
                 onDeleteComponent(component.id);
               }}
               sx={{ p: 0.25 }}
-              color="primary"
+              color="inherit"
             >
               <DeleteIcon fontSize="small" />
             </IconButton>

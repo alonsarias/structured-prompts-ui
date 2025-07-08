@@ -84,7 +84,7 @@ function App() {
             <Tooltip title="Undo">
               <span>
                 <IconButton
-                  color="secondary"
+                  color="inherit"
                   onClick={undo}
                   disabled={!canUndo}
                   size="small"
@@ -97,7 +97,7 @@ function App() {
             <Tooltip title="Redo">
               <span>
                 <IconButton
-                  color="secondary"
+                  color="inherit"
                   onClick={redo}
                   disabled={!canRedo}
                   size="small"
@@ -109,7 +109,7 @@ function App() {
 
             <Tooltip title="Clear all components">
               <IconButton
-                color="primary"
+                color="inherit"
                 onClick={clearAll}
                 size="small"
               >
