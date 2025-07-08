@@ -134,20 +134,20 @@ function App() {
 
       {/* Main Content */}
       <Container maxWidth={false} sx={{
-        py: 2,
+        py: 3,
         height: { xs: 'auto', lg: 'calc(100vh - 64px)' },
         minHeight: { xs: 'calc(100vh - 64px)', lg: 'auto' }
       }}>
         <Box sx={{
           display: 'flex',
           flexDirection: { xs: 'column', lg: 'row' },
-          gap: 2,
+          gap: 3,
           height: { xs: 'auto', lg: '100%' },
           overflow: { xs: 'visible', lg: 'hidden' }
         }}>
           {/* Left Panel - Component Selector */}
           <Box sx={{
-            flex: { xs: '1', lg: '0 0 280px' },
+            flex: { xs: '1', lg: '0 0 305px' },
             minHeight: 'auto',
             display: 'flex',
             flexDirection: 'column'
@@ -177,7 +177,7 @@ function App() {
 
           {/* Center Panel - Component Tree */}
           <Box sx={{
-            flex: { xs: '1', lg: '0 0 280px' },
+            flex: { xs: '1', lg: '1' },
             minHeight: 'auto',
           }}>
             <ComponentTree
@@ -196,7 +196,7 @@ function App() {
 
           {/* Right Panel - Property Editor */}
           <Box sx={{
-            flex: { xs: '1', lg: '0 0 280px' },
+            flex: { xs: '1', lg: '0 0 305px' },
             minHeight: 'auto'
           }}>
             <PropertyEditor
