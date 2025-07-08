@@ -1,6 +1,6 @@
 # Structured Prompting for UI Generation
 
-A visual tool for generating structured prompts that help AI create UI components with precise hierarchy and configuration.
+A tool for generating structured prompts that help AI create UI components with precise hierarchy and configuration.
 
 🚀 **[Live Demo](https://spuig.vercel.app/)**
 
@@ -16,7 +16,7 @@ A visual tool for generating structured prompts that help AI create UI component
 
 ## Overview
 
-This tool is a visual interface builder that creates structured text prompts for AI models to generate UI components. Instead of describing UI components in natural language, it lets you visually build component hierarchies and automatically generates precise prompts that AI can understand and convert into code.
+This tool is a builder that creates structured text prompts for AI models to generate UI components. Instead of describing UI components in natural language, it lets you visually build component hierarchies and automatically generates precise prompts that AI can understand and convert into code.
 
 ### The Problem
 
@@ -31,7 +31,7 @@ When asking AI to create UI components, developers often struggle with:
 
 This tool provides:
 
-- 🎯 **Visual Component Selection** - Browse and select from 100+ Material-UI components
+- 🎯 **Component Selection** - Browse and select from 100+ Material-UI components
 - 🌳 **Hierarchical Tree Builder** - Visual interface for building component trees
 - ⚙️ **Property Editor** - Form-based editing for component props and content
 - 📋 **Structured Prompt Generation** - Automatic conversion to AI-readable prompts
@@ -46,7 +46,7 @@ This tool provides:
 - **Category Filtering**: Browse by Inputs, Layout, Navigation, Data Display, etc.
 - **Component Details**: See descriptions, props, and compatibility information
 
-### 🛠️ Visual Builder
+### 🛠️ Builder
 
 - **Intuitive Interface**: Simple and intuitive component tree building
 - **Real-time Preview**: See your component structure as you build
