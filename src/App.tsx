@@ -121,7 +121,7 @@ function App() {
               <IconButton
                 color="inherit"
                 component="a"
-                href="https://github.com/alonsarias/spuig"
+                href="https://github.com/alonsarias/structured-prompts-ui"
                 target="_blank"
                 size="small"
               >

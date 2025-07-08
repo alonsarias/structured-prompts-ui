@@ -1,4 +1,4 @@
-# Structured Prompting for UI Generation
+# Structured Prompts for UI Generation
 
 A tool for generating structured prompts that help AI create UI components with precise hierarchy and configuration.
 
@@ -105,8 +105,8 @@ Container maxWidth="md"
 1. **Clone the repository**
 
 ```bash
-git clone https://github.com/alonsarias/spuig.git
-cd spuig
+git clone https://github.com/alonsarias/structured-prompts-ui.git
+cd structured-prompts-ui
 ```
 
 2. **Install dependencies**
