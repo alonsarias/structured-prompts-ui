@@ -20,6 +20,7 @@ import {
   DeleteSweep as DeleteSweepIcon,
   RocketLaunch as RocketLaunchIcon,
 } from '@mui/icons-material';
+import { Analytics } from '@vercel/analytics/react';
 
 import { useSpuigBuilder } from './hooks/useSpuigBuilder';
 import { theme } from './theme';
@@ -217,6 +218,7 @@ function App() {
         </Box>
       </Container>
 
+      <Analytics />
     </ThemeProvider>
   );
 }
