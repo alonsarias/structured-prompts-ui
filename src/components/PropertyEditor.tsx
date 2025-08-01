@@ -38,6 +38,27 @@ const PropertyEditor: React.FC<PropertyEditorProps> = ({
     );
   }
 
+  // Handle Root component - show info but no editing
+  if (component.isRoot) {
+    return (
+      <Paper elevation={1} sx={{ p: 2, height: '100%' }}>
+        <Typography variant="h6" gutterBottom>
+          Root Element
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          The Root element acts as the container for your entire component structure.
+          It doesn't appear in the generated prompt and only supports adding child components.
+        </Typography>
+        <Box sx={{ mt: 2, p: 2, bgcolor: 'background.default', borderRadius: 1 }}>
+          <Typography variant="caption" color="text.secondary">
+            <strong>Note:</strong> You cannot edit properties of the Root element.
+            Select a child component to edit its properties.
+          </Typography>
+        </Box>
+      </Paper>
+    );
+  }
+
   const muiComponent = getMuiComponentByName(component.componentName);
   const componentErrors = validationErrors.filter(error => error.componentId === component.id);
 

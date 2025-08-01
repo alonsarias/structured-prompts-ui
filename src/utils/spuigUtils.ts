@@ -6,6 +6,13 @@ export const generateSpuigSyntax = (components: SpuigComponent[]): string => {
     component: SpuigComponent,
     indentLevel: number = 0
   ): string => {
+    // Skip Root components in SPUIG syntax generation
+    if (component.isRoot) {
+      return component.children
+        .map((child) => generateComponentSyntax(child, indentLevel))
+        .join("\n");
+    }
+
     const indent = "  ".repeat(indentLevel);
     let line = `${indent}${component.componentName}`;
 
@@ -50,6 +57,12 @@ export const validateComponent = (
   component: SpuigComponent
 ): ValidationError[] => {
   const errors: ValidationError[] = [];
+
+  // Skip validation for Root components
+  if (component.isRoot) {
+    return errors;
+  }
+
   const muiComponent = getMuiComponentByName(component.componentName);
 
   if (!muiComponent) {
@@ -273,6 +286,32 @@ export const createEmptyComponent = (componentName: string): SpuigComponent => {
   };
 };
 
+export const createRootComponent = (): SpuigComponent => {
+  // Generate UUID (fallback for environments without crypto.randomUUID)
+  const generateId = () => {
+    if (typeof crypto !== "undefined" && crypto.randomUUID) {
+      return crypto.randomUUID();
+    }
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+      /[xy]/g,
+      function (c) {
+        const r = (Math.random() * 16) | 0;
+        const v = c === "x" ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      }
+    );
+  };
+
+  return {
+    id: generateId(),
+    componentName: "Root",
+    props: {},
+    textContent: "",
+    children: [],
+    isRoot: true,
+  };
+};
+
 export const findComponentById = (
   components: SpuigComponent[],
   id: string
@@ -400,6 +439,12 @@ export const canMoveComponentUp = (
   components: SpuigComponent[],
   componentId: string
 ): boolean => {
+  // Find the component first to check if it's a root component
+  const targetComponent = findComponentById(components, componentId);
+  if (targetComponent?.isRoot) {
+    return false; // Root components cannot be moved
+  }
+
   // Check if component is at root level
   const rootIndex = components.findIndex((comp) => comp.id === componentId);
   if (rootIndex > 0) {
@@ -426,6 +471,12 @@ export const canMoveComponentDown = (
   components: SpuigComponent[],
   componentId: string
 ): boolean => {
+  // Find the component first to check if it's a root component
+  const targetComponent = findComponentById(components, componentId);
+  if (targetComponent?.isRoot) {
+    return false; // Root components cannot be moved
+  }
+
   // Check if component is at root level
   const rootIndex = components.findIndex((comp) => comp.id === componentId);
   if (rootIndex >= 0 && rootIndex < components.length - 1) {

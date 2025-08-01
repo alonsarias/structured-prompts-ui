@@ -8,6 +8,7 @@ export interface SpuigComponent {
   textContent?: string;
   children: SpuigComponent[];
   parentId?: string;
+  isRoot?: boolean;
 }
 
 // Material UI Component Definitions

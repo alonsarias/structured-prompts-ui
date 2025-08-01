@@ -8,6 +8,7 @@ import {
   updateComponentById,
   addChildToComponent,
   createEmptyComponent,
+  createRootComponent,
   moveComponentUp,
   moveComponentDown,
   canMoveComponentUp,
@@ -15,7 +16,9 @@ import {
 } from "../utils/spuigUtils";
 
 export const useSpuigBuilder = () => {
-  const [components, setComponents] = useState<SpuigComponent[]>([]);
+  const [components, setComponents] = useState<SpuigComponent[]>(() => [
+    createRootComponent(),
+  ]);
   const [selectedComponentId, setSelectedComponentId] = useState<string | null>(
     null
   );
@@ -53,7 +56,20 @@ export const useSpuigBuilder = () => {
       if (parentId) {
         newComponents = addChildToComponent(components, parentId, newComponent);
       } else {
-        newComponents = [...components, newComponent];
+        // Add to root component if no parent specified
+        const rootComponent = components.find((c) => c.isRoot);
+        if (rootComponent) {
+          newComponents = addChildToComponent(
+            components,
+            rootComponent.id,
+            newComponent
+          );
+        } else {
+          // Fallback: create new root if none exists
+          const newRoot = createRootComponent();
+          newRoot.children.push(newComponent);
+          newComponents = [newRoot];
+        }
       }
 
       saveToHistory(components);
@@ -65,6 +81,12 @@ export const useSpuigBuilder = () => {
 
   const removeComponent = useCallback(
     (componentId: string) => {
+      // Prevent removing the root component
+      const componentToRemove = findComponentById(components, componentId);
+      if (componentToRemove?.isRoot) {
+        return;
+      }
+
       const newComponents = removeComponentById(components, componentId);
       saveToHistory(components);
       setComponents(newComponents);
@@ -156,7 +178,7 @@ export const useSpuigBuilder = () => {
 
   const clearAll = useCallback(() => {
     saveToHistory(components);
-    setComponents([]);
+    setComponents([createRootComponent()]);
     setSelectedComponentId(null);
   }, [components, saveToHistory]);
 

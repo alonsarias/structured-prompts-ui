@@ -72,6 +72,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
   const hasWarnings = componentErrors.some(error => error.severity === 'warning');
   const isSelected = selectedComponentId === component.id;
   const hasChildren = component.children.length > 0;
+  const isRoot = component.isRoot;
 
   return (
     <Box>
@@ -116,12 +117,16 @@ const TreeNode: React.FC<TreeNodeProps> = ({
               variant="body2"
               fontWeight={isSelected ? 'medium' : 'normal'}
               noWrap
+              sx={{
+                fontStyle: isRoot ? 'italic' : 'normal',
+                opacity: isRoot ? 0.7 : 1,
+              }}
             >
-              {component.componentName}
+              {isRoot ? 'Root' : component.componentName}
             </Typography>
 
-            {/* Props indicator */}
-            {Object.keys(component.props).length > 0 && (
+            {/* Props indicator - hide for root */}
+            {!isRoot && Object.keys(component.props).length > 0 && (
               <Chip
                 label={Object.keys(component.props).length}
                 size="small"
@@ -130,8 +135,8 @@ const TreeNode: React.FC<TreeNodeProps> = ({
               />
             )}
 
-            {/* Text content indicator */}
-            {component.textContent && (
+            {/* Text content indicator - hide for root */}
+            {!isRoot && component.textContent && (
               <Typography
                 variant="caption"
                 color="text.secondary"
@@ -167,8 +172,8 @@ const TreeNode: React.FC<TreeNodeProps> = ({
 
         {/* Actions */}
         <Stack direction="row" spacing={0.5}>
-          {/* Move Up Button */}
-          {isSelected && (
+          {/* Move Up Button - hidden for root */}
+          {!isRoot && isSelected && (
             <Tooltip title="Move up">
               <span>
                 <IconButton
@@ -187,8 +192,8 @@ const TreeNode: React.FC<TreeNodeProps> = ({
             </Tooltip>
           )}
 
-          {/* Move Down Button */}
-          {isSelected && (
+          {/* Move Down Button - hidden for root */}
+          {!isRoot && isSelected && (
             <Tooltip title="Move down">
               <span>
                 <IconButton
@@ -207,7 +212,8 @@ const TreeNode: React.FC<TreeNodeProps> = ({
             </Tooltip>
           )}
 
-          {muiComponent?.acceptsChildren && (
+          {/* Add Child Button - always available for root, conditionally for others */}
+          {(isRoot || (muiComponent?.acceptsChildren)) && (
             <Tooltip title="Add child component">
               <IconButton
                 size="small"
@@ -223,19 +229,22 @@ const TreeNode: React.FC<TreeNodeProps> = ({
             </Tooltip>
           )}
 
-          <Tooltip title="Delete component">
-            <IconButton
-              size="small"
-              onClick={(e) => {
-                e.stopPropagation();
-                onDeleteComponent(component.id);
-              }}
-              sx={{ p: 0.25 }}
-              color="inherit"
-            >
-              <DeleteIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
+          {/* Delete Button - hidden for root */}
+          {!isRoot && (
+            <Tooltip title="Delete component">
+              <IconButton
+                size="small"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDeleteComponent(component.id);
+                }}
+                sx={{ p: 0.25 }}
+                color="inherit"
+              >
+                <DeleteIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+          )}
         </Stack>
       </Box>
 
@@ -295,7 +304,7 @@ const ComponentTree: React.FC<ComponentTreeProps> = ({
     <Paper elevation={1} sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <Box sx={{ p: 2, borderBottom: '1px solid', borderColor: 'divider' }}>
         <Typography variant="h6">Component Tree</Typography>
-        {components.length === 0 && (
+        {components.length === 1 && components[0]?.isRoot && components[0].children.length === 0 && (
           <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
             No components added yet. Use the component selector to add your first component.
           </Typography>
