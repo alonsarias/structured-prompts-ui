@@ -35,8 +35,6 @@ function App() {
     setSelectedComponentId,
     moveComponentUpHandler,
     moveComponentDownHandler,
-    canMoveUp,
-    canMoveDown,
     undo,
     redo,
     canUndo,
@@ -100,7 +98,6 @@ function App() {
 
             <Tooltip title="Clear all components">
               <IconButton
-                color="inherit"
                 onClick={clearAll}
                 size="small"
               >
@@ -150,8 +147,6 @@ function App() {
               onAddComponent={handleAddComponent}
               onMoveComponentUp={moveComponentUpHandler}
               onMoveComponentDown={moveComponentDownHandler}
-              canMoveUp={canMoveUp}
-              canMoveDown={canMoveDown}
               validationErrors={validationErrors}
               onUpdateComponent={updateComponent}
             />

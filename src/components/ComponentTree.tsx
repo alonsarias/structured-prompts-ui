@@ -22,6 +22,7 @@ import {
 } from '@mui/icons-material';
 import type { SpuigComponent, ValidationError } from '../types';
 import { getMuiComponentByName } from '../data/muiComponents';
+import { canMoveComponentUp, canMoveComponentDown } from '../utils/spuigUtils';
 import ComponentSelector from './ComponentSelector';
 import PropertyEditor from './PropertyEditor';
 
@@ -34,8 +35,6 @@ interface ComponentTreeProps {
   onAddComponent: (componentName: string, parentId?: string) => void;
   onMoveComponentUp: (componentId: string) => void;
   onMoveComponentDown: (componentId: string) => void;
-  canMoveUp: boolean;
-  canMoveDown: boolean;
   validationErrors: ValidationError[];
   onUpdateComponent: (componentId: string, updates: Partial<SpuigComponent>) => void;
 }
@@ -50,12 +49,11 @@ interface TreeNodeProps {
   onAddComponent: (componentName: string, parentId?: string) => void;
   onMoveComponentUp: (componentId: string) => void;
   onMoveComponentDown: (componentId: string) => void;
-  canMoveUp: boolean;
-  canMoveDown: boolean;
   validationErrors: ValidationError[];
   expanded: boolean;
   onToggleExpanded: () => void;
   onUpdateComponent: (componentId: string, updates: Partial<SpuigComponent>) => void;
+  allComponents: SpuigComponent[];
 }
 
 const TreeNode: React.FC<TreeNodeProps> = ({
@@ -68,12 +66,11 @@ const TreeNode: React.FC<TreeNodeProps> = ({
   onAddComponent,
   onMoveComponentUp,
   onMoveComponentDown,
-  canMoveUp,
-  canMoveDown,
   validationErrors,
   expanded,
   onToggleExpanded,
   onUpdateComponent,
+  allComponents,
 }) => {
   const [selectorAnchorEl, setSelectorAnchorEl] = useState<HTMLElement | null>(null);
   const [selectedParentId, setSelectedParentId] = useState<string | null>(null);
@@ -86,6 +83,10 @@ const TreeNode: React.FC<TreeNodeProps> = ({
   const isSelected = selectedComponentId === component.id;
   const hasChildren = component.children.length > 0;
   const isRoot = component.isRoot;
+
+  // Calculate move capabilities for this specific component
+  const canMoveUp = canMoveComponentUp(allComponents, component.id);
+  const canMoveDown = canMoveComponentDown(allComponents, component.id);
 
   const handleAddChildClick = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
@@ -232,18 +233,18 @@ const TreeNode: React.FC<TreeNodeProps> = ({
           )}
 
           {/* Add Child Button - always available for root, conditionally for others */}
-          {(isRoot || (muiComponent?.acceptsChildren)) && (
-            <Tooltip title={isRoot ? "Add component" : "Add child component"}>
-              <IconButton
-                size="small"
-                onClick={handleAddChildClick}
-                sx={{ p: 0.25 }}
-                color="inherit"
-              >
-                <AddIcon fontSize="small" />
-              </IconButton>
-            </Tooltip>
-          )}
+          <Tooltip title={isRoot ? "Add component" : "Add child component"}>
+            <IconButton
+              size="small"
+              onClick={handleAddChildClick}
+              sx={{ p: 0.25 }}
+              color="inherit"
+              disabled={!muiComponent?.acceptsChildren}
+            >
+              <AddIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+
 
           {/* Move Up Button - hidden for root */}
           {!isRoot && (
@@ -328,10 +329,9 @@ const TreeNode: React.FC<TreeNodeProps> = ({
               onAddComponent={onAddComponent}
               onMoveComponentUp={onMoveComponentUp}
               onMoveComponentDown={onMoveComponentDown}
-              canMoveUp={canMoveUp}
-              canMoveDown={canMoveDown}
               validationErrors={validationErrors}
               onUpdateComponent={onUpdateComponent}
+              allComponents={allComponents}
             />
           ))}
         </Box>
@@ -386,8 +386,6 @@ const ComponentTree: React.FC<ComponentTreeProps> = ({
   onAddComponent,
   onMoveComponentUp,
   onMoveComponentDown,
-  canMoveUp,
-  canMoveDown,
   validationErrors,
   onUpdateComponent,
 }) => {
@@ -433,10 +431,9 @@ const ComponentTree: React.FC<ComponentTreeProps> = ({
             onAddComponent={onAddComponent}
             onMoveComponentUp={onMoveComponentUp}
             onMoveComponentDown={onMoveComponentDown}
-            canMoveUp={canMoveUp}
-            canMoveDown={canMoveDown}
             validationErrors={validationErrors}
             onUpdateComponent={onUpdateComponent}
+            allComponents={components}
           />
         ))}
       </Box>
