@@ -237,7 +237,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
 
           {/* Add Child Button - always available for root, conditionally for others */}
           {(isRoot || (muiComponent?.acceptsChildren)) && (
-            <Tooltip title="Add child component">
+            <Tooltip title={isRoot ? "Add component" : "Add child component"}>
               <IconButton
                 size="small"
                 onClick={handleAddChildClick}

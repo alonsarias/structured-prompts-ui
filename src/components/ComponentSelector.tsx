@@ -68,8 +68,8 @@ const ComponentSelector: React.FC<ComponentSelectorProps> = ({
       anchorEl={anchorEl}
       onClose={handleClose}
       anchorOrigin={{
-        vertical: 'bottom',
-        horizontal: 'left',
+        vertical: 'top',
+        horizontal: 'right',
       }}
       transformOrigin={{
         vertical: 'top',
