@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Paper,
   Typography,
@@ -21,6 +21,7 @@ import {
 } from '@mui/icons-material';
 import type { SpuigComponent, ValidationError } from '../types';
 import { getMuiComponentByName } from '../data/muiComponents';
+import ComponentSelector from './ComponentSelector';
 
 interface ComponentTreeProps {
   components: SpuigComponent[];
@@ -28,6 +29,7 @@ interface ComponentTreeProps {
   onSelectComponent: (id: string | null) => void;
   onDeleteComponent: (id: string) => void;
   onAddChild: (parentId: string) => void;
+  onAddComponent: (componentName: string, parentId?: string) => void;
   onMoveComponentUp: (componentId: string) => void;
   onMoveComponentDown: (componentId: string) => void;
   canMoveUp: boolean;
@@ -42,6 +44,7 @@ interface TreeNodeProps {
   onSelectComponent: (id: string) => void;
   onDeleteComponent: (id: string) => void;
   onAddChild: (parentId: string) => void;
+  onAddComponent: (componentName: string, parentId?: string) => void;
   onMoveComponentUp: (componentId: string) => void;
   onMoveComponentDown: (componentId: string) => void;
   canMoveUp: boolean;
@@ -58,6 +61,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
   onSelectComponent,
   onDeleteComponent,
   onAddChild,
+  onAddComponent,
   onMoveComponentUp,
   onMoveComponentDown,
   canMoveUp,
@@ -66,6 +70,9 @@ const TreeNode: React.FC<TreeNodeProps> = ({
   expanded,
   onToggleExpanded,
 }) => {
+  const [selectorAnchorEl, setSelectorAnchorEl] = useState<HTMLElement | null>(null);
+  const [selectedParentId, setSelectedParentId] = useState<string | null>(null);
+
   const muiComponent = getMuiComponentByName(component.componentName);
   const componentErrors = validationErrors.filter(error => error.componentId === component.id);
   const hasErrors = componentErrors.some(error => error.severity === 'error');
@@ -73,6 +80,23 @@ const TreeNode: React.FC<TreeNodeProps> = ({
   const isSelected = selectedComponentId === component.id;
   const hasChildren = component.children.length > 0;
   const isRoot = component.isRoot;
+
+  const handleAddChildClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+    setSelectorAnchorEl(event.currentTarget);
+    setSelectedParentId(component.id);
+    onAddChild(component.id);
+  };
+
+  const handleCloseSelectorDialog = () => {
+    setSelectorAnchorEl(null);
+    setSelectedParentId(null);
+  };
+
+  const handleAddComponent = (componentName: string, parentId?: string) => {
+    onAddComponent(componentName, parentId);
+    handleCloseSelectorDialog();
+  };
 
   return (
     <Box>
@@ -94,7 +118,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
         }}
         onClick={() => onSelectComponent(component.id)}
       >
-        {/* Expand/Collapse Icon */}
+        {/* Expand/Collapse Icon - hidden for root */}
         <IconButton
           size="small"
           onClick={(e) => {
@@ -104,7 +128,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
           sx={{
             p: 0.25,
             mr: 0.5,
-            visibility: hasChildren ? 'visible' : 'hidden',
+            visibility: isRoot ? 'hidden' : (hasChildren ? 'visible' : 'hidden'),
           }}
         >
           {expanded ? <ExpandMoreIcon fontSize="small" /> : <ChevronRightIcon fontSize="small" />}
@@ -118,7 +142,6 @@ const TreeNode: React.FC<TreeNodeProps> = ({
               fontWeight={isSelected ? 'medium' : 'normal'}
               noWrap
               sx={{
-                fontStyle: isRoot ? 'italic' : 'normal',
                 opacity: isRoot ? 0.7 : 1,
               }}
             >
@@ -217,10 +240,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
             <Tooltip title="Add child component">
               <IconButton
                 size="small"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onAddChild(component.id);
-                }}
+                onClick={handleAddChildClick}
                 sx={{ p: 0.25 }}
                 color="inherit"
               >
@@ -260,6 +280,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
               onSelectComponent={onSelectComponent}
               onDeleteComponent={onDeleteComponent}
               onAddChild={onAddChild}
+              onAddComponent={onAddComponent}
               onMoveComponentUp={onMoveComponentUp}
               onMoveComponentDown={onMoveComponentDown}
               canMoveUp={canMoveUp}
@@ -269,6 +290,15 @@ const TreeNode: React.FC<TreeNodeProps> = ({
           ))}
         </Box>
       )}
+
+      {/* Component Selector Dialog */}
+      <ComponentSelector
+        open={Boolean(selectorAnchorEl)}
+        anchorEl={selectorAnchorEl}
+        onClose={handleCloseSelectorDialog}
+        onAddComponent={handleAddComponent}
+        selectedParentId={selectedParentId}
+      />
     </Box>
   );
 };
@@ -277,11 +307,16 @@ const TreeNode: React.FC<TreeNodeProps> = ({
 const TreeNodeContainer: React.FC<Omit<TreeNodeProps, 'expanded' | 'onToggleExpanded'>> = (props) => {
   const [expanded, setExpanded] = React.useState(true);
 
+  // Root components should always be expanded
+  const isRoot = props.component.isRoot;
+  const actualExpanded = isRoot ? true : expanded;
+  const handleToggle = isRoot ? () => { } : () => setExpanded(!expanded);
+
   return (
     <TreeNode
       {...props}
-      expanded={expanded}
-      onToggleExpanded={() => setExpanded(!expanded)}
+      expanded={actualExpanded}
+      onToggleExpanded={handleToggle}
     />
   );
 };
@@ -292,6 +327,7 @@ const ComponentTree: React.FC<ComponentTreeProps> = ({
   onSelectComponent,
   onDeleteComponent,
   onAddChild,
+  onAddComponent,
   onMoveComponentUp,
   onMoveComponentDown,
   canMoveUp,
@@ -306,7 +342,7 @@ const ComponentTree: React.FC<ComponentTreeProps> = ({
         <Typography variant="h6">Component Tree</Typography>
         {components.length === 1 && components[0]?.isRoot && components[0].children.length === 0 && (
           <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-            No components added yet. Use the component selector to add your first component.
+            No components added yet. Click the + button on Root to add your first component.
           </Typography>
         )}
       </Box>
@@ -337,6 +373,7 @@ const ComponentTree: React.FC<ComponentTreeProps> = ({
             onSelectComponent={onSelectComponent}
             onDeleteComponent={onDeleteComponent}
             onAddChild={onAddChild}
+            onAddComponent={onAddComponent}
             onMoveComponentUp={onMoveComponentUp}
             onMoveComponentDown={onMoveComponentDown}
             canMoveUp={canMoveUp}

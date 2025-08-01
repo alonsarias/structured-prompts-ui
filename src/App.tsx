@@ -1,37 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   ThemeProvider,
   CssBaseline,
   AppBar,
   Toolbar,
-  Typography,
   Container,
   Box,
   IconButton,
   Tooltip,
-  Button,
   Stack,
-  Alert,
 } from '@mui/material';
 import {
   Undo as UndoIcon,
   Redo as RedoIcon,
   GitHub as GitHubIcon,
   DeleteSweep as DeleteSweepIcon,
-  RocketLaunch as RocketLaunchIcon,
 } from '@mui/icons-material';
 import { Analytics } from '@vercel/analytics/react';
 
 import { useSpuigBuilder } from './hooks/useSpuigBuilder';
 import { theme } from './theme';
-import ComponentSelector from './components/ComponentSelector';
 import ComponentTree from './components/ComponentTree';
 import PropertyEditor from './components/PropertyEditor';
 import SpuigPreview from './components/SpuigPreview';
 
 function App() {
-  const [addingChildTo, setAddingChildTo] = useState<string | null>(null);
-
   const {
     components,
     selectedComponent,
@@ -55,11 +48,10 @@ function App() {
 
   const handleAddComponent = (componentName: string, parentId?: string) => {
     addComponent(componentName, parentId);
-    setAddingChildTo(null);
   };
 
-  const handleAddChild = (parentId: string) => {
-    setAddingChildTo(parentId);
+  const handleAddChild = () => {
+    // This is now handled internally by the ComponentTree via the dialog
   };
 
   return (
@@ -146,37 +138,7 @@ function App() {
           height: { xs: 'auto', lg: '100%' },
           overflow: { xs: 'visible', lg: 'hidden' }
         }}>
-          {/* Left Panel - Component Selector */}
-          <Box sx={{
-            flex: { xs: '1', lg: '0 0 305px' },
-            minHeight: 'auto',
-            display: 'flex',
-            flexDirection: 'column'
-          }}>
-            <Stack spacing={2} sx={{ height: '100%' }}>
-              <ComponentSelector
-                onAddComponent={handleAddComponent}
-                selectedParentId={addingChildTo}
-              />
-
-              {addingChildTo && (
-                <Box sx={{ p: 1, bgcolor: 'background.paper', borderRadius: 1, border: '1px solid', borderColor: 'action.active' }}>
-                  <Typography variant="caption" color="text.secondary">
-                    Adding child to selected component
-                  </Typography>
-                  <Button
-                    size="small"
-                    onClick={() => setAddingChildTo(null)}
-                    sx={{ ml: 1, color: 'text.secondary' }}
-                  >
-                    Cancel
-                  </Button>
-                </Box>
-              )}
-            </Stack>
-          </Box>
-
-          {/* Center Panel - Component Tree */}
+          {/* Left Panel - Component Tree */}
           <Box sx={{
             flex: { xs: '1', lg: '1' },
             minHeight: 'auto',
@@ -187,6 +149,7 @@ function App() {
               onSelectComponent={setSelectedComponentId}
               onDeleteComponent={removeComponent}
               onAddChild={handleAddChild}
+              onAddComponent={handleAddComponent}
               onMoveComponentUp={moveComponentUpHandler}
               onMoveComponentDown={moveComponentDownHandler}
               canMoveUp={canMoveUp}
@@ -195,7 +158,7 @@ function App() {
             />
           </Box>
 
-          {/* Right Panel - Property Editor */}
+          {/* Center Panel - Property Editor */}
           <Box sx={{
             flex: { xs: '1', lg: '0 0 305px' },
             minHeight: 'auto'
@@ -207,7 +170,7 @@ function App() {
             />
           </Box>
 
-          {/* Far Right Panel - SPUIG Preview */}
+          {/* Right Panel - SPUIG Preview */}
           <Box sx={{
             flex: { xs: '1', lg: '1' },
             minWidth: 0,
