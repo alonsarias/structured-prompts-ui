@@ -100,6 +100,7 @@ function App() {
               <IconButton
                 onClick={clearAll}
                 size="small"
+                color='inherit'
               >
                 <DeleteSweepIcon />
               </IconButton>

@@ -239,7 +239,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
               onClick={handleAddChildClick}
               sx={{ p: 0.25 }}
               color="inherit"
-              disabled={!muiComponent?.acceptsChildren}
+              disabled={!isRoot && !muiComponent?.acceptsChildren}
             >
               <AddIcon fontSize="small" />
             </IconButton>
@@ -395,11 +395,6 @@ const ComponentTree: React.FC<ComponentTreeProps> = ({
     <Paper elevation={1} sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <Box sx={{ p: 2, borderBottom: '1px solid', borderColor: 'divider' }}>
         <Typography variant="h6">Component Tree</Typography>
-        {components.length === 1 && components[0]?.isRoot && components[0].children.length === 0 && (
-          <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-            No components added yet. Click the + button on Root to add your first component.
-          </Typography>
-        )}
       </Box>
 
       {/* Global Errors */}
@@ -437,20 +432,6 @@ const ComponentTree: React.FC<ComponentTreeProps> = ({
           />
         ))}
       </Box>
-
-      {/* Clear selection */}
-      {selectedComponentId && (
-        <Box sx={{ p: 1, borderTop: '1px solid', borderColor: 'divider' }}>
-          <Typography
-            variant="caption"
-            color="text.secondary"
-            sx={{ cursor: 'pointer' }}
-            onClick={() => onSelectComponent(null)}
-          >
-            Clear selection
-          </Typography>
-        </Box>
-      )}
     </Paper>
   );
 };
