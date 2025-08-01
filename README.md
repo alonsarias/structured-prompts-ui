@@ -4,7 +4,7 @@ A tool for generating structured prompts that help AI create UI components with 
 
 🚀 **[Live Demo](https://spuig.vercel.app/)**
 
-![SPUIG Screenshot](https://github.com/user-attachments/assets/cc628c02-da18-406f-8a11-ef340c6cdb88)
+![SPUIG Screenshot](https://github.com/user-attachments/assets/6442e267-205b-48a7-bffa-c0e2085edd41)
 
 ## Table of Contents
 
@@ -142,24 +142,30 @@ npm run preview
 
 1. **Start Building**
 
-   - Select a component from the left panel
-   - Click "Add Component" to add it to your tree
+   - Click the "+" icon on the Root in the Component Tree
+   - Choose a component from the Selector to add it to your Tree
 
 2. **Create Hierarchy**
 
-   - Select a parent component in the tree
-   - Click the "+" icon to add a child
-   - Choose the child component from the selector
+   - Select a parent component in the Tree
+   - Click the "+" icon on any component to add a child
+   - Choose the child component from the Selector
 
 3. **Configure Properties**
 
-   - Select any component in the tree
-   - Use the Property Editor to set props and text content
-   - See validation errors in real-time
+   - Click the edit icon (pencil) on any component in the Tree
+   - Use the Property Editor to set properties
+   - See validation errors and warnings in real-time with visual indicators
 
-4. **Generate Prompt**
-   - View the live prompt preview on the right
-   - Copy to clipboard or download as a file
+4. **Organize Components**
+
+   - Use the up/down arrow buttons to reorder components within their parent
+   - Expand/collapse component branches using the arrow icons
+   - Delete unwanted components using the delete icon
+
+5. **Generate Prompt**
+   - View the live prompt preview in the Preview panel
+   - Copy to clipboard or download as a file using the header buttons
    - Use with your favorite AI coding assistant
 
 ### Advanced Features
