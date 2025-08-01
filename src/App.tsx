@@ -21,13 +21,11 @@ import { Analytics } from '@vercel/analytics/react';
 import { useSpuigBuilder } from './hooks/useSpuigBuilder';
 import { theme } from './theme';
 import ComponentTree from './components/ComponentTree';
-import PropertyEditor from './components/PropertyEditor';
 import SpuigPreview from './components/SpuigPreview';
 
 function App() {
   const {
     components,
-    selectedComponent,
     selectedComponentId,
     generatedSpuig,
     validationErrors,
@@ -155,24 +153,13 @@ function App() {
               canMoveUp={canMoveUp}
               canMoveDown={canMoveDown}
               validationErrors={validationErrors}
-            />
-          </Box>
-
-          {/* Center Panel - Property Editor */}
-          <Box sx={{
-            flex: { xs: '1', lg: '0 0 305px' },
-            minHeight: 'auto'
-          }}>
-            <PropertyEditor
-              component={selectedComponent}
               onUpdateComponent={updateComponent}
-              validationErrors={validationErrors}
             />
           </Box>
 
           {/* Right Panel - SPUIG Preview */}
           <Box sx={{
-            flex: { xs: '1', lg: '1' },
+            flex: { xs: '1', lg: '2' },
             minWidth: 0,
             minHeight: 'auto'
           }}>
