@@ -1,0 +1,259 @@
+# SPUIG Project Rules
+
+## Project Overview
+
+SPUIG (Structured Prompts for UI Generation) is a tool for generating structured prompts that help AI create UI components with precise hierarchy and configuration. It provides a visual interface for building component trees using Material-UI components and automatically generates AI-readable prompts.
+
+## Technology Stack
+
+- **React 19** - UI framework
+- **TypeScript** - Type safety with strict mode enabled
+- **Material-UI v7** - Component library (@mui/material)
+- **Emotion** - CSS-in-JS styling (@emotion/react, @emotion/styled)
+- **Vite** - Build tool and dev server
+- **ESLint** - Linting with TypeScript support
+
+## Code Style Guidelines
+
+### TypeScript
+
+- Use strict TypeScript mode (enabled in tsconfig)
+- Always provide explicit types for function parameters and return types
+- Use `type` for type aliases, `interface` for object shapes
+- Export types from `src/types/index.ts` for shared types
+- Use `type` imports when importing types: `import type { SpuigComponent } from '../types'`
+- Avoid `any` - use `unknown` if type is truly unknown
+- Use union types for prop values: `string | number | boolean | object | null | undefined`
+
+### React Components
+
+- Use functional components exclusively
+- Use explicit `React.FC<Props>` type annotation or inline props typing
+- Always destructure props in function parameters
+- Use `useCallback` for event handlers and functions passed as props
+- Use `useMemo` for expensive computations
+- Keep components focused and single-purpose
+- Use descriptive component and prop names
+
+### Naming Conventions
+
+- Components: PascalCase (`ComponentTree.tsx`)
+- Hooks: camelCase starting with `use` (`useSpuigBuilder.ts`)
+- Utilities: camelCase (`spuigUtils.ts`)
+- Types/Interfaces: PascalCase (`SpuigComponent`, `ValidationError`)
+- Constants: camelCase or UPPER_SNAKE_CASE
+- Files: Match the main export (component/hook/type name)
+
+### Imports
+
+- Group imports: React → MUI → Icons → Local imports → Types
+- Use absolute imports when possible (configure in tsconfig if needed)
+- Use named imports for MUI components
+- Use type imports for TypeScript types: `import type { ... }`
+
+Example:
+```typescript
+import React, { useState, useCallback } from 'react';
+import { Box, Typography, Paper } from '@mui/material';
+import { Delete as DeleteIcon } from '@mui/icons-material';
+import { useSpuigBuilder } from '../hooks/useSpuigBuilder';
+import type { SpuigComponent } from '../types';
+```
+
+## Architecture Patterns
+
+### File Organization
+
+```
+src/
+├── components/     # React components (UI)
+├── hooks/         # Custom React hooks (state management)
+├── utils/         # Pure utility functions
+├── types/         # TypeScript type definitions
+├── data/          # Static data and component definitions
+└── theme/         # Material-UI theme configuration
+```
+
+### State Management
+
+- Use custom hooks for complex state logic (see `useSpuigBuilder.ts`)
+- Keep state immutable - always create new objects/arrays
+- Use `useCallback` for state setters and handlers
+- Implement undo/redo with history array pattern
+- Store state in custom hooks, not in components directly
+
+### Component Structure
+
+- Keep components in `src/components/`
+- One component per file
+- Props interface defined above component or imported from types
+- Use early returns for conditional rendering
+- Extract complex logic into custom hooks or utility functions
+
+### Utility Functions
+
+- Pure functions in `src/utils/`
+- No side effects
+- Well-typed parameters and return values
+- Export functions individually for tree-shaking
+- Document complex algorithms with comments
+
+### Data and Types
+
+- Component definitions in `src/data/components/*.json`
+- Type definitions in `src/types/index.ts`
+- Keep types close to usage when component-specific
+- Use discriminated unions for variant types
+
+## Material-UI Guidelines
+
+### Styling
+
+- Use `sx` prop for component styling (preferred)
+- Use theme values from `src/theme/index.ts`
+- Dark mode theme is the default
+- Use responsive breakpoints: `{ xs: 'value', lg: 'value' }`
+- Prefer spacing units from theme: `sx={{ p: 2, mt: 1 }}`
+
+### Component Usage
+
+- Import components directly: `import { Box, Typography } from '@mui/material'`
+- Use Material-UI components consistently
+- Follow MUI component patterns and prop conventions
+- Use `Tooltip` for icon buttons without text labels
+- Use `Paper` for elevated surfaces
+- Use `Stack` for flex layouts
+
+### Theme Customization
+
+- Customize theme in `src/theme/index.ts`
+- Use theme palette colors: `primary.main`, `text.secondary`, etc.
+- Access theme in components via `sx` prop or `useTheme` hook
+- Custom component overrides go in `theme.components`
+
+## TypeScript Conventions
+
+### Type Definitions
+
+- Define types in `src/types/index.ts` for shared types
+- Use interfaces for object shapes with extensions
+- Use type aliases for unions and intersections
+- Document complex types with JSDoc comments
+
+### Props Interfaces
+
+- Define props interfaces above component or import from types
+- Use descriptive names: `ComponentTreeProps`, `PropertyEditorProps`
+- Mark optional props with `?`
+- Use `Partial<>` utility type when appropriate
+
+### Utility Types
+
+- Use `Record<string, PropValue>` for object dictionaries
+- Use `Partial<SpuigComponent>` for optional updates
+- Use union types for variant values
+
+## Best Practices
+
+### Performance
+
+- Memoize expensive computations with `useMemo`
+- Wrap callbacks with `useCallback` to prevent unnecessary re-renders
+- Avoid creating new objects/arrays in render without memoization
+- Use React.memo sparingly (only when profiling shows benefits)
+
+### Immutability
+
+- Always create new objects/arrays when updating state
+- Use spread operators: `{ ...component, ...updates }`
+- Use `map`/`filter` for array transformations
+- Never mutate state directly
+
+### Error Handling
+
+- Validate component props and hierarchy
+- Return validation errors as structured objects
+- Use severity levels: `'error' | 'warning'`
+- Display errors in UI with appropriate Material-UI components
+
+### Code Organization
+
+- Keep files focused and under 300 lines when possible
+- Extract complex logic into separate functions or hooks
+- Group related functionality together
+- Use comments for complex algorithms, not obvious code
+
+### Validation
+
+- Validate component props against MUI component definitions
+- Check hierarchy relationships (validParents, validChildren)
+- Provide clear error messages
+- Validate recursively through component trees
+
+## Specific Patterns
+
+### Component Creation
+
+- Use `createEmptyComponent()` utility for new components
+- Use `createRootComponent()` for root components
+- Set default props from MUI component definitions
+- Generate UUIDs for component IDs
+
+### State Updates
+
+- Use immutable update patterns:
+  ```typescript
+  setComponents(components.map(c =>
+    c.id === id ? { ...c, ...updates } : c
+  ));
+  ```
+- For nested updates, use recursive utility functions
+- Save to history before state changes
+
+### Component Tree Operations
+
+- Use utility functions from `spuigUtils.ts` for tree operations
+- Always validate hierarchy before adding components
+- Check if components can accept children before adding
+- Prevent operations on root component when appropriate
+
+### Prompt Generation
+
+- Generate SPUIG syntax recursively
+- Skip root components in generated output
+- Format props appropriately (strings, numbers, booleans, objects)
+- Indent children with 2 spaces per level
+
+## Things to Avoid
+
+- Don't use class components
+- Don't mutate state directly
+- Don't use `any` type
+- Don't mix styling approaches (stick to `sx` prop)
+- Don't create deep component hierarchies (keep it flat)
+- Don't put business logic in components (extract to hooks/utils)
+- Don't duplicate type definitions
+- Don't use inline styles (use `sx` prop instead)
+- Don't forget to handle edge cases (empty arrays, null values)
+- Don't skip TypeScript types
+
+## ESLint Configuration
+
+- Follow ESLint rules defined in `eslint.config.js`
+- TypeScript ESLint rules are enabled
+- React hooks rules are enforced
+- Unused variables are warnings, not errors
+
+## Development Workflow
+
+- Run `npm run dev` for development
+- Run `npm run build` for production build
+- Run `npm run lint` before committing
+- TypeScript strict mode is enabled - fix all type errors
+
+## Notes
+
+- The project uses a dark theme by default
+- Root components are special - they don't appear in generated prompts
+- Component definitions are JSON-driven for easy extensibility
+- Validation happens in real-time as users build component trees
