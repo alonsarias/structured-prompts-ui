@@ -1,0 +1,411 @@
+---
+alwaysApply: true
+---
+
+# SPUIG Project Cursor Rules
+
+## TypeScript Standards
+
+### Strict Mode
+
+- Always use TypeScript strict mode (already enabled in `tsconfig.app.json`)
+- Never use `any` type - use proper types or `unknown` if needed
+- Use explicit return types for functions when not obvious
+- Example from `src/utils/spuigUtils.ts`:
+
+```typescript
+export const findComponentById = (
+  components: SpuigComponent[],
+  id: string
+): SpuigComponent | null => {
+  // implementation
+};
+```
+
+### Type Definitions
+
+- Place all type definitions in `src/types/index.ts`
+- Use interfaces for object shapes (e.g., `SpuigComponent`, `MuiComponentDefinition`)
+- Use type aliases for unions and primitives (e.g., `PropValue`)
+- Export types from types file, not from component files
+- Reference: `src/types/index.ts` shows the pattern
+
+### Import Organization
+
+- Group imports: React, then Material-UI, then local imports
+- Use named imports for Material-UI components and icons
+- Use type imports with `import type` syntax
+- Example from `src/App.tsx`:
+
+```typescript
+import React from "react";
+import { ThemeProvider, CssBaseline, AppBar } from "@mui/material";
+import { Undo as UndoIcon } from "@mui/icons-material";
+import type { SpuigComponent } from "./types";
+```
+
+## React Patterns
+
+### Component Structure
+
+- Use functional components only (no class components)
+- Use `React.FC<Props>` type annotation for components
+- Define props interfaces above component definition
+- Example from `src/components/ComponentSelector.tsx`:
+
+```typescript
+interface ComponentSelectorProps {
+  onAddComponent: (componentName: string, parentId?: string) => void;
+  selectedParentId?: string | null;
+  open: boolean;
+  anchorEl: HTMLElement | null;
+  onClose: () => void;
+}
+
+const ComponentSelector: React.FC<ComponentSelectorProps> = ({
+  onAddComponent,
+  // ...
+}) => {
+  // component implementation
+};
+```
+
+### Hooks Usage
+
+- Use `useState` for local component state
+- Use `useCallback` for event handlers and functions passed as props
+- Use `useMemo` for expensive computations
+- Custom hooks go in `src/hooks/` directory
+- Custom hooks must be prefixed with `use` (e.g., `useSpuigBuilder`)
+- Reference: `src/hooks/useSpuigBuilder.ts` shows the pattern
+
+### State Management
+
+- Use immutable updates - always create new objects/arrays
+- Use spread operators for shallow updates
+- For nested updates, use recursive functions or immutable update patterns
+- Example from `src/utils/spuigUtils.ts`:
+
+```typescript
+export const updateComponentById = (
+  components: SpuigComponent[],
+  id: string,
+  updates: Partial<SpuigComponent>
+): SpuigComponent[] => {
+  return components.map((component) => {
+    if (component.id === id) {
+      return { ...component, ...updates };
+    }
+    return {
+      ...component,
+      children: updateComponentById(component.children, id, updates),
+    };
+  });
+};
+```
+
+### Component Exports
+
+- Use default exports for components (e.g., `export default ComponentName`)
+- Use named exports for utilities, hooks, and types
+- Example: `src/App.tsx` uses `export default App`
+
+## Material-UI Patterns
+
+### Styling
+
+- Use `sx` prop for component styling, not `styled` components
+- Use theme spacing units (e.g., `sx={{ p: 2 }}` instead of `padding: '16px'`)
+- Use theme breakpoints for responsive design
+- Reference: `src/App.tsx` shows sx prop usage:
+
+```typescript
+<Box sx={{
+  display: 'flex',
+  flexDirection: { xs: 'column', lg: 'row' },
+  gap: 3,
+  height: { xs: 'auto', lg: '100%' }
+}}>
+```
+
+### Theme Usage
+
+- Theme is defined in `src/theme/index.ts`
+- Use `ThemeProvider` at app root (see `src/App.tsx`)
+- Access theme values via `sx` prop or `useTheme` hook
+- Custom theme overrides go in `theme.components` section
+- Reference: `src/theme/index.ts` shows dark theme configuration
+
+### Component Imports
+
+- Import Material-UI components individually from `@mui/material`
+- Import icons individually from `@mui/icons-material` with alias if needed
+- Example:
+
+```typescript
+import { Paper, Typography, Box } from "@mui/material";
+import { Delete as DeleteIcon, Add as AddIcon } from "@mui/icons-material";
+```
+
+## File Organization
+
+### Directory Structure
+
+- Components: `src/components/` - One component per file
+- Hooks: `src/hooks/` - Custom React hooks
+- Utils: `src/utils/` - Pure utility functions
+- Types: `src/types/index.ts` - All TypeScript type definitions
+- Data: `src/data/` - Static data and JSON imports
+- Theme: `src/theme/index.ts` - Material-UI theme configuration
+- Assets: `src/assets/` - Static assets like images
+
+### File Naming
+
+- Components: PascalCase (e.g., `ComponentTree.tsx`)
+- Hooks: camelCase with `use` prefix (e.g., `useSpuigBuilder.ts`)
+- Utils: camelCase (e.g., `spuigUtils.ts`)
+- Types: `index.ts` in types directory
+- Data files: camelCase JSON files (e.g., `inputs.json`)
+
+### Component File Structure
+
+1. Imports (React, Material-UI, types, utilities)
+2. Props interface definition
+3. Component implementation
+4. Default export
+
+- Reference: `src/components/ComponentSelector.tsx` shows this pattern
+
+## Utility Functions
+
+### Pure Functions
+
+- All utility functions should be pure (no side effects)
+- Functions in `src/utils/` should be exported as named exports
+- Use recursive functions for tree traversal operations
+- Example from `src/utils/spuigUtils.ts`:
+
+```typescript
+export const findComponentById = (
+  components: SpuigComponent[],
+  id: string
+): SpuigComponent | null => {
+  for (const component of components) {
+    if (component.id === id) {
+      return component;
+    }
+    const found = findComponentById(component.children, id);
+    if (found) {
+      return found;
+    }
+  }
+  return null;
+};
+```
+
+### Function Naming
+
+- Use verb prefixes: `create`, `find`, `update`, `remove`, `validate`, `generate`
+- Use descriptive names: `findComponentById`, `updateComponentById`
+- Boolean functions use `can` prefix: `canMoveComponentUp`, `canMoveComponentDown`
+
+## Data Management
+
+### Component Definitions
+
+- Material-UI component definitions are in JSON files in `src/data/components/`
+- Import and combine in `src/data/muiComponents.ts`
+- Use `getMuiComponentByName` to look up components
+- Reference: `src/data/muiComponents.ts` shows the pattern
+
+### JSON Imports
+
+- Import JSON files directly as TypeScript modules
+- Use type assertions when importing JSON: `as MuiComponentDefinition[]`
+- Example:
+
+```typescript
+import inputsData from "./components/inputs.json";
+export const muiComponents: MuiComponentDefinition[] = [
+  ...inputsData.components,
+  // ...
+] as MuiComponentDefinition[];
+```
+
+## Code Style
+
+### General
+
+- Use 2 spaces for indentation
+- Use single quotes for strings (unless double quotes needed)
+- Use semicolons
+- Maximum line length: follow ESLint rules (see `eslint.config.js`)
+- Trailing commas in multi-line objects/arrays
+
+### Function Declarations
+
+- Use arrow functions for component props and callbacks
+- Use regular functions for exported utilities (optional, project uses arrow functions)
+- Use `const` for function declarations: `const functionName = () => {}`
+
+### Comments
+
+- Use comments sparingly - code should be self-documenting
+- Use JSDoc comments for exported functions if needed
+- Inline comments for complex logic only
+
+### Error Handling
+
+- Use validation functions that return `ValidationError[]`
+- Validation errors have `id`, `componentId`, `type`, `message`, `severity`
+- Reference: `src/types/index.ts` defines `ValidationError` interface
+- Example from `src/utils/spuigUtils.ts`:
+
+```typescript
+errors.push({
+  id: `${component.id}-missing-${propDef.name}`,
+  componentId: component.id,
+  type: "missing-required-prop",
+  message: `Missing required prop: ${propDef.name}`,
+  severity: "error",
+});
+```
+
+## React Patterns Specific
+
+### Event Handlers
+
+- Use `handle` prefix for event handlers: `handleAddComponent`, `handleDeleteClick`
+- Use `on` prefix for props that are callbacks: `onAddComponent`, `onDeleteComponent`
+- Stop propagation when needed: `event.stopPropagation()`
+- Example from `src/components/ComponentTree.tsx`:
+
+```typescript
+const handleAddChildClick = (event: React.MouseEvent<HTMLElement>) => {
+  event.stopPropagation();
+  // handler logic
+};
+```
+
+### Conditional Rendering
+
+- Use ternary operators for simple conditionals
+- Use early returns for guard clauses
+- Extract complex conditionals to variables or useMemo
+- Example:
+
+```typescript
+if (!component) {
+  return <Typography>Select a component</Typography>;
+}
+```
+
+### List Rendering
+
+- Use `.map()` for rendering lists
+- Always provide `key` prop with unique identifier (use component `id`)
+- Example:
+
+```typescript
+component.children.map((child) => (
+  <TreeNode key={child.id} component={child} />
+));
+```
+
+## Performance Optimizations
+
+### Memoization
+
+- Use `useMemo` for expensive computations that depend on props/state
+- Use `useCallback` for functions passed as props to prevent re-renders
+- Reference: `src/hooks/useSpuigBuilder.ts` shows these patterns:
+
+```typescript
+const generatedSpuig = useMemo(() => {
+  return generateSpuigSyntax(components);
+}, [components]);
+
+const addComponent = useCallback(
+  (componentName: string, parentId?: string) => {
+    // implementation
+  },
+  [components, saveToHistory]
+);
+```
+
+## Project-Specific Patterns
+
+### Component Tree Structure
+
+- Root component has `isRoot: true` property
+- Components have recursive `children` array
+- Use `parentId` to track relationships
+- Reference: `src/types/index.ts` defines `SpuigComponent`
+
+### SPUIG Syntax Generation
+
+- Generate indented syntax with 2 spaces per level
+- Skip root components in output
+- Format props based on type (string in quotes, boolean/number with braces)
+- Reference: `src/utils/spuigUtils.ts` - `generateSpuigSyntax` function
+
+### Validation System
+
+- Validate components recursively
+- Check required props, prop types, hierarchy constraints
+- Return array of validation errors
+- Reference: `src/utils/spuigUtils.ts` - `validateAllComponents` function
+
+### History Management
+
+- Maintain history array in custom hook
+- Save state before mutations
+- Implement undo/redo with history index
+- Reference: `src/hooks/useSpuigBuilder.ts` shows history pattern
+
+## When Adding New Features
+
+### New Components
+
+1. Create component file in `src/components/`
+2. Define props interface above component
+3. Use Material-UI components with `sx` prop
+4. Export as default export
+5. Import types from `src/types/`
+
+### New Utilities
+
+1. Add function to appropriate file in `src/utils/`
+2. Make function pure (no side effects)
+3. Add proper TypeScript types
+4. Export as named export
+5. Add tests if needed
+
+### New Types
+
+1. Add type definitions to `src/types/index.ts`
+2. Export from types file
+3. Import with `import type` syntax in consuming files
+
+### New Hooks
+
+1. Create file in `src/hooks/` with `use` prefix
+2. Use standard React hooks (useState, useCallback, useMemo)
+3. Return object with state and handlers
+4. Reference: `src/hooks/useSpuigBuilder.ts` shows the pattern
+
+## ESLint Configuration
+
+- Follow ESLint rules in `eslint.config.js`
+- Uses TypeScript ESLint recommended rules
+- React hooks rules enabled
+- Unused variables show as warnings
+- Reference: `eslint.config.js` for full configuration
+
+## Build Configuration
+
+- Uses Vite for building (`vite.config.ts`)
+- TypeScript compilation: `tsc -b` before build
+- Development server: `npm run dev` (port 5173)
+- Build output: `dist/` directory
+- Reference: `package.json` and `vite.config.ts`
