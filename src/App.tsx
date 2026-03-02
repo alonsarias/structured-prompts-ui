@@ -1,21 +1,17 @@
 import React from 'react';
-import {
-  ThemeProvider,
-  CssBaseline,
-  AppBar,
-  Toolbar,
-  Container,
-  Box,
-  IconButton,
-  Tooltip,
-  Stack,
-} from '@mui/material';
-import {
-  Undo as UndoIcon,
-  Redo as RedoIcon,
-  GitHub as GitHubIcon,
-  DeleteSweep as DeleteSweepIcon,
-} from '@mui/icons-material';
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import Stack from "@mui/material/Stack";
+import UndoIcon from "@mui/icons-material/Undo";
+import RedoIcon from "@mui/icons-material/Redo";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
 import { Analytics } from '@vercel/analytics/react';
 
 import { SpuigBuilderProvider } from './contexts/SpuigBuilderProvider';

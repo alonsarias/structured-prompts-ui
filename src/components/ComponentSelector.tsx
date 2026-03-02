@@ -1,17 +1,16 @@
 import React, { useState, useMemo } from 'react';
-import {
-  Autocomplete,
-  TextField,
-  Paper,
-  Typography,
-  Box,
-  Chip,
-  Button,
-  Stack,
-  Popover,
-  IconButton,
-} from '@mui/material';
-import { Add as AddIcon, Close as CloseIcon } from '@mui/icons-material';
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import Popover from "@mui/material/Popover";
+import IconButton from "@mui/material/IconButton";
+import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
 import { muiComponents, getAllCategories, searchComponents } from '../data/muiComponents';
 import type { MuiComponentDefinition } from '../types';
 import { useSpuigBuilderContext } from '../contexts/SpuigBuilderContext';

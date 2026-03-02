@@ -1,21 +1,17 @@
-import React, { useState } from "react";
-import {
-  Paper,
-  Typography,
-  Box,
-  IconButton,
-  Tooltip,
-  Stack,
-  Snackbar,
-  Alert,
-} from "@mui/material";
-import {
-  ContentCopy as CopyIcon,
-  Download as DownloadIcon,
-} from "@mui/icons-material";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import React, { useState, lazy, Suspense } from "react";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import Stack from "@mui/material/Stack";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import CopyIcon from "@mui/icons-material/ContentCopy";
+import DownloadIcon from "@mui/icons-material/Download";
 import { useSpuigBuilderContext } from "../contexts/SpuigBuilderContext";
+
+const CodeHighlighter = lazy(() => import("./CodeHighlighter"));
 
 const SpuigPreview: React.FC = () => {
   const { state } = useSpuigBuilderContext();
@@ -86,22 +82,23 @@ const SpuigPreview: React.FC = () => {
       </Box>
 
       <Box sx={{ flexGrow: 1, overflow: "auto" }}>
-        <SyntaxHighlighter
-          language="jsx"
-          style={vscDarkPlus}
-          customStyle={{
-            margin: 0,
-            height: "100%",
-            fontSize: "0.875rem",
-            fontFamily: '"Fira Code", "Consolas", "Monaco", monospace',
-            backgroundColor: "transparent",
-          }}
-          showLineNumbers
+        <Suspense
+          fallback={
+            <Box
+              sx={{ p: 2, fontFamily: "monospace", fontSize: "0.875rem", opacity: 0.5 }}
+            >
+              Loading preview...
+            </Box>
+          }
         >
-          {spuigSyntax
-            ? `Convert the following structure into a component:\n\n${spuigSyntax}`
-            : "// Add components to see the prompt here"}
-        </SyntaxHighlighter>
+          <CodeHighlighter
+            code={
+              spuigSyntax
+                ? `Convert the following structure into a component:\n\n${spuigSyntax}`
+                : "// Add components to see the prompt here"
+            }
+          />
+        </Suspense>
       </Box>
 
       {/* Usage Instructions */}

@@ -1,25 +1,21 @@
 import React, { useState, useMemo, useCallback } from "react";
-import {
-  Paper,
-  Typography,
-  Box,
-  IconButton,
-  Chip,
-  Stack,
-  Tooltip,
-  Alert,
-} from "@mui/material";
-import {
-  Delete as DeleteIcon,
-  Add as AddIcon,
-  ExpandMore as ExpandMoreIcon,
-  ChevronRight as ChevronRightIcon,
-  Error as ErrorIcon,
-  Warning as WarningIcon,
-  KeyboardArrowUp as KeyboardArrowUpIcon,
-  KeyboardArrowDown as KeyboardArrowDownIcon,
-  Edit as EditIcon,
-} from "@mui/icons-material";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
+import Tooltip from "@mui/material/Tooltip";
+import Alert from "@mui/material/Alert";
+import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ErrorIcon from "@mui/icons-material/Error";
+import WarningIcon from "@mui/icons-material/Warning";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import EditIcon from "@mui/icons-material/Edit";
 import type { SpuigComponent } from "../types";
 import { getMuiComponentByName } from "../data/muiComponents";
 import { canMoveComponentUp, canMoveComponentDown } from "../utils/spuigUtils";

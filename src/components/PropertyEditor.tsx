@@ -1,22 +1,20 @@
 import React from 'react';
-import {
-  Paper,
-  Typography,
-  Box,
-  TextField,
-  Switch,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  FormControlLabel,
-  Stack,
-  Divider,
-  Alert,
-  Popover,
-  IconButton,
-} from '@mui/material';
-import { Close as CloseIcon } from '@mui/icons-material';
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Switch from "@mui/material/Switch";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Stack from "@mui/material/Stack";
+import Divider from "@mui/material/Divider";
+import Alert from "@mui/material/Alert";
+import Popover from "@mui/material/Popover";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 import { getMuiComponentByName } from '../data/muiComponents';
 import { useSpuigBuilderContext } from '../contexts/SpuigBuilderContext';
 import { useTreeNodeContext } from '../contexts/TreeNodeContext';
