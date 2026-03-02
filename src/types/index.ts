@@ -40,14 +40,6 @@ export interface MuiComponentDefinition {
   validChildren?: string[];
 }
 
-// Application State
-export interface AppState {
-  selectedComponent: SpuigComponent | null;
-  componentTree: SpuigComponent[];
-  generatedSpuig: string;
-  errors: ValidationError[];
-}
-
 export interface ValidationError {
   id: string;
   componentId: string;
@@ -58,20 +50,4 @@ export interface ValidationError {
     | "unknown-component";
   message: string;
   severity: "error" | "warning";
-}
-
-// UI State
-export interface TreeNode {
-  id: string;
-  label: string;
-  children?: TreeNode[];
-}
-
-export interface PropFormField {
-  name: string;
-  type: "text" | "number" | "boolean" | "select" | "multiline";
-  value: PropValue;
-  options?: string[];
-  required: boolean;
-  error?: string;
 }

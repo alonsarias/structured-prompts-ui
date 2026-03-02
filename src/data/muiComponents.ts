@@ -28,12 +28,6 @@ export const getMuiComponentByName = (
   return muiComponents.find((comp) => comp.name === name);
 };
 
-export const getMuiComponentsByCategory = (
-  category: string
-): MuiComponentDefinition[] => {
-  return muiComponents.filter((comp) => comp.category === category);
-};
-
 export const getAllCategories = (): string[] => {
   const categories = muiComponents.map((comp) => comp.category);
   return Array.from(new Set(categories)).sort();

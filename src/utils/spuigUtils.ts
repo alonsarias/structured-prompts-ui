@@ -53,7 +53,7 @@ export const generateSpuigSyntax = (components: SpuigComponent[]): string => {
     .join("\n");
 };
 
-export const validateComponent = (
+const validateComponent = (
   component: SpuigComponent
 ): ValidationError[] => {
   const errors: ValidationError[] = [];
@@ -142,7 +142,7 @@ export const validateComponent = (
   return errors;
 };
 
-export const validateHierarchy = (
+const validateHierarchy = (
   components: SpuigComponent[]
 ): ValidationError[] => {
   const errors: ValidationError[] = [];
