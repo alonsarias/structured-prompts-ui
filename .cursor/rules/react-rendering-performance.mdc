@@ -1,0 +1,295 @@
+---
+description: React rendering and DOM performance patterns for animations, SVG optimization, CSS content-visibility, conditional rendering, and useTransition loading states. Use when working with animations, SVG elements, long lists, show/hide toggles, or loading state management.
+globs: "*.tsx,*.jsx,*.ts,*.js,*.css"
+alwaysApply: false
+---
+
+# React Rendering Performance
+
+Patterns for optimizing the rendering process to reduce browser work.
+
+## 1. Animate SVG Wrapper Instead of SVG Element
+
+**Impact: LOW** - Enables hardware acceleration
+
+Many browsers don't have hardware acceleration for CSS3 animations on SVG elements. Wrap SVG in a `<div>` and animate the wrapper.
+
+**Incorrect: animating SVG directly - no hardware acceleration**
+
+```tsx
+function LoadingSpinner() {
+  return (
+    <svg className="animate-spin" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="10" />
+    </svg>
+  )
+}
+```
+
+**Correct: animating wrapper div - hardware accelerated**
+
+```tsx
+function LoadingSpinner() {
+  return (
+    <div className="animate-spin">
+      <svg viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" />
+      </svg>
+    </div>
+  )
+}
+```
+
+This applies to all CSS transforms and transitions (`transform`, `opacity`, `translate`, `scale`, `rotate`).
+
+---
+
+## 2. CSS content-visibility for Long Lists
+
+**Impact: HIGH** - Faster initial render
+
+Apply `content-visibility: auto` to defer off-screen rendering.
+
+**CSS:**
+
+```css
+.message-item {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 80px;
+}
+```
+
+**Usage:**
+
+```tsx
+function MessageList({ messages }: { messages: Message[] }) {
+  return (
+    <div className="message-list">
+      {messages.map(msg => (
+        <div key={msg.id} className="message-item">
+          <MessageContent content={msg.content} />
+        </div>
+      ))}
+    </div>
+  )
+}
+```
+
+For 1000 messages, browser skips layout/paint for ~990 off-screen items (10x faster initial render).
+
+---
+
+## 3. Hoist Static JSX Elements
+
+**Impact: LOW** - Avoids re-creation
+
+Extract static JSX outside components to avoid re-creation on every render.
+
+**Incorrect: recreates element every render**
+
+```tsx
+function LoadingSkeleton() {
+  return <div className="skeleton animate-pulse" />
+}
+
+function Container() {
+  return (
+    <div>
+      {loading && <LoadingSkeleton />}
+    </div>
+  )
+}
+```
+
+**Correct: reuses same element**
+
+```tsx
+const loadingSkeleton = (
+  <div className="skeleton animate-pulse" />
+)
+
+function Container() {
+  return (
+    <div>
+      {loading && loadingSkeleton}
+    </div>
+  )
+}
+```
+
+Especially helpful for large static SVG nodes.
+
+**Note:** If using React Compiler, it automatically hoists static JSX elements.
+
+---
+
+## 4. Optimize SVG Precision
+
+**Impact: LOW** - Reduces file size
+
+Reduce SVG coordinate precision to decrease file size.
+
+**Incorrect: excessive precision**
+
+```svg
+<path d="M12.3456789 45.6789012 L23.4567890 67.8901234" />
+```
+
+**Correct: 1 decimal place**
+
+```svg
+<path d="M12.3 45.7 L23.5 67.9" />
+```
+
+**Automate with SVGO:**
+
+```bash
+npx svgo --precision=1 --multipass icon.svg
+```
+
+---
+
+## 5. Use Activity Component for Show/Hide
+
+**Impact: MEDIUM** - Preserves state/DOM
+
+Use React's `<Activity>` to preserve state/DOM for expensive components that frequently toggle visibility.
+
+**Usage:**
+
+```tsx
+import { Activity } from 'react'
+
+function Dropdown({ isOpen }: Props) {
+  return (
+    <Activity mode={isOpen ? 'visible' : 'hidden'}>
+      <ExpensiveDropdownContent />
+    </Activity>
+  )
+}
+```
+
+Avoids expensive re-renders and state loss when toggling.
+
+---
+
+## 6. Use Explicit Conditional Rendering
+
+**Impact: LOW** - Prevents rendering 0 or NaN
+
+Use explicit ternary operators instead of `&&` when the condition can be `0`, `NaN`, or other falsy values that render.
+
+**Incorrect: renders "0" when count is 0**
+
+```tsx
+function Badge({ count }: { count: number }) {
+  return (
+    <div>
+      {count && <span className="badge">{count}</span>}
+    </div>
+  )
+}
+
+// When count = 0, renders: <div>0</div>
+// When count = 5, renders: <div><span>5</span></div>
+```
+
+**Correct: renders nothing when count is 0**
+
+```tsx
+function Badge({ count }: { count: number }) {
+  return (
+    <div>
+      {count > 0 ? <span className="badge">{count}</span> : null}
+    </div>
+  )
+}
+
+// When count = 0, renders: <div></div>
+// When count = 5, renders: <div><span>5</span></div>
+```
+
+---
+
+## 7. Use useTransition Over Manual Loading States
+
+**Impact: LOW** - Reduces re-renders and improves code clarity
+
+Use `useTransition` instead of manual `useState` for loading states.
+
+**Incorrect: manual loading state**
+
+```tsx
+function SearchResults() {
+  const [query, setQuery] = useState('')
+  const [results, setResults] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleSearch = async (value: string) => {
+    setIsLoading(true)
+    setQuery(value)
+    const data = await fetchResults(value)
+    setResults(data)
+    setIsLoading(false)
+  }
+
+  return (
+    <>
+      <input onChange={e => handleSearch(e.target.value)} />
+      {isLoading && <Spinner />}
+      <ResultsList results={results} />
+    </>
+  )
+}
+```
+
+**Correct: useTransition with built-in pending state**
+
+```tsx
+import { useTransition, useState } from 'react'
+
+function SearchResults() {
+  const [query, setQuery] = useState('')
+  const [results, setResults] = useState([])
+  const [isPending, startTransition] = useTransition()
+
+  const handleSearch = (value: string) => {
+    setQuery(value) // Update input immediately
+
+    startTransition(async () => {
+      const data = await fetchResults(value)
+      setResults(data)
+    })
+  }
+
+  return (
+    <>
+      <input onChange={e => handleSearch(e.target.value)} />
+      {isPending && <Spinner />}
+      <ResultsList results={results} />
+    </>
+  )
+}
+```
+
+**Benefits:**
+- Automatic pending state management
+- Error resilience - pending state resets even if transition throws
+- Better responsiveness during updates
+- New transitions automatically cancel pending ones
+
+Reference: [useTransition](https://react.dev/reference/react/useTransition)
+
+---
+
+## Quick Reference
+
+| Pattern | Impact | When to Use |
+|---------|--------|-------------|
+| SVG wrapper animation | LOW | Animating SVG elements |
+| content-visibility | HIGH | Long scrollable lists |
+| Hoist static JSX | LOW | Repeated static elements |
+| SVG precision | LOW | Optimizing SVG file size |
+| Activity component | MEDIUM | Frequently toggled expensive components |
+| Explicit conditionals | LOW | Rendering based on numbers |
+| useTransition | LOW | Managing loading states |

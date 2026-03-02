@@ -1,0 +1,631 @@
+---
+description: React composition patterns for scalable component architecture including compound components, context providers, state management, boolean prop alternatives, render props vs children, and React 19 API changes. Use when refactoring components with many boolean props, building component libraries, designing flexible APIs, or working with context providers.
+globs: "*.tsx,*.jsx,*.ts,*.js"
+alwaysApply: false
+---
+
+# React Composition Patterns
+
+Composition patterns for building flexible, maintainable React components. Avoid boolean prop proliferation by using compound components, lifting state, and composing internals.
+
+---
+
+## 1. Avoid Boolean Prop Proliferation
+
+**Impact: CRITICAL** - Prevents unmaintainable component variants
+
+Don't add boolean props like `isThread`, `isEditing`, `isDMThread` to customize behavior. Each boolean doubles possible states and creates unmaintainable conditional logic.
+
+**Incorrect: boolean props create exponential complexity**
+
+```tsx
+function Composer({
+  onSubmit,
+  isThread,
+  channelId,
+  isDMThread,
+  dmId,
+  isEditing,
+  isForwarding,
+}: Props) {
+  return (
+    <div className="composer">
+      <Input />
+      {isDMThread ? (
+        <DMThreadHeader dmId={dmId} />
+      ) : isThread ? (
+        <ThreadHeader channelId={channelId} />
+      ) : null}
+      {isEditing ? (
+        <EditActions />
+      ) : isForwarding ? (
+        <ForwardActions />
+      ) : (
+        <SendActions onSubmit={onSubmit} />
+      )}
+    </div>
+  )
+}
+```
+
+**Correct: composition eliminates conditionals**
+
+```tsx
+// Channel composer
+function ChannelComposer() {
+  return (
+    <ComposerProvider>
+      <ComposerFrame>
+        <ComposerInput />
+        <ComposerFooter>
+          <FormattingTools />
+          <EmojiPicker />
+          <SendButton />
+        </ComposerFooter>
+      </ComposerFrame>
+    </ComposerProvider>
+  )
+}
+
+// Thread composer - adds "also send to channel" field
+function ThreadComposer({ channelId }: { channelId: string }) {
+  return (
+    <ThreadProvider channelId={channelId}>
+      <ComposerFrame>
+        <ComposerInput />
+        <AlsoSendToChannel />
+        <ComposerFooter>
+          <FormattingTools />
+          <SendButton />
+        </ComposerFooter>
+      </ComposerFrame>
+    </ThreadProvider>
+  )
+}
+
+// Edit composer - different footer actions
+function EditComposer() {
+  return (
+    <EditProvider>
+      <ComposerFrame>
+        <ComposerInput />
+        <ComposerFooter>
+          <CancelButton />
+          <SaveButton />
+        </ComposerFooter>
+      </ComposerFrame>
+    </EditProvider>
+  )
+}
+```
+
+Each variant is explicit about what it renders. Share internals without sharing a monolithic parent.
+
+---
+
+## 2. Use Compound Components
+
+**Impact: HIGH** - Enables flexible composition without prop drilling
+
+Structure complex components as compound components with shared context.
+
+**Incorrect: monolithic component with render props**
+
+```tsx
+function Composer({
+  renderHeader,
+  renderFooter,
+  renderActions,
+  showAttachments,
+  showFormatting,
+  showEmojis,
+}: Props) {
+  return (
+    <div className="composer">
+      {renderHeader?.()}
+      <Input />
+      {showAttachments && <Attachments />}
+      {renderFooter ? (
+        renderFooter()
+      ) : (
+        <Footer>
+          {showFormatting && <FormattingTools />}
+          {showEmojis && <EmojiPicker />}
+          {renderActions?.()}
+        </Footer>
+      )}
+    </div>
+  )
+}
+```
+
+**Correct: compound components with shared context**
+
+```tsx
+const ComposerContext = createContext<ComposerContextValue | null>(null)
+
+function ComposerProvider({ children, state, actions, meta }: ProviderProps) {
+  return (
+    <ComposerContext.Provider value={{ state, actions, meta }}>
+      {children}
+    </ComposerContext.Provider>
+  )
+}
+
+function ComposerFrame({ children }: { children: React.ReactNode }) {
+  return <div className="composer">{children}</div>
+}
+
+function ComposerInput() {
+  const { state, actions: { update }, meta: { inputRef } } = use(ComposerContext)
+  return (
+    <textarea
+      ref={inputRef}
+      value={state.input}
+      onChange={e => update(s => ({ ...s, input: e.target.value }))}
+    />
+  )
+}
+
+function ComposerSubmit() {
+  const { actions: { submit } } = use(ComposerContext)
+  return <button onClick={submit}>Send</button>
+}
+
+// Export as compound component
+const Composer = {
+  Provider: ComposerProvider,
+  Frame: ComposerFrame,
+  Input: ComposerInput,
+  Submit: ComposerSubmit,
+  Header: ComposerHeader,
+  Footer: ComposerFooter,
+  Attachments: ComposerAttachments,
+}
+```
+
+**Usage:**
+
+```tsx
+<Composer.Provider state={state} actions={actions} meta={meta}>
+  <Composer.Frame>
+    <Composer.Header />
+    <Composer.Input />
+    <Composer.Footer>
+      <Composer.Attachments />
+      <Composer.Submit />
+    </Composer.Footer>
+  </Composer.Frame>
+</Composer.Provider>
+```
+
+---
+
+## 3. Decouple State Management from UI
+
+**Impact: MEDIUM** - Enables swapping state implementations without changing UI
+
+The provider should be the only place that knows how state is managed.
+
+**Incorrect: UI coupled to state implementation**
+
+```tsx
+function ChannelComposer({ channelId }: { channelId: string }) {
+  // UI component knows about global state implementation
+  const state = useGlobalChannelState(channelId)
+  const { submit, updateInput } = useChannelSync(channelId)
+
+  return (
+    <div>
+      <textarea
+        value={state.input}
+        onChange={e => updateInput(e.target.value)}
+      />
+      <button onClick={submit}>Send</button>
+    </div>
+  )
+}
+```
+
+**Correct: state management isolated in provider**
+
+```tsx
+// Provider handles all state management details
+function ChannelProvider({ channelId, children }: Props) {
+  const { state, update, submit } = useGlobalChannel(channelId)
+  const inputRef = useRef<HTMLTextAreaElement>(null)
+
+  return (
+    <ComposerContext.Provider value={{ state, actions: { update, submit }, meta: { inputRef } }}>
+      {children}
+    </ComposerContext.Provider>
+  )
+}
+
+// UI component only knows about the context interface
+function ChannelComposer() {
+  return (
+    <Composer.Frame>
+      <Composer.Input />
+      <Composer.Footer>
+        <Composer.Submit />
+      </Composer.Footer>
+    </Composer.Frame>
+  )
+}
+
+// Usage
+function Channel({ channelId }: { channelId: string }) {
+  return (
+    <ChannelProvider channelId={channelId}>
+      <ChannelComposer />
+    </ChannelProvider>
+  )
+}
+```
+
+**Different providers, same UI:**
+
+```tsx
+// Local state for ephemeral forms
+function ForwardMessageProvider({ children }: Props) {
+  const [state, setState] = useState(initialState)
+  const forwardMessage = useForwardMessage()
+
+  return (
+    <ComposerContext.Provider value={{ state, actions: { update: setState, submit: forwardMessage }, meta }}>
+      {children}
+    </ComposerContext.Provider>
+  )
+}
+
+// Global synced state for channels
+function ChannelProvider({ channelId, children }: Props) {
+  const { state, update, submit } = useGlobalChannel(channelId)
+
+  return (
+    <ComposerContext.Provider value={{ state, actions: { update, submit }, meta }}>
+      {children}
+    </ComposerContext.Provider>
+  )
+}
+```
+
+The same `Composer.Input` works with both providers.
+
+---
+
+## 4. Define Generic Context Interfaces
+
+**Impact: HIGH** - Enables dependency-injectable state
+
+Define a generic interface with `state`, `actions`, and `meta`.
+
+```tsx
+interface ComposerState {
+  input: string
+  attachments: Attachment[]
+  isSubmitting: boolean
+}
+
+interface ComposerActions {
+  update: (updater: (state: ComposerState) => ComposerState) => void
+  submit: () => void
+}
+
+interface ComposerMeta {
+  inputRef: React.RefObject<HTMLTextAreaElement>
+}
+
+interface ComposerContextValue {
+  state: ComposerState
+  actions: ComposerActions
+  meta: ComposerMeta
+}
+
+const ComposerContext = createContext<ComposerContextValue | null>(null)
+```
+
+**UI components consume the interface:**
+
+```tsx
+function ComposerInput() {
+  const { state, actions: { update }, meta } = use(ComposerContext)
+
+  return (
+    <textarea
+      ref={meta.inputRef}
+      value={state.input}
+      onChange={e => update(s => ({ ...s, input: e.target.value }))}
+    />
+  )
+}
+```
+
+**Custom UI outside the component can access state:**
+
+```tsx
+function ForwardMessageDialog() {
+  return (
+    <ForwardMessageProvider>
+      <DialogContent>
+        {/* The composer UI */}
+        <Composer.Frame>
+          <Composer.Input />
+          <Composer.Footer />
+        </Composer.Frame>
+
+        {/* Custom UI OUTSIDE composer but INSIDE provider */}
+        <MessagePreview />
+
+        {/* Actions at the bottom */}
+        <DialogFooter>
+          <CancelButton />
+          <ForwardButton />
+        </DialogFooter>
+      </DialogContent>
+    </ForwardMessageProvider>
+  )
+}
+
+// Lives OUTSIDE Composer.Frame but can submit!
+function ForwardButton() {
+  const { actions: { submit } } = use(ComposerContext)
+  return <button onClick={submit}>Forward</button>
+}
+
+// Lives OUTSIDE Composer.Frame but can read state!
+function MessagePreview() {
+  const { state } = use(ComposerContext)
+  return <Preview content={state.input} />
+}
+```
+
+The provider boundary matters, not visual nesting.
+
+---
+
+## 5. Lift State into Provider Components
+
+**Impact: HIGH** - Enables state sharing outside component boundaries
+
+Move state into dedicated providers so sibling components can access it.
+
+**Incorrect: state trapped inside component**
+
+```tsx
+function ForwardMessageComposer() {
+  const [state, setState] = useState(initialState)
+
+  return (
+    <div>
+      <Input value={state.input} onChange={...} />
+      <SubmitButton onClick={...} />
+    </div>
+  )
+}
+
+// Problem: How does this button access composer state?
+function ForwardMessageDialog() {
+  return (
+    <Dialog>
+      <ForwardMessageComposer />
+      <MessagePreview /> {/* Needs composer state */}
+      <ForwardButton />  {/* Needs to call submit */}
+    </Dialog>
+  )
+}
+```
+
+**Correct: state lifted to provider**
+
+```tsx
+function ForwardMessageProvider({ children }: Props) {
+  const [state, setState] = useState(initialState)
+  const forwardMessage = useForwardMessage()
+  const inputRef = useRef<HTMLTextAreaElement>(null)
+
+  return (
+    <ComposerContext.Provider value={{ state, actions: { update: setState, submit: forwardMessage }, meta: { inputRef } }}>
+      {children}
+    </ComposerContext.Provider>
+  )
+}
+
+function ForwardMessageDialog() {
+  return (
+    <ForwardMessageProvider>
+      <Dialog>
+        <ForwardMessageComposer />
+        <MessagePreview />
+        <ForwardButton />
+      </Dialog>
+    </ForwardMessageProvider>
+  )
+}
+
+function ForwardButton() {
+  const { actions } = use(ComposerContext)
+  return <button onClick={actions.submit}>Forward</button>
+}
+```
+
+Components just need to be within the provider, not visually nested.
+
+---
+
+## 6. Create Explicit Component Variants
+
+**Impact: MEDIUM** - Self-documenting code
+
+Instead of boolean props, create explicit variants.
+
+**Incorrect: one component, many modes**
+
+```tsx
+<Composer isThread isDMThread={false} isEditing={false} channelId="123" />
+```
+
+**Correct: explicit variants**
+
+```tsx
+<ThreadComposer channelId="123" />
+<EditMessageComposer messageId="456" />
+<ForwardMessageComposer messageId="789" />
+```
+
+**Implementation:**
+
+```tsx
+function ThreadComposer({ channelId }: { channelId: string }) {
+  return (
+    <ThreadProvider channelId={channelId}>
+      <Composer.Frame>
+        <Composer.Input />
+        <AlsoSendToChannel />
+        <Composer.Footer>
+          <FormattingTools />
+          <SendButton />
+        </Composer.Footer>
+      </Composer.Frame>
+    </ThreadProvider>
+  )
+}
+
+function EditMessageComposer({ messageId }: { messageId: string }) {
+  return (
+    <EditProvider messageId={messageId}>
+      <Composer.Frame>
+        <Composer.Input />
+        <Composer.Footer>
+          <CancelButton />
+          <SaveButton />
+        </Composer.Footer>
+      </Composer.Frame>
+    </EditProvider>
+  )
+}
+```
+
+Each variant is explicit about what provider/state, UI elements, and actions it uses.
+
+---
+
+## 7. Prefer Children Over Render Props
+
+**Impact: MEDIUM** - Cleaner composition
+
+Use `children` instead of `renderX` props.
+
+**Incorrect: render props**
+
+```tsx
+function Composer({
+  renderHeader,
+  renderFooter,
+  renderActions,
+}: Props) {
+  return (
+    <div>
+      {renderHeader?.()}
+      <Input />
+      {renderFooter ? renderFooter() : <Footer />}
+      {renderActions?.()}
+    </div>
+  )
+}
+
+// Awkward usage
+<Composer
+  renderHeader={() => <Header />}
+  renderFooter={() => (
+    <>
+      <FormattingTools />
+      <EmojiPicker />
+    </>
+  )}
+  renderActions={() => <SendButton />}
+/>
+```
+
+**Correct: compound components with children**
+
+```tsx
+function ComposerFrame({ children }: { children: React.ReactNode }) {
+  return <div className="composer">{children}</div>
+}
+
+function ComposerFooter({ children }: { children: React.ReactNode }) {
+  return <div className="composer-footer">{children}</div>
+}
+
+// Flexible usage
+<ComposerFrame>
+  <Header />
+  <ComposerInput />
+  <ComposerFooter>
+    <FormattingTools />
+    <EmojiPicker />
+    <SendButton />
+  </ComposerFooter>
+</ComposerFrame>
+```
+
+**When render props are appropriate:**
+
+```tsx
+// When parent needs to pass data back
+<List
+  items={users}
+  renderItem={(user) => <UserCard user={user} />}
+/>
+```
+
+---
+
+## 8. React 19 API Changes
+
+**Impact: MEDIUM** - Cleaner definitions
+
+> React 19+ only. Skip if using React 18 or earlier.
+
+**ref as regular prop (no forwardRef)**
+
+```tsx
+// Incorrect: forwardRef in React 19
+const ComposerInput = forwardRef<HTMLTextAreaElement, Props>((props, ref) => {
+  return <textarea ref={ref} {...props} />
+})
+
+// Correct: ref as regular prop
+function ComposerInput({ ref, ...props }: Props & { ref?: React.Ref<HTMLTextAreaElement> }) {
+  return <textarea ref={ref} {...props} />
+}
+```
+
+**use() instead of useContext()**
+
+```tsx
+// Incorrect: useContext in React 19
+const value = useContext(MyContext)
+
+// Correct: use()
+const value = use(MyContext)
+```
+
+`use()` can be called conditionally, unlike `useContext()`.
+
+---
+
+## Quick Reference
+
+| Pattern | Impact | When to Use |
+|---------|--------|-------------|
+| Avoid boolean props | CRITICAL | Component has multiple modes |
+| Compound components | HIGH | Complex configurable components |
+| Decouple state from UI | MEDIUM | Swappable state implementations |
+| Generic context interface | HIGH | Dependency-injectable components |
+| Lift state to provider | HIGH | Sibling components need shared state |
+| Explicit variants | MEDIUM | Self-documenting code |
+| Children over render props | MEDIUM | Static composition structure |
+| React 19 APIs | MEDIUM | Using React 19+ |

@@ -1,0 +1,309 @@
+---
+description: Critical React performance patterns for eliminating async waterfalls and optimizing bundle size. Use when dealing with slow loading, Promise.all, async/await parallelization, bundle size optimization, lazy loading, code splitting, barrel file imports, or tree shaking issues.
+globs: "*.tsx,*.jsx,*.ts,*.js"
+alwaysApply: false
+---
+
+# React Performance Critical Patterns
+
+Performance optimization guide for React applications. Contains critical rules for eliminating async waterfalls and optimizing bundle size.
+
+## 1. Eliminating Waterfalls (CRITICAL)
+
+Waterfalls are the #1 performance killer. Each sequential await adds full network latency.
+
+### 1.1 Defer Await Until Needed
+
+**Impact: HIGH** - Avoids blocking unused code paths
+
+Move `await` operations into the branches where they're actually used.
+
+**Incorrect: blocks both branches**
+
+```typescript
+async function handleRequest(userId: string, skipProcessing: boolean) {
+  const userData = await fetchUserData(userId)
+
+  if (skipProcessing) {
+    return { skipped: true }
+  }
+
+  return processUserData(userData)
+}
+```
+
+**Correct: only blocks when needed**
+
+```typescript
+async function handleRequest(userId: string, skipProcessing: boolean) {
+  if (skipProcessing) {
+    return { skipped: true }
+  }
+
+  const userData = await fetchUserData(userId)
+  return processUserData(userData)
+}
+```
+
+**Early return optimization:**
+
+```typescript
+// Incorrect: always fetches permissions
+async function updateResource(resourceId: string, userId: string) {
+  const permissions = await fetchPermissions(userId)
+  const resource = await getResource(resourceId)
+
+  if (!resource) {
+    return { error: 'Not found' }
+  }
+
+  if (!permissions.canEdit) {
+    return { error: 'Forbidden' }
+  }
+
+  return await updateResourceData(resource, permissions)
+}
+
+// Correct: fetches only when needed
+async function updateResource(resourceId: string, userId: string) {
+  const resource = await getResource(resourceId)
+
+  if (!resource) {
+    return { error: 'Not found' }
+  }
+
+  const permissions = await fetchPermissions(userId)
+
+  if (!permissions.canEdit) {
+    return { error: 'Forbidden' }
+  }
+
+  return await updateResourceData(resource, permissions)
+}
+```
+
+### 1.2 Promise.all() for Independent Operations
+
+**Impact: CRITICAL** - 2-10x improvement
+
+When async operations have no interdependencies, execute them concurrently.
+
+**Incorrect: sequential execution, 3 round trips**
+
+```typescript
+const user = await fetchUser()
+const posts = await fetchPosts()
+const comments = await fetchComments()
+```
+
+**Correct: parallel execution, 1 round trip**
+
+```typescript
+const [user, posts, comments] = await Promise.all([
+  fetchUser(),
+  fetchPosts(),
+  fetchComments()
+])
+```
+
+### 1.3 Dependency-Based Parallelization
+
+**Impact: CRITICAL** - 2-10x improvement
+
+For operations with partial dependencies, maximize parallelism by starting independent operations immediately.
+
+**Incorrect: config waits for user unnecessarily**
+
+```typescript
+const [user, config] = await Promise.all([
+  fetchUser(),
+  fetchConfig()
+])
+const profile = await fetchProfile(user.id)
+```
+
+**Correct: config and profile run in parallel**
+
+```typescript
+const userPromise = fetchUser()
+const profilePromise = userPromise.then(user => fetchProfile(user.id))
+
+const [user, config, profile] = await Promise.all([
+  userPromise,
+  fetchConfig(),
+  profilePromise
+])
+```
+
+**Alternative with better-all library:**
+
+```typescript
+import { all } from 'better-all'
+
+const { user, config, profile } = await all({
+  async user() { return fetchUser() },
+  async config() { return fetchConfig() },
+  async profile() {
+    return fetchProfile((await this.$.user).id)
+  }
+})
+```
+
+Reference: [better-all](https://github.com/shuding/better-all)
+
+---
+
+## 2. Bundle Size Optimization (CRITICAL)
+
+Reducing initial bundle size improves Time to Interactive and Largest Contentful Paint.
+
+### 2.1 Avoid Barrel File Imports
+
+**Impact: CRITICAL** - 200-800ms import cost, slow builds
+
+Import directly from source files instead of barrel files to avoid loading thousands of unused modules.
+
+Popular icon and component libraries can have up to 10,000 re-exports. For many React packages, it takes 200-800ms just to import them.
+
+**Why tree-shaking doesn't help:** When a library is marked as external, the bundler can't optimize it.
+
+**Incorrect: imports entire library**
+
+```tsx
+import { Check, X, Menu } from 'lucide-react'
+// Loads 1,583 modules, takes ~2.8s extra in dev
+
+import { Button, TextField } from '@mui/material'
+// Loads 2,225 modules, takes ~4.2s extra in dev
+```
+
+**Correct: imports only what you need**
+
+```tsx
+import Check from 'lucide-react/dist/esm/icons/check'
+import X from 'lucide-react/dist/esm/icons/x'
+import Menu from 'lucide-react/dist/esm/icons/menu'
+// Loads only 3 modules (~2KB vs ~1MB)
+
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
+```
+
+**Libraries commonly affected:** `lucide-react`, `@mui/material`, `@mui/icons-material`, `@tabler/icons-react`, `react-icons`, `@headlessui/react`, `@radix-ui/react-*`, `lodash`, `ramda`, `date-fns`, `rxjs`, `react-use`.
+
+Direct imports provide 15-70% faster dev boot, 28% faster builds, 40% faster cold starts.
+
+### 2.2 Conditional Module Loading
+
+**Impact: HIGH** - Loads large data only when needed
+
+Load large data or modules only when a feature is activated.
+
+**Example: lazy-load animation frames**
+
+```tsx
+function AnimationPlayer({ enabled, setEnabled }: Props) {
+  const [frames, setFrames] = useState<Frame[] | null>(null)
+
+  useEffect(() => {
+    if (enabled && !frames && typeof window !== 'undefined') {
+      import('./animation-frames.js')
+        .then(mod => setFrames(mod.frames))
+        .catch(() => setEnabled(false))
+    }
+  }, [enabled, frames, setEnabled])
+
+  if (!frames) return <Placeholder />
+  return <Player frames={frames} />
+}
+```
+
+### 2.3 Preload Based on User Intent
+
+**Impact: MEDIUM** - Reduces perceived latency
+
+Preload heavy bundles before they're needed.
+
+**Example: preload on hover/focus**
+
+```tsx
+function EditorButton({ onClick }: { onClick: () => void }) {
+  const preload = () => {
+    if (typeof window !== 'undefined') {
+      void import('./monaco-editor')
+    }
+  }
+
+  return (
+    <button
+      onClick={onClick}
+      onMouseEnter={preload}
+      onFocus={preload}
+    >
+      Open Editor
+    </button>
+  )
+}
+```
+
+**Example: preload when feature flag is enabled**
+
+```tsx
+function FlagsProvider({ children, flags }: Props) {
+  useEffect(() => {
+    if (flags.editorEnabled && typeof window !== 'undefined') {
+      void import('./monaco-editor').then(mod => mod.init())
+    }
+  }, [flags.editorEnabled])
+
+  return <FlagsContext.Provider value={flags}>
+    {children}
+  </FlagsContext.Provider>
+}
+```
+
+### 2.4 Dynamic Imports for Heavy Components
+
+**Impact: CRITICAL** - Directly affects TTI and LCP
+
+Use React.lazy() to lazy-load large components not needed on initial render.
+
+**Incorrect: Monaco bundles with main chunk ~300KB**
+
+```tsx
+import { MonacoEditor } from './monaco-editor'
+
+function CodePanel({ code }: { code: string }) {
+  return <MonacoEditor value={code} />
+}
+```
+
+**Correct: Monaco loads on demand**
+
+```tsx
+import { lazy, Suspense } from 'react'
+
+const MonacoEditor = lazy(() => import('./monaco-editor').then(m => ({ default: m.MonacoEditor })))
+
+function CodePanel({ code }: { code: string }) {
+  return (
+    <Suspense fallback={<div>Loading editor...</div>}>
+      <MonacoEditor value={code} />
+    </Suspense>
+  )
+}
+```
+
+---
+
+## Quick Reference
+
+| Pattern | Impact | When to Use |
+|---------|--------|-------------|
+| Defer await | HIGH | Conditional async operations |
+| Promise.all() | CRITICAL | Independent async operations |
+| Dependency parallelization | CRITICAL | Partial dependencies |
+| Direct imports | CRITICAL | Any barrel file library |
+| Conditional loading | HIGH | Large optional features |
+| Intent preloading | MEDIUM | Heavy components with user triggers |
+| React.lazy() | CRITICAL | Large components not needed initially |

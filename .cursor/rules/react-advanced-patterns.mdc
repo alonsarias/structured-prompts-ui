@@ -1,0 +1,256 @@
+---
+description: Advanced React patterns for refs, stable callbacks, useEffectEvent, and application initialization. Use when dealing with event handler refs, stable callback references, subscription management, effect dependencies, or one-time app initialization.
+globs: "*.tsx,*.jsx,*.ts,*.js"
+alwaysApply: false
+---
+
+# React Advanced Patterns
+
+Advanced patterns for specific cases requiring careful implementation.
+
+## 1. Initialize App Once, Not Per Mount
+
+**Impact: LOW-MEDIUM** - Avoids duplicate initialization in development
+
+Don't put app-wide initialization inside `useEffect([])`. Components can remount (especially in React StrictMode), causing effects to re-run. Use a module-level guard instead.
+
+**Incorrect: runs twice in dev, re-runs on remount**
+
+```tsx
+function App() {
+  useEffect(() => {
+    loadFromStorage()
+    checkAuthToken()
+    initializeAnalytics()
+  }, [])
+
+  return <MainContent />
+}
+```
+
+**Correct: once per app load**
+
+```tsx
+let didInit = false
+
+function App() {
+  useEffect(() => {
+    if (didInit) return
+    didInit = true
+
+    loadFromStorage()
+    checkAuthToken()
+    initializeAnalytics()
+  }, [])
+
+  return <MainContent />
+}
+```
+
+**Alternative: initialize outside component**
+
+```tsx
+// Initialize at module level (runs once when module loads)
+loadFromStorage()
+checkAuthToken()
+initializeAnalytics()
+
+function App() {
+  return <MainContent />
+}
+```
+
+**Alternative: use a dedicated initialization module**
+
+```typescript
+// init.ts
+let initialized = false
+
+export function initApp() {
+  if (initialized) return
+  initialized = true
+
+  loadFromStorage()
+  checkAuthToken()
+  initializeAnalytics()
+}
+
+// App.tsx
+import { initApp } from './init'
+
+initApp() // Called once at module load
+
+function App() {
+  return <MainContent />
+}
+```
+
+Reference: [Initializing the application](https://react.dev/learn/you-might-not-need-an-effect#initializing-the-application)
+
+---
+
+## 2. Store Event Handlers in Refs
+
+**Impact: LOW** - Stable subscriptions
+
+Store callbacks in refs when used in effects that shouldn't re-subscribe on callback changes.
+
+**Incorrect: re-subscribes on every render**
+
+```tsx
+function useWindowEvent(event: string, handler: (e: Event) => void) {
+  useEffect(() => {
+    window.addEventListener(event, handler)
+    return () => window.removeEventListener(event, handler)
+  }, [event, handler]) // handler changes every render
+}
+```
+
+**Correct: stable subscription with ref**
+
+```tsx
+function useWindowEvent(event: string, handler: (e: Event) => void) {
+  const handlerRef = useRef(handler)
+
+  // Update ref on every render
+  useLayoutEffect(() => {
+    handlerRef.current = handler
+  })
+
+  useEffect(() => {
+    const eventHandler = (e: Event) => handlerRef.current(e)
+    window.addEventListener(event, eventHandler)
+    return () => window.removeEventListener(event, eventHandler)
+  }, [event]) // Only re-subscribes when event changes
+}
+```
+
+**Usage:**
+
+```tsx
+function MyComponent() {
+  const [count, setCount] = useState(0)
+
+  // Handler can use latest count without causing re-subscription
+  useWindowEvent('keydown', (e) => {
+    if (e.key === 'Enter') {
+      console.log('Current count:', count)
+    }
+  })
+
+  return <button onClick={() => setCount(c => c + 1)}>{count}</button>
+}
+```
+
+---
+
+## 3. useEffectEvent for Stable Callback Refs
+
+**Impact: LOW** - Prevents effect re-runs
+
+Access latest values in callbacks without adding them to dependency arrays. Prevents effect re-runs while avoiding stale closures.
+
+**Incorrect: effect re-runs on every callback change**
+
+```tsx
+function SearchInput({ onSearch }: { onSearch: (q: string) => void }) {
+  const [query, setQuery] = useState('')
+
+  useEffect(() => {
+    const timeout = setTimeout(() => onSearch(query), 300)
+    return () => clearTimeout(timeout)
+  }, [query, onSearch]) // onSearch changes cause extra effect runs
+}
+```
+
+**Correct: using React's useEffectEvent**
+
+```tsx
+import { useEffectEvent } from 'react'
+
+function SearchInput({ onSearch }: { onSearch: (q: string) => void }) {
+  const [query, setQuery] = useState('')
+  const onSearchEvent = useEffectEvent(onSearch)
+
+  useEffect(() => {
+    const timeout = setTimeout(() => onSearchEvent(query), 300)
+    return () => clearTimeout(timeout)
+  }, [query]) // onSearchEvent is stable, not a dependency
+}
+```
+
+**Manual implementation (if useEffectEvent not available):**
+
+```tsx
+function useEffectEvent<T extends (...args: any[]) => any>(handler: T): T {
+  const handlerRef = useRef(handler)
+
+  useLayoutEffect(() => {
+    handlerRef.current = handler
+  })
+
+  return useCallback((...args: Parameters<T>) => {
+    return handlerRef.current(...args)
+  }, []) as T
+}
+```
+
+**Common use cases:**
+
+- Event handlers passed as props
+- Callbacks that reference frequently changing state
+- Logging/analytics that shouldn't cause re-subscriptions
+
+**Example: stable interval callback**
+
+```tsx
+function Timer({ onTick }: { onTick: (count: number) => void }) {
+  const [count, setCount] = useState(0)
+  const onTickEvent = useEffectEvent(onTick)
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setCount(c => {
+        const newCount = c + 1
+        onTickEvent(newCount)
+        return newCount
+      })
+    }, 1000)
+
+    return () => clearInterval(id)
+  }, []) // No dependencies needed
+
+  return <div>Count: {count}</div>
+}
+```
+
+---
+
+## Quick Reference
+
+| Pattern | Impact | When to Use |
+|---------|--------|-------------|
+| Init once guard | LOW-MEDIUM | App-wide initialization |
+| Handler refs | LOW | Subscriptions with changing callbacks |
+| useEffectEvent | LOW | Callbacks in effects without dependencies |
+
+---
+
+## When to Use These Patterns
+
+These patterns are for specific edge cases. **Don't use them by default.**
+
+**Use init guard when:**
+- Setting up analytics/logging once
+- Loading persisted state from storage
+- Initializing third-party SDKs
+
+**Use handler refs when:**
+- Creating custom subscription hooks
+- Event handlers that change frequently
+- Preventing re-subscriptions to expensive listeners
+
+**Use useEffectEvent when:**
+- Callbacks passed as props are used in effects
+- You need latest values without effect re-runs
+- Building debounced/throttled handlers
