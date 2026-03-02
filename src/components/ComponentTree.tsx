@@ -28,6 +28,8 @@ import {
   type TreeNodeContextValue,
 } from "../contexts/TreeNodeContext";
 
+const NOOP = () => {};
+
 function RootNodeActions() {
   const { actions: { onAddChildClick } } = useTreeNodeContext();
   return (
@@ -397,14 +399,16 @@ function TreeNodeContainer({
   const [expanded, setExpanded] = useState(true);
   const isRoot = !!component.isRoot;
   const actualExpanded = isRoot ? true : expanded;
-  const handleToggle = isRoot ? () => {} : () => setExpanded(!expanded);
+  const handleToggle = useCallback(() => {
+    setExpanded((prev) => !prev);
+  }, []);
 
   return (
     <TreeNode
       component={component}
       level={level}
       expanded={actualExpanded}
-      onToggleExpanded={handleToggle}
+      onToggleExpanded={isRoot ? NOOP : handleToggle}
     />
   );
 }

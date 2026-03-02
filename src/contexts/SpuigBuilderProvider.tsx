@@ -32,7 +32,23 @@ export function SpuigBuilderProvider({
         clearAll: builder.clearAll,
       },
     }),
-    [builder]
+    [
+      builder.components,
+      builder.selectedComponentId,
+      builder.generatedSpuig,
+      builder.validationErrors,
+      builder.canUndo,
+      builder.canRedo,
+      builder.addComponent,
+      builder.removeComponent,
+      builder.updateComponent,
+      builder.setSelectedComponentId,
+      builder.moveComponentUpHandler,
+      builder.moveComponentDownHandler,
+      builder.undo,
+      builder.redo,
+      builder.clearAll,
+    ]
   );
 
   return (

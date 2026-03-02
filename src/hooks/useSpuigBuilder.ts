@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useRef } from "react";
 import type { SpuigComponent } from "../types";
 import {
   generateSpuigSyntax,
@@ -22,8 +22,16 @@ export const useSpuigBuilder = () => {
   const [selectedComponentId, setSelectedComponentId] = useState<string | null>(
     null
   );
-  const [history, setHistory] = useState<SpuigComponent[][]>([]);
-  const [historyIndex, setHistoryIndex] = useState(-1);
+  const [historyState, setHistoryState] = useState<{
+    entries: SpuigComponent[][];
+    index: number;
+  }>({ entries: [], index: -1 });
+
+  const componentsRef = useRef(components);
+  componentsRef.current = components;
+
+  const historyStateRef = useRef(historyState);
+  historyStateRef.current = historyState;
 
   const selectedComponent = useMemo(() => {
     if (!selectedComponentId) return null;
@@ -38,152 +46,143 @@ export const useSpuigBuilder = () => {
     return validateAllComponents(components);
   }, [components]);
 
-  const saveToHistory = useCallback(
-    (newComponents: SpuigComponent[]) => {
-      const newHistory = history.slice(0, historyIndex + 1);
-      newHistory.push([...newComponents]);
-      setHistory(newHistory);
-      setHistoryIndex(newHistory.length - 1);
-    },
-    [history, historyIndex]
-  );
+  const saveToHistory = useCallback(() => {
+    const currentComponents = componentsRef.current;
+    setHistoryState((prev) => {
+      const newEntries = prev.entries.slice(0, prev.index + 1);
+      newEntries.push([...currentComponents]);
+      return { entries: newEntries, index: newEntries.length - 1 };
+    });
+  }, []);
 
   const addComponent = useCallback(
     (componentName: string, parentId?: string) => {
       const newComponent = createEmptyComponent(componentName);
-
-      let newComponents: SpuigComponent[];
-      if (parentId) {
-        newComponents = addChildToComponent(components, parentId, newComponent);
-      } else {
-        // Add to root component if no parent specified
-        const rootComponent = components.find((c) => c.isRoot);
-        if (rootComponent) {
-          newComponents = addChildToComponent(
-            components,
-            rootComponent.id,
-            newComponent
-          );
+      saveToHistory();
+      setComponents((prev) => {
+        let newComponents: SpuigComponent[];
+        if (parentId) {
+          newComponents = addChildToComponent(prev, parentId, newComponent);
         } else {
-          // Fallback: create new root if none exists
-          const newRoot = createRootComponent();
-          newRoot.children.push(newComponent);
-          newComponents = [newRoot];
+          const rootComponent = prev.find((c) => c.isRoot);
+          if (rootComponent) {
+            newComponents = addChildToComponent(
+              prev,
+              rootComponent.id,
+              newComponent
+            );
+          } else {
+            const newRoot = createRootComponent();
+            newRoot.children.push(newComponent);
+            newComponents = [newRoot];
+          }
         }
-      }
-
-      saveToHistory(components);
-      setComponents(newComponents);
+        return newComponents;
+      });
       setSelectedComponentId(newComponent.id);
     },
-    [components, saveToHistory]
+    [saveToHistory]
   );
 
   const removeComponent = useCallback(
     (componentId: string) => {
-      // Prevent removing the root component
-      const componentToRemove = findComponentById(components, componentId);
-      if (componentToRemove?.isRoot) {
-        return;
-      }
-
-      const newComponents = removeComponentById(components, componentId);
-      saveToHistory(components);
-      setComponents(newComponents);
-
-      if (selectedComponentId === componentId) {
-        setSelectedComponentId(null);
-      }
+      saveToHistory();
+      setComponents((prev) => {
+        const componentToRemove = findComponentById(prev, componentId);
+        if (componentToRemove?.isRoot) {
+          return prev;
+        }
+        return removeComponentById(prev, componentId);
+      });
+      setSelectedComponentId((prev) => (prev === componentId ? null : prev));
     },
-    [components, selectedComponentId, saveToHistory]
+    [saveToHistory]
   );
 
   const updateComponent = useCallback(
     (componentId: string, updates: Partial<SpuigComponent>) => {
-      const newComponents = updateComponentById(
-        components,
-        componentId,
-        updates
+      saveToHistory();
+      setComponents((prev) =>
+        updateComponentById(prev, componentId, updates)
       );
-      saveToHistory(components);
-      setComponents(newComponents);
     },
-    [components, saveToHistory]
+    [saveToHistory]
   );
 
   const moveComponent = useCallback(
     (componentId: string, newParentId: string | null, index?: number) => {
-      // Remove from current location
-      const component = findComponentById(components, componentId);
-      if (!component) return;
+      saveToHistory();
+      setComponents((prev) => {
+        const component = findComponentById(prev, componentId);
+        if (!component) return prev;
 
-      let newComponents = removeComponentById(components, componentId);
+        let newComponents = removeComponentById(prev, componentId);
 
-      // Add to new location
-      if (newParentId) {
-        newComponents = addChildToComponent(
-          newComponents,
-          newParentId,
-          component
-        );
-      } else {
-        if (index !== undefined) {
-          newComponents.splice(index, 0, component);
+        if (newParentId) {
+          newComponents = addChildToComponent(
+            newComponents,
+            newParentId,
+            component
+          );
         } else {
-          newComponents.push(component);
+          if (index !== undefined) {
+            const arr = [...newComponents];
+            arr.splice(index, 0, component);
+            newComponents = arr;
+          } else {
+            newComponents = [...newComponents, component];
+          }
         }
-      }
-
-      saveToHistory(components);
-      setComponents(newComponents);
+        return newComponents;
+      });
     },
-    [components, saveToHistory]
+    [saveToHistory]
   );
 
   const moveComponentUpHandler = useCallback(
     (componentId: string) => {
-      if (canMoveComponentUp(components, componentId)) {
-        const newComponents = moveComponentUp(components, componentId);
-        saveToHistory(components);
-        setComponents(newComponents);
-      }
+      saveToHistory();
+      setComponents((prev) => {
+        if (!canMoveComponentUp(prev, componentId)) return prev;
+        return moveComponentUp(prev, componentId);
+      });
     },
-    [components, saveToHistory]
+    [saveToHistory]
   );
 
   const moveComponentDownHandler = useCallback(
     (componentId: string) => {
-      if (canMoveComponentDown(components, componentId)) {
-        const newComponents = moveComponentDown(components, componentId);
-        saveToHistory(components);
-        setComponents(newComponents);
-      }
+      saveToHistory();
+      setComponents((prev) => {
+        if (!canMoveComponentDown(prev, componentId)) return prev;
+        return moveComponentDown(prev, componentId);
+      });
     },
-    [components, saveToHistory]
+    [saveToHistory]
   );
 
   const undo = useCallback(() => {
-    if (historyIndex > 0) {
-      setHistoryIndex(historyIndex - 1);
-      setComponents([...history[historyIndex - 1]]);
-    }
-  }, [history, historyIndex]);
+    const { entries, index } = historyStateRef.current;
+    if (index <= 0) return;
+    setHistoryState((prev) => ({ ...prev, index: prev.index - 1 }));
+    setComponents([...entries[index - 1]]);
+  }, []);
 
   const redo = useCallback(() => {
-    if (historyIndex < history.length - 1) {
-      setHistoryIndex(historyIndex + 1);
-      setComponents([...history[historyIndex + 1]]);
-    }
-  }, [history, historyIndex]);
+    const { entries, index } = historyStateRef.current;
+    if (index >= entries.length - 1) return;
+    setHistoryState((prev) => ({ ...prev, index: prev.index + 1 }));
+    setComponents([...entries[index + 1]]);
+  }, []);
 
   const clearAll = useCallback(() => {
-    saveToHistory(components);
+    saveToHistory();
     setComponents([createRootComponent()]);
     setSelectedComponentId(null);
-  }, [components, saveToHistory]);
+  }, [saveToHistory]);
 
-  const canUndo = historyIndex > 0;
-  const canRedo = historyIndex < history.length - 1;
+  const canUndo = historyState.index > 0;
+  const canRedo = historyState.index < historyState.entries.length - 1;
 
   return {
     // State
