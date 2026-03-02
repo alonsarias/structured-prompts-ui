@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import {
   Paper,
   Typography,
@@ -20,79 +20,47 @@ import {
   KeyboardArrowDown as KeyboardArrowDownIcon,
   Edit as EditIcon,
 } from "@mui/icons-material";
-import type { SpuigComponent, ValidationError } from "../types";
+import type { SpuigComponent } from "../types";
 import { getMuiComponentByName } from "../data/muiComponents";
 import { canMoveComponentUp, canMoveComponentDown } from "../utils/spuigUtils";
 import ComponentSelector from "./ComponentSelector";
 import PropertyEditor from "./PropertyEditor";
+import { useSpuigBuilderContext } from "../contexts/SpuigBuilderContext";
+import {
+  TreeNodeContext,
+  useTreeNodeContext,
+  type TreeNodeContextValue,
+} from "../contexts/TreeNodeContext";
 
-interface ComponentTreeProps {
-  components: SpuigComponent[];
-  selectedComponentId: string | null;
-  onSelectComponent: (id: string | null) => void;
-  onDeleteComponent: (id: string) => void;
-  onAddChild: (parentId: string) => void;
-  onAddComponent: (componentName: string, parentId?: string) => void;
-  onMoveComponentUp: (componentId: string) => void;
-  onMoveComponentDown: (componentId: string) => void;
-  validationErrors: ValidationError[];
-  onUpdateComponent: (
-    componentId: string,
-    updates: Partial<SpuigComponent>
-  ) => void;
+function RootNodeActions() {
+  const { actions: { onAddChildClick } } = useTreeNodeContext();
+  return (
+    <Stack direction="row" spacing={0.5}>
+      <Tooltip title="Add component">
+        <IconButton
+          size="small"
+          onClick={onAddChildClick}
+          sx={{ p: 0.25 }}
+          color="inherit"
+        >
+          <AddIcon fontSize="small" />
+        </IconButton>
+      </Tooltip>
+    </Stack>
+  );
 }
 
-interface TreeNodeProps {
-  component: SpuigComponent;
-  level: number;
-  selectedComponentId: string | null;
-  onSelectComponent: (id: string) => void;
-  onDeleteComponent: (id: string) => void;
-  onAddChild: (parentId: string) => void;
-  onAddComponent: (componentName: string, parentId?: string) => void;
-  onMoveComponentUp: (componentId: string) => void;
-  onMoveComponentDown: (componentId: string) => void;
-  validationErrors: ValidationError[];
-  expanded: boolean;
-  onToggleExpanded: () => void;
-  onUpdateComponent: (
-    componentId: string,
-    updates: Partial<SpuigComponent>
-  ) => void;
-  allComponents: SpuigComponent[];
-}
+function ChildNodeActions() {
+  const {
+    state: { canMoveUp, canMoveDown, component, isSelected },
+    actions: { onAddChildClick, onEditClick },
+  } = useTreeNodeContext();
+  const { actions: builderActions } = useSpuigBuilderContext();
+  const muiComponent = getMuiComponentByName(component.componentName);
+  const muiAcceptsChildren = muiComponent?.acceptsChildren ?? false;
 
-interface TreeNodeActionsProps {
-  isRoot: boolean;
-  isSelected: boolean;
-  muiAcceptsChildren: boolean;
-  canMoveUp: boolean;
-  canMoveDown: boolean;
-  onSelectComponent: (id: string) => void;
-  onAddChildClick: (event: React.MouseEvent<HTMLElement>) => void;
-  onEditClick: (event: React.MouseEvent<HTMLElement>) => void;
-  onMoveUp: () => void;
-  onMoveDown: () => void;
-  onDelete: () => void;
-  componentId: string;
-}
-
-const TreeNodeActions: React.FC<TreeNodeActionsProps> = ({
-  isRoot,
-  isSelected,
-  muiAcceptsChildren,
-  canMoveUp,
-  canMoveDown,
-  onSelectComponent,
-  onAddChildClick,
-  onEditClick,
-  onMoveUp,
-  onMoveDown,
-  onDelete,
-  componentId,
-}) => (
-  <Stack direction="row" spacing={0.5}>
-    {!isRoot && (
+  return (
+    <Stack direction="row" spacing={0.5}>
       <Tooltip title="Edit properties">
         <IconButton
           size="small"
@@ -103,27 +71,25 @@ const TreeNodeActions: React.FC<TreeNodeActionsProps> = ({
           <EditIcon fontSize="small" />
         </IconButton>
       </Tooltip>
-    )}
-    <Tooltip title={isRoot ? "Add component" : "Add child component"}>
-      <IconButton
-        size="small"
-        onClick={onAddChildClick}
-        sx={{ p: 0.25 }}
-        color="inherit"
-        disabled={!isRoot && !muiAcceptsChildren}
-      >
-        <AddIcon fontSize="small" />
-      </IconButton>
-    </Tooltip>
-    {!isRoot && (
+      <Tooltip title="Add child component">
+        <IconButton
+          size="small"
+          onClick={onAddChildClick}
+          sx={{ p: 0.25 }}
+          color="inherit"
+          disabled={!muiAcceptsChildren}
+        >
+          <AddIcon fontSize="small" />
+        </IconButton>
+      </Tooltip>
       <Tooltip title="Move up">
         <span>
           <IconButton
             size="small"
             onClick={(e) => {
               e.stopPropagation();
-              if (!isSelected) onSelectComponent(componentId);
-              onMoveUp();
+              if (!isSelected) builderActions.setSelectedComponentId(component.id);
+              builderActions.moveComponentUp(component.id);
             }}
             sx={{ p: 0.25 }}
             color="inherit"
@@ -133,16 +99,14 @@ const TreeNodeActions: React.FC<TreeNodeActionsProps> = ({
           </IconButton>
         </span>
       </Tooltip>
-    )}
-    {!isRoot && (
       <Tooltip title="Move down">
         <span>
           <IconButton
             size="small"
             onClick={(e) => {
               e.stopPropagation();
-              if (!isSelected) onSelectComponent(componentId);
-              onMoveDown();
+              if (!isSelected) builderActions.setSelectedComponentId(component.id);
+              builderActions.moveComponentDown(component.id);
             }}
             sx={{ p: 0.25 }}
             color="inherit"
@@ -152,15 +116,13 @@ const TreeNodeActions: React.FC<TreeNodeActionsProps> = ({
           </IconButton>
         </span>
       </Tooltip>
-    )}
-    {!isRoot && (
       <Tooltip title="Delete component">
         <IconButton
           size="small"
           onClick={(e) => {
             e.stopPropagation();
-            if (!isSelected) onSelectComponent(componentId);
-            onDelete();
+            if (!isSelected) builderActions.setSelectedComponentId(component.id);
+            builderActions.removeComponent(component.id);
           }}
           sx={{ p: 0.25 }}
           color="inherit"
@@ -168,94 +130,96 @@ const TreeNodeActions: React.FC<TreeNodeActionsProps> = ({
           <DeleteIcon fontSize="small" />
         </IconButton>
       </Tooltip>
-    )}
-  </Stack>
-);
-
-interface TreeNodeHeaderProps {
-  component: SpuigComponent;
-  isSelected: boolean;
-  isRoot: boolean;
-  componentErrors: ValidationError[];
-  hasErrors: boolean;
-  hasWarnings: boolean;
+    </Stack>
+  );
 }
 
-const TreeNodeHeader: React.FC<TreeNodeHeaderProps> = ({
-  component,
-  isSelected,
-  isRoot,
-  componentErrors,
-  hasErrors,
-  hasWarnings,
-}) => (
-  <Box sx={{ flexGrow: 1, minWidth: 0 }}>
-    <Stack direction="row" alignItems="center" spacing={1}>
-      <Typography
-        variant="body2"
-        fontWeight={isSelected ? "medium" : "normal"}
-        noWrap
-        sx={{ opacity: isRoot ? 0.7 : 1 }}
-      >
-        {isRoot ? "Root" : component.componentName}
+function RootNodeHeader() {
+  return (
+    <Box sx={{ flexGrow: 1, minWidth: 0 }}>
+      <Typography variant="body2" noWrap sx={{ opacity: 0.7 }}>
+        Root
       </Typography>
-      {!isRoot && Object.keys(component.props).length > 0 && (
-        <Chip
-          label={Object.keys(component.props).length}
-          size="small"
-          variant="outlined"
-          sx={{ height: 16, fontSize: "0.625rem" }}
-        />
-      )}
-      {!isRoot && component.textContent && (
-        <Typography
-          variant="caption"
-          color="text.secondary"
-          sx={{
-            fontStyle: "italic",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            maxWidth: 100,
-          }}
-        >
-          "{component.textContent}"
-        </Typography>
-      )}
-    </Stack>
-    {(hasErrors || hasWarnings) && (
-      <Stack direction="row" spacing={0.5} sx={{ mt: 0.25 }}>
-        {componentErrors.map((error) => (
-          <Tooltip key={error.id} title={error.message}>
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              {error.severity === "error" ? (
-                <ErrorIcon sx={{ fontSize: 12, color: "error.main" }} />
-              ) : (
-                <WarningIcon sx={{ fontSize: 12, color: "warning.main" }} />
-              )}
-            </Box>
-          </Tooltip>
-        ))}
-      </Stack>
-    )}
-  </Box>
-);
+    </Box>
+  );
+}
 
-const TreeNode: React.FC<TreeNodeProps> = ({
+function ChildNodeHeader() {
+  const {
+    state: {
+      component,
+      isSelected,
+      componentErrors,
+      hasErrors,
+      hasWarnings,
+    },
+  } = useTreeNodeContext();
+
+  return (
+    <Box sx={{ flexGrow: 1, minWidth: 0 }}>
+      <Stack direction="row" alignItems="center" spacing={1}>
+        <Typography
+          variant="body2"
+          fontWeight={isSelected ? "medium" : "normal"}
+          noWrap
+        >
+          {component.componentName}
+        </Typography>
+        {Object.keys(component.props).length > 0 && (
+          <Chip
+            label={Object.keys(component.props).length}
+            size="small"
+            variant="outlined"
+            sx={{ height: 16, fontSize: "0.625rem" }}
+          />
+        )}
+        {component.textContent && (
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            sx={{
+              fontStyle: "italic",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              maxWidth: 100,
+            }}
+          >
+            "{component.textContent}"
+          </Typography>
+        )}
+      </Stack>
+      {(hasErrors || hasWarnings) && (
+        <Stack direction="row" spacing={0.5} sx={{ mt: 0.25 }}>
+          {componentErrors.map((error) => (
+            <Tooltip key={error.id} title={error.message}>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                {error.severity === "error" ? (
+                  <ErrorIcon sx={{ fontSize: 12, color: "error.main" }} />
+                ) : (
+                  <WarningIcon sx={{ fontSize: 12, color: "warning.main" }} />
+                )}
+              </Box>
+            </Tooltip>
+          ))}
+        </Stack>
+      )}
+    </Box>
+  );
+}
+
+function TreeNode({
   component,
   level,
-  selectedComponentId,
-  onSelectComponent,
-  onDeleteComponent,
-  onAddChild,
-  onAddComponent,
-  onMoveComponentUp,
-  onMoveComponentDown,
-  validationErrors,
   expanded,
   onToggleExpanded,
-  onUpdateComponent,
-  allComponents,
-}) => {
+}: {
+  component: SpuigComponent;
+  level: number;
+  expanded: boolean;
+  onToggleExpanded: () => void;
+}) {
+  const { state: builderState, actions: builderActions } =
+    useSpuigBuilderContext();
   const [selectorAnchorEl, setSelectorAnchorEl] = useState<HTMLElement | null>(
     null
   );
@@ -263,193 +227,196 @@ const TreeNode: React.FC<TreeNodeProps> = ({
   const [propertyEditorAnchorEl, setPropertyEditorAnchorEl] =
     useState<HTMLElement | null>(null);
 
-  const muiComponent = getMuiComponentByName(component.componentName);
-  const componentErrors = validationErrors.filter(
+  const componentErrors = builderState.validationErrors.filter(
     (error) => error.componentId === component.id
   );
   const hasErrors = componentErrors.some((error) => error.severity === "error");
   const hasWarnings = componentErrors.some(
     (error) => error.severity === "warning"
   );
-  const isSelected = selectedComponentId === component.id;
+  const isSelected = builderState.selectedComponentId === component.id;
   const hasChildren = component.children.length > 0;
-  const isRoot = component.isRoot;
+  const isRoot = !!component.isRoot;
 
-  // Calculate move capabilities for this specific component
-  const canMoveUp = canMoveComponentUp(allComponents, component.id);
-  const canMoveDown = canMoveComponentDown(allComponents, component.id);
+  const canMoveUp = canMoveComponentUp(
+    builderState.components,
+    component.id
+  );
+  const canMoveDown = canMoveComponentDown(
+    builderState.components,
+    component.id
+  );
 
-  const handleAddChildClick = (event: React.MouseEvent<HTMLElement>) => {
-    event.stopPropagation();
-    if (!isSelected) {
-      onSelectComponent(component.id);
-    }
-    setSelectorAnchorEl(event.currentTarget);
-    setSelectedParentId(component.id);
-    onAddChild(component.id);
-  };
+  const handleAddChildClick = useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      event.stopPropagation();
+      if (!isSelected) {
+        builderActions.setSelectedComponentId(component.id);
+      }
+      setSelectorAnchorEl(event.currentTarget);
+      setSelectedParentId(component.id);
+    },
+    [isSelected, component.id, builderActions]
+  );
 
   const handleCloseSelectorDialog = () => {
     setSelectorAnchorEl(null);
     setSelectedParentId(null);
   };
 
-  const handleAddComponent = (componentName: string, parentId?: string) => {
-    onAddComponent(componentName, parentId);
-    handleCloseSelectorDialog();
-  };
-
-  const handleEditClick = (event: React.MouseEvent<HTMLElement>) => {
-    event.stopPropagation();
-    if (!isSelected) {
-      onSelectComponent(component.id);
-    }
-    setPropertyEditorAnchorEl(event.currentTarget);
-  };
+  const handleEditClick = useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      event.stopPropagation();
+      if (!isSelected) {
+        builderActions.setSelectedComponentId(component.id);
+      }
+      setPropertyEditorAnchorEl(event.currentTarget);
+    },
+    [isSelected, component.id, builderActions]
+  );
 
   const handleClosePropertyEditor = () => {
     setPropertyEditorAnchorEl(null);
   };
 
+  const nodeValue: TreeNodeContextValue = useMemo(
+    () => ({
+      state: {
+        component,
+        level,
+        isSelected,
+        isRoot,
+        componentErrors,
+        hasErrors,
+        hasWarnings,
+        canMoveUp,
+        canMoveDown,
+        expanded,
+      },
+      actions: {
+        onToggleExpanded,
+        onAddChildClick: handleAddChildClick,
+        onEditClick: handleEditClick,
+      },
+    }),
+    [
+      component,
+      level,
+      isSelected,
+      isRoot,
+      componentErrors,
+      hasErrors,
+      hasWarnings,
+      canMoveUp,
+      canMoveDown,
+      expanded,
+      onToggleExpanded,
+      handleAddChildClick,
+      handleEditClick,
+    ]
+  );
+
   return (
-    <Box>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          py: 0.5,
-          px: 1,
-          ml: level * 2,
-          borderRadius: 1,
-          backgroundColor: isSelected ? "action.selected" : "transparent",
-          border: isSelected ? "1px solid" : "1px solid transparent",
-          borderColor: isSelected ? "primary.main" : "transparent",
-          cursor: "pointer",
-          "&:hover": {
-            backgroundColor: isSelected ? "action.selected" : "action.hover",
-          },
-        }}
-        onClick={() => onSelectComponent(component.id)}
-      >
-        {!isRoot && hasChildren && (
-          <IconButton
-            size="small"
-            onClick={(e) => {
-              e.stopPropagation();
-              onToggleExpanded();
-            }}
-            sx={{ p: 0.25, mr: 0.5 }}
-          >
-            {expanded ? (
-              <ExpandMoreIcon fontSize="small" />
-            ) : (
-              <ChevronRightIcon fontSize="small" />
-            )}
-          </IconButton>
+    <TreeNodeContext.Provider value={nodeValue}>
+      <Box>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            py: 0.5,
+            px: 1,
+            ml: level * 2,
+            borderRadius: 1,
+            backgroundColor: isSelected ? "action.selected" : "transparent",
+            border: isSelected ? "1px solid" : "1px solid transparent",
+            borderColor: isSelected ? "primary.main" : "transparent",
+            cursor: "pointer",
+            "&:hover": {
+              backgroundColor: isSelected ? "action.selected" : "action.hover",
+            },
+          }}
+          onClick={() => builderActions.setSelectedComponentId(component.id)}
+        >
+          {!isRoot && hasChildren && (
+            <IconButton
+              size="small"
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleExpanded();
+              }}
+              sx={{ p: 0.25, mr: 0.5 }}
+            >
+              {expanded ? (
+                <ExpandMoreIcon fontSize="small" />
+              ) : (
+                <ChevronRightIcon fontSize="small" />
+              )}
+            </IconButton>
+          )}
+
+          {isRoot ? <RootNodeHeader /> : <ChildNodeHeader />}
+
+          {isRoot ? <RootNodeActions /> : <ChildNodeActions />}
+        </Box>
+
+        {/* Children */}
+        {expanded && hasChildren && (
+          <Box>
+            {component.children.map((child) => (
+              <TreeNodeContainer
+                key={child.id}
+                component={child}
+                level={level + 1}
+              />
+            ))}
+          </Box>
         )}
 
-        <TreeNodeHeader
-          component={component}
-          isSelected={isSelected}
-          isRoot={!!isRoot}
-          componentErrors={componentErrors}
-          hasErrors={hasErrors}
-          hasWarnings={hasWarnings}
+        {/* Component Selector Dialog */}
+        <ComponentSelector
+          open={Boolean(selectorAnchorEl)}
+          anchorEl={selectorAnchorEl}
+          onClose={handleCloseSelectorDialog}
+          selectedParentId={selectedParentId}
         />
 
-        <TreeNodeActions
-          isRoot={!!isRoot}
-          isSelected={isSelected}
-          muiAcceptsChildren={muiComponent?.acceptsChildren ?? false}
-          canMoveUp={canMoveUp}
-          canMoveDown={canMoveDown}
-          onSelectComponent={onSelectComponent}
-          onAddChildClick={handleAddChildClick}
-          onEditClick={handleEditClick}
-          onMoveUp={() => onMoveComponentUp(component.id)}
-          onMoveDown={() => onMoveComponentDown(component.id)}
-          onDelete={() => onDeleteComponent(component.id)}
-          componentId={component.id}
+        {/* Property Editor Popover */}
+        <PropertyEditor
+          open={Boolean(propertyEditorAnchorEl)}
+          anchorEl={propertyEditorAnchorEl}
+          onClose={handleClosePropertyEditor}
         />
       </Box>
-
-      {/* Children */}
-      {expanded && hasChildren && (
-        <Box>
-          {component.children.map((child) => (
-            <TreeNodeContainer
-              key={child.id}
-              component={child}
-              level={level + 1}
-              selectedComponentId={selectedComponentId}
-              onSelectComponent={onSelectComponent}
-              onDeleteComponent={onDeleteComponent}
-              onAddChild={onAddChild}
-              onAddComponent={onAddComponent}
-              onMoveComponentUp={onMoveComponentUp}
-              onMoveComponentDown={onMoveComponentDown}
-              validationErrors={validationErrors}
-              onUpdateComponent={onUpdateComponent}
-              allComponents={allComponents}
-            />
-          ))}
-        </Box>
-      )}
-
-      {/* Component Selector Dialog */}
-      <ComponentSelector
-        open={Boolean(selectorAnchorEl)}
-        anchorEl={selectorAnchorEl}
-        onClose={handleCloseSelectorDialog}
-        onAddComponent={handleAddComponent}
-        selectedParentId={selectedParentId}
-      />
-
-      {/* Property Editor Popover */}
-      <PropertyEditor
-        open={Boolean(propertyEditorAnchorEl)}
-        anchorEl={propertyEditorAnchorEl}
-        onClose={handleClosePropertyEditor}
-        component={component}
-        onUpdateComponent={onUpdateComponent}
-        validationErrors={validationErrors}
-      />
-    </Box>
+    </TreeNodeContext.Provider>
   );
-};
+}
 
-// Container component to manage expanded state
-const TreeNodeContainer: React.FC<
-  Omit<TreeNodeProps, "expanded" | "onToggleExpanded">
-> = (props) => {
-  const [expanded, setExpanded] = React.useState(true);
-
-  // Root components should always be expanded
-  const isRoot = props.component.isRoot;
+function TreeNodeContainer({
+  component,
+  level,
+}: {
+  component: SpuigComponent;
+  level: number;
+}) {
+  const [expanded, setExpanded] = useState(true);
+  const isRoot = !!component.isRoot;
   const actualExpanded = isRoot ? true : expanded;
   const handleToggle = isRoot ? () => {} : () => setExpanded(!expanded);
 
   return (
     <TreeNode
-      {...props}
+      component={component}
+      level={level}
       expanded={actualExpanded}
       onToggleExpanded={handleToggle}
     />
   );
-};
+}
 
-const ComponentTree: React.FC<ComponentTreeProps> = ({
-  components,
-  selectedComponentId,
-  onSelectComponent,
-  onDeleteComponent,
-  onAddChild,
-  onAddComponent,
-  onMoveComponentUp,
-  onMoveComponentDown,
-  validationErrors,
-  onUpdateComponent,
-}) => {
+const ComponentTree: React.FC = () => {
+  const { state } = useSpuigBuilderContext();
+  const { components, validationErrors } = state;
+
   const globalErrors = validationErrors.filter(
     (error) => error.type === "invalid-hierarchy"
   );
@@ -481,16 +448,6 @@ const ComponentTree: React.FC<ComponentTreeProps> = ({
             key={component.id}
             component={component}
             level={0}
-            selectedComponentId={selectedComponentId}
-            onSelectComponent={onSelectComponent}
-            onDeleteComponent={onDeleteComponent}
-            onAddChild={onAddChild}
-            onAddComponent={onAddComponent}
-            onMoveComponentUp={onMoveComponentUp}
-            onMoveComponentDown={onMoveComponentDown}
-            validationErrors={validationErrors}
-            onUpdateComponent={onUpdateComponent}
-            allComponents={components}
           />
         ))}
       </Box>

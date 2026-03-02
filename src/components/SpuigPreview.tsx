@@ -15,12 +15,11 @@ import {
 } from "@mui/icons-material";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { useSpuigBuilderContext } from "../contexts/SpuigBuilderContext";
 
-interface SpuigPreviewProps {
-  spuigSyntax: string;
-}
-
-const SpuigPreview: React.FC<SpuigPreviewProps> = ({ spuigSyntax }) => {
+const SpuigPreview: React.FC = () => {
+  const { state } = useSpuigBuilderContext();
+  const spuigSyntax = state.generatedSpuig;
   const [copySuccess, setCopySuccess] = useState(false);
 
   const getFullPrompt = () => {

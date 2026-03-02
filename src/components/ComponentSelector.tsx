@@ -14,9 +14,9 @@ import {
 import { Add as AddIcon, Close as CloseIcon } from '@mui/icons-material';
 import { muiComponents, getAllCategories, searchComponents } from '../data/muiComponents';
 import type { MuiComponentDefinition } from '../types';
+import { useSpuigBuilderContext } from '../contexts/SpuigBuilderContext';
 
 interface ComponentSelectorProps {
-  onAddComponent: (componentName: string, parentId?: string) => void;
   selectedParentId?: string | null;
   open: boolean;
   anchorEl: HTMLElement | null;
@@ -24,12 +24,12 @@ interface ComponentSelectorProps {
 }
 
 const ComponentSelector: React.FC<ComponentSelectorProps> = ({
-  onAddComponent,
   selectedParentId,
   open,
   anchorEl,
   onClose,
 }) => {
+  const { actions } = useSpuigBuilderContext();
   const [selectedComponent, setSelectedComponent] = useState<MuiComponentDefinition | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
@@ -48,7 +48,7 @@ const ComponentSelector: React.FC<ComponentSelectorProps> = ({
 
   const handleAddComponent = () => {
     if (selectedComponent) {
-      onAddComponent(selectedComponent.name, selectedParentId || undefined);
+      actions.addComponent(selectedComponent.name, selectedParentId || undefined);
       setSelectedComponent(null);
       setSearchQuery('');
       onClose();

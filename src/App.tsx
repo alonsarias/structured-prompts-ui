@@ -18,43 +18,29 @@ import {
 } from '@mui/icons-material';
 import { Analytics } from '@vercel/analytics/react';
 
-import { useSpuigBuilder } from './hooks/useSpuigBuilder';
+import { SpuigBuilderProvider } from './contexts/SpuigBuilderProvider';
+import { useSpuigBuilderContext } from './contexts/SpuigBuilderContext';
 import { theme } from './theme';
 import ComponentTree from './components/ComponentTree';
 import SpuigPreview from './components/SpuigPreview';
 
 function App() {
-  const {
-    components,
-    selectedComponentId,
-    generatedSpuig,
-    validationErrors,
-    addComponent,
-    removeComponent,
-    updateComponent,
-    setSelectedComponentId,
-    moveComponentUpHandler,
-    moveComponentDownHandler,
-    undo,
-    redo,
-    canUndo,
-    canRedo,
-    clearAll,
-  } = useSpuigBuilder();
-
-  const handleAddComponent = (componentName: string, parentId?: string) => {
-    addComponent(componentName, parentId);
-  };
-
-  const handleAddChild = () => {
-    // This is now handled internally by the ComponentTree via the dialog
-  };
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <SpuigBuilderProvider>
+        <AppContent />
+      </SpuigBuilderProvider>
+      <Analytics />
+    </ThemeProvider>
+  );
+}
 
-      {/* App Bar */}
+function AppContent() {
+  const { state, actions } = useSpuigBuilderContext();
+
+  return (
+    <>
       <AppBar position="static" elevation={1}>
         <Toolbar>
           <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
@@ -74,8 +60,8 @@ function App() {
               <span>
                 <IconButton
                   color="inherit"
-                  onClick={undo}
-                  disabled={!canUndo}
+                  onClick={actions.undo}
+                  disabled={!state.canUndo}
                   size="small"
                 >
                   <UndoIcon />
@@ -87,8 +73,8 @@ function App() {
               <span>
                 <IconButton
                   color="inherit"
-                  onClick={redo}
-                  disabled={!canRedo}
+                  onClick={actions.redo}
+                  disabled={!state.canRedo}
                   size="small"
                 >
                   <RedoIcon />
@@ -98,7 +84,7 @@ function App() {
 
             <Tooltip title="Clear all components">
               <IconButton
-                onClick={clearAll}
+                onClick={actions.clearAll}
                 size="small"
                 color='inherit'
               >
@@ -121,7 +107,6 @@ function App() {
         </Toolbar>
       </AppBar>
 
-      {/* Main Content */}
       <Container maxWidth={false} sx={{
         py: 3,
         height: { xs: 'auto', lg: 'calc(100vh - 64px)' },
@@ -134,38 +119,23 @@ function App() {
           height: { xs: 'auto', lg: '100%' },
           overflow: { xs: 'visible', lg: 'hidden' }
         }}>
-          {/* Left Panel - Component Tree */}
           <Box sx={{
             flex: { xs: '1', lg: '1' },
             minHeight: 'auto',
           }}>
-            <ComponentTree
-              components={components}
-              selectedComponentId={selectedComponentId}
-              onSelectComponent={setSelectedComponentId}
-              onDeleteComponent={removeComponent}
-              onAddChild={handleAddChild}
-              onAddComponent={handleAddComponent}
-              onMoveComponentUp={moveComponentUpHandler}
-              onMoveComponentDown={moveComponentDownHandler}
-              validationErrors={validationErrors}
-              onUpdateComponent={updateComponent}
-            />
+            <ComponentTree />
           </Box>
 
-          {/* Right Panel - SPUIG Preview */}
           <Box sx={{
             flex: { xs: '1', lg: '2' },
             minWidth: 0,
             minHeight: 'auto'
           }}>
-            <SpuigPreview spuigSyntax={generatedSpuig} />
+            <SpuigPreview />
           </Box>
         </Box>
       </Container>
-
-      <Analytics />
-    </ThemeProvider>
+    </>
   );
 }
 

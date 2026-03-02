@@ -17,31 +17,18 @@ import {
   IconButton,
 } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
-import type { SpuigComponent, ValidationError } from '../types';
 import { getMuiComponentByName } from '../data/muiComponents';
-
-interface PropertyEditorProps {
-  component: SpuigComponent | null;
-  onUpdateComponent: (componentId: string, updates: Partial<SpuigComponent>) => void;
-  validationErrors: ValidationError[];
-  open: boolean;
-  anchorEl: HTMLElement | null;
-  onClose: () => void;
-}
+import { useSpuigBuilderContext } from '../contexts/SpuigBuilderContext';
+import { useTreeNodeContext } from '../contexts/TreeNodeContext';
 
 interface PropertyEditorContentProps {
-  component: SpuigComponent | null;
-  onUpdateComponent: (componentId: string, updates: Partial<SpuigComponent>) => void;
-  validationErrors: ValidationError[];
   onClose: () => void;
 }
 
 const PropertyEditorContent: React.FC<PropertyEditorContentProps> = ({
-  component,
-  onUpdateComponent,
-  validationErrors,
   onClose,
 }) => {
+  const { state: { component } } = useTreeNodeContext();
   if (!component) {
     return (
       <Paper elevation={1} sx={{ p: 2, width: 320, height: 400, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -51,27 +38,39 @@ const PropertyEditorContent: React.FC<PropertyEditorContentProps> = ({
       </Paper>
     );
   }
+  if (component.isRoot) return <RootPropertyInfo />;
+  return <ComponentPropertyEditor onClose={onClose} />;
+};
 
-  if (component.isRoot) {
-    return (
-      <Paper elevation={1} sx={{ p: 2, width: 320, height: 400 }}>
-        <Typography variant="h6" gutterBottom>
-          Root
+function RootPropertyInfo() {
+  return (
+    <Paper elevation={1} sx={{ p: 2, width: 320, height: 400 }}>
+      <Typography variant="h6" gutterBottom>
+        Root
+      </Typography>
+      <Typography variant="body2" color="text.secondary">
+        The Root acts as the container for your entire component structure.
+        It doesn&apos;t appear in the generated prompt and only supports adding child components.
+      </Typography>
+      <Box sx={{ mt: 2, p: 2, bgcolor: 'background.default', borderRadius: 1 }}>
+        <Typography variant="caption" color="text.secondary">
+          <strong>Note:</strong> You cannot edit properties of the Root.
+          Select a child component to edit its properties.
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          The Root acts as the container for your entire component structure.
-          It doesn't appear in the generated prompt and only supports adding child components.
-        </Typography>
-        <Box sx={{ mt: 2, p: 2, bgcolor: 'background.default', borderRadius: 1 }}>
-          <Typography variant="caption" color="text.secondary">
-            <strong>Note:</strong> You cannot edit properties of the Root.
-            Select a child component to edit its properties.
-          </Typography>
-        </Box>
-      </Paper>
-    );
-  }
+      </Box>
+    </Paper>
+  );
+}
 
+interface ComponentPropertyEditorProps {
+  onClose: () => void;
+}
+
+const ComponentPropertyEditor: React.FC<ComponentPropertyEditorProps> = ({
+  onClose,
+}) => {
+  const { state: { component } } = useTreeNodeContext();
+  const { state: { validationErrors }, actions: { updateComponent } } = useSpuigBuilderContext();
   const muiComponent = getMuiComponentByName(component.componentName);
   const componentErrors = validationErrors.filter(error => error.componentId === component.id);
 
@@ -84,11 +83,11 @@ const PropertyEditorContent: React.FC<PropertyEditorContentProps> = ({
       newProps[propName] = value;
     }
 
-    onUpdateComponent(component.id, { props: newProps });
+    updateComponent(component.id, { props: newProps });
   };
 
   const handleTextContentChange = (textContent: string) => {
-    onUpdateComponent(component.id, { textContent });
+    updateComponent(component.id, { textContent });
   };
 
   const renderPropEditor = (propDef: {
@@ -295,10 +294,13 @@ const PropertyEditorContent: React.FC<PropertyEditorContentProps> = ({
   );
 };
 
+interface PropertyEditorProps {
+  open: boolean;
+  anchorEl: HTMLElement | null;
+  onClose: () => void;
+}
+
 const PropertyEditor: React.FC<PropertyEditorProps> = ({
-  component,
-  onUpdateComponent,
-  validationErrors,
   open,
   anchorEl,
   onClose,
@@ -319,12 +321,7 @@ const PropertyEditor: React.FC<PropertyEditorProps> = ({
       invisible: true,
     }}
   >
-    <PropertyEditorContent
-      component={component}
-      onUpdateComponent={onUpdateComponent}
-      validationErrors={validationErrors}
-      onClose={onClose}
-    />
+    <PropertyEditorContent onClose={onClose} />
   </Popover>
 );
 
