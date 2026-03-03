@@ -1,0 +1,34 @@
+---
+description: Core project rule — always-on context for SPUIG
+alwaysApply: true
+---
+
+SPUIG (Structured Prompts for UI Generation) generates indentation-based structured prompts that describe MUI component trees for AI consumption.
+
+## Non-Obvious Conventions
+
+- All MUI imports must be direct paths (`import Button from "@mui/material/Button"`), never barrel imports (`import { Button } from "@mui/material"`). Same for `@mui/icons-material`. Barrel imports add 200-800ms and thousands of unused modules.
+- Context values always follow the `{ state, actions }` shape. State is read-only data, actions are callbacks. See `SpuigBuilderContext.ts` and `TreeNodeContext.ts` for the two context interfaces.
+- This is React 19 — use `use()` instead of `useContext()`, `ref` as a regular prop instead of `forwardRef`.
+- State updates that depend on current state must use functional form: `setState(prev => ...)`.
+- No test suite exists. There are no test commands, no test runner, no test files.
+
+## Landmines
+
+- The `isRoot` flag on `SpuigComponent` is special-cased throughout the entire codebase: Root components are excluded from SPUIG syntax output, skip validation, cannot be deleted or moved, and always render expanded. Any new feature touching components must account for `isRoot`.
+- `CodeHighlighter` is lazy-loaded via `React.lazy()` in `SpuigPreview.tsx`. Do not convert it to a static import — it pulls in the heavy `react-syntax-highlighter` bundle.
+- All component tree mutations go through immutable utility functions in `spuigUtils.ts` (`addChildToComponent`, `removeComponentById`, `updateComponentById`, etc.). Never mutate component state directly.
+- MUI component definitions live in JSON files under `src/data/components/`. The `muiComponents.ts` module aggregates them and provides indexed lookup via `getMuiComponentByName()`. Add new components by editing the JSON, not the aggregator.
+- History (undo/redo) uses refs (`componentsRef`, `historyStateRef`) to avoid stale closures. `saveToHistory()` must be called before any `setComponents` mutation.
+
+## Performance Rules (Progressive Disclosure)
+
+Detailed performance patterns are in dedicated rules — they apply automatically when relevant:
+
+- `react-performance-critical.mdc` — async waterfalls, Promise.all, bundle size, direct imports
+- `react-rerender-optimization.mdc` — derived state, memoization, useRef, transitions
+- `react-rendering-performance.mdc` — SVG animation, content-visibility, useTransition
+- `react-javascript-performance.mdc` — layout thrashing, index maps, caching, toSorted()
+- `react-composition-patterns.mdc` — compound components, context, boolean prop alternatives
+- `react-advanced-patterns.mdc` — init guards, handler refs, useEffectEvent
+- `react-client-data-fetching.mdc` — SWR, deduplicated listeners, localStorage
