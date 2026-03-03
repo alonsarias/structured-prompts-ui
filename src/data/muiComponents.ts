@@ -22,15 +22,22 @@ export const muiComponents: MuiComponentDefinition[] = [
   ...labData.components,
 ] as MuiComponentDefinition[];
 
+const muiComponentsByName = new Map(
+  muiComponents.map((comp) => [comp.name, comp])
+);
+
 export const getMuiComponentByName = (
   name: string
 ): MuiComponentDefinition | undefined => {
-  return muiComponents.find((comp) => comp.name === name);
+  return muiComponentsByName.get(name);
 };
 
 export const getAllCategories = (): string[] => {
-  const categories = muiComponents.map((comp) => comp.category);
-  return Array.from(new Set(categories)).sort();
+  const categorySet = new Set<string>();
+  for (const comp of muiComponents) {
+    categorySet.add(comp.category);
+  }
+  return [...categorySet].sort();
 };
 
 export const searchComponents = (query: string): MuiComponentDefinition[] => {

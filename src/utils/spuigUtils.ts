@@ -1,6 +1,22 @@
 import type { SpuigComponent, ValidationError, PropValue } from "../types";
 import { getMuiComponentByName } from "../data/muiComponents";
 
+const UUID_REGEX = /[xy]/g;
+
+function generateId(): string {
+  if (typeof crypto !== "undefined" && crypto.randomUUID) {
+    return crypto.randomUUID();
+  }
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+    UUID_REGEX,
+    function (c) {
+      const r = (Math.random() * 16) | 0;
+      const v = c === "x" ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    }
+  );
+}
+
 export const generateSpuigSyntax = (components: SpuigComponent[]): string => {
   const generateComponentSyntax = (
     component: SpuigComponent,
@@ -90,8 +106,11 @@ const validateComponent = (
   });
 
   // Validate prop types
+  const propsByName = new Map(
+    muiComponent.props.map((p) => [p.name, p])
+  );
   Object.entries(component.props).forEach(([propName, propValue]) => {
-    const propDef = muiComponent.props.find((p) => p.name === propName);
+    const propDef = propsByName.get(propName);
     if (
       propDef &&
       propValue !== undefined &&
@@ -262,21 +281,6 @@ export const createEmptyComponent = (componentName: string): SpuigComponent => {
     });
   }
 
-  // Generate UUID (fallback for environments without crypto.randomUUID)
-  const generateId = () => {
-    if (typeof crypto !== "undefined" && crypto.randomUUID) {
-      return crypto.randomUUID();
-    }
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
-      /[xy]/g,
-      function (c) {
-        const r = (Math.random() * 16) | 0;
-        const v = c === "x" ? r : (r & 0x3) | 0x8;
-        return v.toString(16);
-      }
-    );
-  };
-
   return {
     id: generateId(),
     componentName,
@@ -287,21 +291,6 @@ export const createEmptyComponent = (componentName: string): SpuigComponent => {
 };
 
 export const createRootComponent = (): SpuigComponent => {
-  // Generate UUID (fallback for environments without crypto.randomUUID)
-  const generateId = () => {
-    if (typeof crypto !== "undefined" && crypto.randomUUID) {
-      return crypto.randomUUID();
-    }
-    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
-      /[xy]/g,
-      function (c) {
-        const r = (Math.random() * 16) | 0;
-        const v = c === "x" ? r : (r & 0x3) | 0x8;
-        return v.toString(16);
-      }
-    );
-  };
-
   return {
     id: generateId(),
     componentName: "Root",

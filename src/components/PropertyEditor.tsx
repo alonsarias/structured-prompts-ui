@@ -70,7 +70,16 @@ const ComponentPropertyEditor: React.FC<ComponentPropertyEditorProps> = ({
   const { state: { component } } = useTreeNodeContext();
   const { state: { validationErrors }, actions: { updateComponent } } = useSpuigBuilderContext();
   const muiComponent = getMuiComponentByName(component.componentName);
-  const componentErrors = validationErrors.filter(error => error.componentId === component.id);
+  const componentErrors: typeof validationErrors = [];
+  const propNamesWithErrors = new Set<string>();
+  for (const error of validationErrors) {
+    if (error.componentId === component.id) {
+      componentErrors.push(error);
+      if (error.type === "invalid-prop-type") {
+        propNamesWithErrors.add(error.id.replace(/^.*-invalid-/, ""));
+      }
+    }
+  }
 
   const handlePropChange = (propName: string, value: string | number | boolean | object | null) => {
     const newProps = { ...component.props };
@@ -96,9 +105,7 @@ const ComponentPropertyEditor: React.FC<ComponentPropertyEditorProps> = ({
     enumValues?: string[];
   }) => {
     const currentValue = component.props[propDef.name] ?? '';
-    const hasError = componentErrors.some(error =>
-      error.type === 'invalid-prop-type' && error.message.includes(propDef.name)
-    );
+    const hasError = propNamesWithErrors.has(propDef.name);
 
     switch (propDef.type) {
       case 'boolean':

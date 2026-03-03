@@ -16,7 +16,7 @@ import WarningIcon from "@mui/icons-material/Warning";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import EditIcon from "@mui/icons-material/Edit";
-import type { SpuigComponent } from "../types";
+import type { SpuigComponent, ValidationError } from "../types";
 import { getMuiComponentByName } from "../data/muiComponents";
 import { canMoveComponentUp, canMoveComponentDown } from "../utils/spuigUtils";
 import ComponentSelector from "./ComponentSelector";
@@ -225,13 +225,16 @@ function TreeNode({
   const [propertyEditorAnchorEl, setPropertyEditorAnchorEl] =
     useState<HTMLElement | null>(null);
 
-  const componentErrors = builderState.validationErrors.filter(
-    (error) => error.componentId === component.id
-  );
-  const hasErrors = componentErrors.some((error) => error.severity === "error");
-  const hasWarnings = componentErrors.some(
-    (error) => error.severity === "warning"
-  );
+  const componentErrors: ValidationError[] = [];
+  let hasErrors = false;
+  let hasWarnings = false;
+  for (const error of builderState.validationErrors) {
+    if (error.componentId === component.id) {
+      componentErrors.push(error);
+      if (error.severity === "error") hasErrors = true;
+      if (error.severity === "warning") hasWarnings = true;
+    }
+  }
   const isSelected = builderState.selectedComponentId === component.id;
   const hasChildren = component.children.length > 0;
   const isRoot = !!component.isRoot;
