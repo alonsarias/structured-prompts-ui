@@ -180,19 +180,26 @@ npm run preview
 ```
 src/
 ├── components/           # React components
-│   ├── ComponentSelector.tsx    # Component library browser
+│   ├── CodeHighlighter.tsx     # Syntax-highlighted code display
+│   ├── ComponentSelector.tsx   # Component library browser
 │   ├── ComponentTree.tsx       # Hierarchical tree view
 │   ├── PropertyEditor.tsx      # Property configuration forms
 │   └── SpuigPreview.tsx        # Prompt preview and export
+├── contexts/            # React Context providers
+│   ├── SpuigBuilderContext.ts  # Builder state/actions context
+│   ├── SpuigBuilderProvider.tsx# Provider wrapping useSpuigBuilder
+│   └── TreeNodeContext.ts      # Per-node state context
 ├── data/                # Component definitions
 │   ├── muiComponents.ts        # Component registry
 │   └── components/             # JSON component definitions
 ├── hooks/               # Custom React hooks
-│   └── useSpuigBuilder.ts     # Main application state
+│   └── useSpuigBuilder.ts     # Core builder logic and state
 ├── types/               # TypeScript type definitions
+│   └── index.ts               # Component, prop, and validation types
 ├── utils/               # Utility functions
-│   └── spuigUtils.ts          # Component manipulation utilities
+│   └── spuigUtils.ts          # Tree manipulation and SPUIG generation
 └── theme/               # Material-UI theme configuration
+    └── index.ts               # Dark theme with purple/cyan palette
 ```
 
 ## Development
@@ -215,7 +222,8 @@ npm run lint     # Run ESLint
 
 ### Architecture Overview
 
-- **State Management**: Custom hook (`useSpuigBuilder`) with immutable updates
+- **State Management**: React Context (`SpuigBuilderProvider`) distributes state and actions from `useSpuigBuilder` via `useSpuigBuilderContext`, with memoized state/actions separation to minimize re-renders
+- **Tree Node Context**: `TreeNodeContext` provides per-node state (selection, errors, expand/collapse) to child components, avoiding prop drilling through the tree hierarchy
 - **Component System**: JSON-driven component definitions for easy extensibility
 - **Validation System**: Real-time validation with detailed error messages
-- **Export System**: Structured text generation optimized for AI consumption
+- **Export System**: Structured text generation with syntax highlighting, optimized for AI consumption
