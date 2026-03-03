@@ -13,6 +13,12 @@ import { useSpuigBuilderContext } from "../contexts/SpuigBuilderContext";
 
 const CodeHighlighter = lazy(() => import("./CodeHighlighter"));
 
+const codeHighlighterFallback = (
+  <Box sx={{ p: 2, fontFamily: "monospace", fontSize: "0.875rem", opacity: 0.5 }}>
+    Loading preview...
+  </Box>
+);
+
 const SpuigPreview: React.FC = () => {
   const { state } = useSpuigBuilderContext();
   const spuigSyntax = state.generatedSpuig;
@@ -82,15 +88,7 @@ const SpuigPreview: React.FC = () => {
       </Box>
 
       <Box sx={{ flexGrow: 1, overflow: "auto" }}>
-        <Suspense
-          fallback={
-            <Box
-              sx={{ p: 2, fontFamily: "monospace", fontSize: "0.875rem", opacity: 0.5 }}
-            >
-              Loading preview...
-            </Box>
-          }
-        >
+        <Suspense fallback={codeHighlighterFallback}>
           <CodeHighlighter
             code={
               spuigSyntax

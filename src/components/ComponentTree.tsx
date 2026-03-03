@@ -316,7 +316,12 @@ function TreeNode({
 
   return (
     <TreeNodeContext.Provider value={nodeValue}>
-      <Box>
+      <Box
+        sx={{
+          contentVisibility: "auto",
+          containIntrinsicSize: "0 40px",
+        }}
+      >
         <Box
           sx={{
             display: "flex",
@@ -357,7 +362,7 @@ function TreeNode({
           {isRoot ? <RootNodeActions /> : <ChildNodeActions />}
         </Box>
 
-        {/* Children */}
+        {/* Children - Consider <Activity mode={...}> when upgrading to React 19.2+ to preserve state when collapsing */}
         {expanded && hasChildren && (
           <Box>
             {component.children.map((child) => (
