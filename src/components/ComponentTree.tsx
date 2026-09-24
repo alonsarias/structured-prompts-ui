@@ -2,6 +2,7 @@ import React, { useState, useMemo, useCallback } from "react";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
@@ -29,6 +30,57 @@ import {
 } from "../contexts/TreeNodeContext";
 
 const NOOP = () => {};
+
+function EmptyTreeState({ rootId }: { rootId: string }) {
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+
+  return (
+    <Box
+      sx={{
+        flexGrow: 1,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "flex-start",
+        px: 3,
+        py: 4,
+        gap: 2,
+        maxWidth: 440,
+      }}
+    >
+      <Box
+        component="img"
+        src="/spuig.svg"
+        alt=""
+        sx={{ height: 36, width: 36 }}
+      />
+      <Box>
+        <Typography variant="h5" component="h2">
+          SPUIG
+        </Typography>
+        <Typography variant="body1" color="text.secondary">
+          Structured Prompts UI
+        </Typography>
+      </Box>
+      <Typography variant="body1" sx={{ maxWidth: "38ch" }}>
+        Build a MUI component tree and get an AI-ready structured prompt.
+      </Typography>
+      <Button
+        variant="contained"
+        startIcon={<AddIcon />}
+        onClick={(event) => setAnchorEl(event.currentTarget)}
+      >
+        Add first component
+      </Button>
+      <ComponentSelector
+        open={Boolean(anchorEl)}
+        anchorEl={anchorEl}
+        onClose={() => setAnchorEl(null)}
+        selectedParentId={rootId}
+      />
+    </Box>
+  );
+}
 
 function RootNodeActions() {
   const { actions: { onAddChildClick } } = useTreeNodeContext();
@@ -222,8 +274,7 @@ function TreeNode({
     null
   );
   const [selectedParentId, setSelectedParentId] = useState<string | null>(null);
-  const [propertyEditorAnchorEl, setPropertyEditorAnchorEl] =
-    useState<HTMLElement | null>(null);
+  const [propertyEditorOpen, setPropertyEditorOpen] = useState(false);
 
   const componentErrors: ValidationError[] = [];
   let hasErrors = false;
@@ -271,13 +322,13 @@ function TreeNode({
       if (!isSelected) {
         builderActions.setSelectedComponentId(component.id);
       }
-      setPropertyEditorAnchorEl(event.currentTarget);
+      setPropertyEditorOpen(true);
     },
     [isSelected, component.id, builderActions]
   );
 
   const handleClosePropertyEditor = () => {
-    setPropertyEditorAnchorEl(null);
+    setPropertyEditorOpen(false);
   };
 
   const nodeValue: TreeNodeContextValue = useMemo(
@@ -388,8 +439,7 @@ function TreeNode({
 
         {/* Property Editor Popover */}
         <PropertyEditor
-          open={Boolean(propertyEditorAnchorEl)}
-          anchorEl={propertyEditorAnchorEl}
+          open={propertyEditorOpen}
           onClose={handleClosePropertyEditor}
         />
       </Box>
@@ -428,6 +478,8 @@ const ComponentTree: React.FC = () => {
   const globalErrors = validationErrors.filter(
     (error) => error.type === "invalid-hierarchy"
   );
+  const root = components.length === 1 ? components[0] : undefined;
+  const isFirstRun = Boolean(root?.isRoot && root.children.length === 0);
 
   return (
     <Paper
@@ -449,16 +501,19 @@ const ComponentTree: React.FC = () => {
         </Box>
       )}
 
-      {/* Tree Content */}
-      <Box sx={{ flexGrow: 1, overflow: "auto", p: 1 }}>
-        {components.map((component) => (
-          <TreeNodeContainer
-            key={component.id}
-            component={component}
-            level={0}
-          />
-        ))}
-      </Box>
+      {isFirstRun && root ? (
+        <EmptyTreeState rootId={root.id} />
+      ) : (
+        <Box sx={{ flexGrow: 1, overflow: "auto", p: 1 }}>
+          {components.map((component) => (
+            <TreeNodeContainer
+              key={component.id}
+              component={component}
+              level={0}
+            />
+          ))}
+        </Box>
+      )}
     </Paper>
   );
 };
