@@ -59,7 +59,7 @@ function EmptyTreeState({ rootId }: { rootId: string }) {
           SPUIG
         </Typography>
         <Typography variant="body1" color="text.secondary">
-          Structured Prompts UI
+          Structured Prompts for UI Generation
         </Typography>
       </Box>
       <Typography variant="body1" sx={{ maxWidth: "38ch" }}>
@@ -83,7 +83,9 @@ function EmptyTreeState({ rootId }: { rootId: string }) {
 }
 
 function RootNodeActions() {
-  const { actions: { onAddChildClick } } = useTreeNodeContext();
+  const {
+    actions: { onAddChildClick },
+  } = useTreeNodeContext();
   return (
     <Stack direction="row" spacing={0.5}>
       <Tooltip title="Add component">
@@ -138,7 +140,8 @@ function ChildNodeActions() {
             size="small"
             onClick={(e) => {
               e.stopPropagation();
-              if (!isSelected) builderActions.setSelectedComponentId(component.id);
+              if (!isSelected)
+                builderActions.setSelectedComponentId(component.id);
               builderActions.moveComponentUp(component.id);
             }}
             sx={{ p: 0.25 }}
@@ -155,7 +158,8 @@ function ChildNodeActions() {
             size="small"
             onClick={(e) => {
               e.stopPropagation();
-              if (!isSelected) builderActions.setSelectedComponentId(component.id);
+              if (!isSelected)
+                builderActions.setSelectedComponentId(component.id);
               builderActions.moveComponentDown(component.id);
             }}
             sx={{ p: 0.25 }}
@@ -172,7 +176,8 @@ function ChildNodeActions() {
           size="small"
           onClick={(e) => {
             e.stopPropagation();
-            if (!isSelected) builderActions.setSelectedComponentId(component.id);
+            if (!isSelected)
+              builderActions.setSelectedComponentId(component.id);
             builderActions.removeComponent(component.id);
           }}
           sx={{ p: 0.25 }}
@@ -196,13 +201,7 @@ function RootNodeHeader() {
 
 function ChildNodeHeader() {
   const {
-    state: {
-      component,
-      isSelected,
-      componentErrors,
-      hasErrors,
-      hasWarnings,
-    },
+    state: { component, isSelected, componentErrors, hasErrors, hasWarnings },
   } = useTreeNodeContext();
 
   return (
@@ -268,7 +267,7 @@ function TreeNode({
   const { state: builderState, actions: builderActions } =
     useSpuigBuilderContext();
   const [selectorAnchorEl, setSelectorAnchorEl] = useState<HTMLElement | null>(
-    null
+    null,
   );
   const [selectedParentId, setSelectedParentId] = useState<string | null>(null);
   const [propertyEditorOpen, setPropertyEditorOpen] = useState(false);
@@ -287,13 +286,10 @@ function TreeNode({
   const hasChildren = component.children.length > 0;
   const isRoot = !!component.isRoot;
 
-  const canMoveUp = canMoveComponentUp(
-    builderState.components,
-    component.id
-  );
+  const canMoveUp = canMoveComponentUp(builderState.components, component.id);
   const canMoveDown = canMoveComponentDown(
     builderState.components,
-    component.id
+    component.id,
   );
 
   const handleAddChildClick = useCallback(
@@ -305,7 +301,7 @@ function TreeNode({
       setSelectorAnchorEl(event.currentTarget);
       setSelectedParentId(component.id);
     },
-    [isSelected, component.id, builderActions]
+    [isSelected, component.id, builderActions],
   );
 
   const handleCloseSelectorDialog = () => {
@@ -321,7 +317,7 @@ function TreeNode({
       }
       setPropertyEditorOpen(true);
     },
-    [isSelected, component.id, builderActions]
+    [isSelected, component.id, builderActions],
   );
 
   const handleClosePropertyEditor = () => {
@@ -362,7 +358,7 @@ function TreeNode({
       onToggleExpanded,
       handleAddChildClick,
       handleEditClick,
-    ]
+    ],
   );
 
   return (
@@ -475,7 +471,7 @@ const ComponentTree: React.FC = () => {
   const { components, validationErrors } = state;
 
   const globalErrors = validationErrors.filter(
-    (error) => error.type === "invalid-hierarchy"
+    (error) => error.type === "invalid-hierarchy",
   );
   const root = components.length === 1 ? components[0] : undefined;
   const isFirstRun = Boolean(root?.isRoot && root.children.length === 0);
@@ -483,7 +479,12 @@ const ComponentTree: React.FC = () => {
   return (
     <Paper
       elevation={0}
-      sx={{ height: "100%", display: "flex", flexDirection: "column", backgroundColor: "transparent" }}
+      sx={{
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: "transparent",
+      }}
     >
       <Box className="panel-header">
         <Typography variant="h6">Component Tree</Typography>
@@ -503,7 +504,10 @@ const ComponentTree: React.FC = () => {
       {isFirstRun && root ? (
         <EmptyTreeState rootId={root.id} />
       ) : (
-        <Box className="tree-canvas" sx={{ flexGrow: 1, overflow: "auto", p: 1 }}>
+        <Box
+          className="tree-canvas"
+          sx={{ flexGrow: 1, overflow: "auto", p: 1 }}
+        >
           {components.map((component) => (
             <TreeNodeContainer
               key={component.id}
