@@ -1,0 +1,271 @@
+:root {
+  --ground: #0d1117;
+  --panel: #151a22;
+  --elevated: #1b212b;
+  --seam: #262c36;
+  --muted: #8b949e;
+  --text: #e6edf3;
+  --keyword: #79c0ff;
+  --string: #56d364;
+  --number: #c678dd;
+  --warning: #e3b341;
+  --destructive: #f85149;
+  --sans: "Lexend Variable", "Lexend", sans-serif;
+  --mono: "Fira Code Variable", "Fira Code", ui-monospace, monospace;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  background: var(--ground);
+  color: var(--text);
+}
+
+body {
+  margin: 0;
+  font-family: var(--sans);
+  font-variant-numeric: tabular-nums;
+  background-color: var(--ground);
+  background-image: radial-gradient(rgba(230, 237, 243, 0.045) 0.6px, transparent 0.65px);
+  background-size: 3px 3px;
+}
+
+::selection {
+  background: rgba(121, 192, 255, 0.32);
+  color: var(--text);
+}
+
+:focus-visible {
+  outline: 1px solid var(--keyword);
+  outline-offset: 2px;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--seam) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--seam);
+  border: 2px solid var(--panel);
+  border-radius: 0;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.console-shell {
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--ground);
+}
+
+.console-header {
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 12px 0 16px;
+  border-bottom: 1px solid var(--seam);
+  background: var(--ground);
+}
+
+.console-mark {
+  height: 28px;
+  width: 28px;
+  display: block;
+}
+
+.console-header-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.console-gap {
+  width: 28px;
+  flex-shrink: 0;
+}
+
+.console-stage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.console-panel {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--panel);
+}
+
+.console-panel-tree {
+  flex: 1;
+  border-bottom: 1px solid var(--seam);
+}
+
+.console-panel-preview {
+  flex: 1.4;
+}
+
+@media (min-width: 1200px) {
+  .console-stage {
+    flex-direction: row;
+  }
+
+  .console-panel-tree {
+    flex: 1;
+    border-bottom: 0;
+    border-right: 1px solid var(--seam);
+  }
+
+  .console-panel-preview {
+    flex: 2;
+  }
+}
+
+.panel-header {
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 12px 0 16px;
+  border-bottom: 1px solid var(--seam);
+  background: var(--panel);
+}
+
+.panel-header .MuiTypography-root {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1;
+  font-variant-caps: all-small-caps;
+  color: var(--muted);
+}
+
+.tree-canvas {
+  background-color: var(--panel);
+  background-image:
+    linear-gradient(to right, rgba(38, 44, 54, 0.85) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(38, 44, 54, 0.85) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+.tree-name {
+  font-family: var(--mono) !important;
+  font-size: 13px !important;
+  color: var(--keyword) !important;
+  letter-spacing: 0 !important;
+}
+
+.tree-text {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--string);
+  font-style: normal;
+}
+
+.prop-count {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--number);
+  border-color: var(--seam) !important;
+  height: 16px;
+  font-size: 11px;
+}
+
+.console-destructive {
+  margin-left: 16px;
+  border: 1px dashed var(--seam) !important;
+  border-radius: 4px !important;
+  color: var(--muted) !important;
+  background: transparent !important;
+}
+
+.console-destructive:hover,
+.console-destructive:focus-visible {
+  border-color: var(--destructive) !important;
+  color: var(--destructive) !important;
+  background: transparent !important;
+}
+
+.console-destructive.Mui-disabled {
+  border-color: transparent !important;
+  color: rgba(139, 148, 158, 0.4) !important;
+}
+
+.axis-y {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 200ms var(--ease);
+}
+
+.axis-y.is-open {
+  grid-template-rows: 1fr;
+}
+
+.axis-y-inner {
+  overflow: hidden;
+  min-height: 0;
+  margin-left: 22px;
+  border-left: 1px solid var(--seam);
+}
+
+.prompt-sheet {
+  position: relative;
+  min-height: 100%;
+  background:
+    linear-gradient(to right, transparent 2.6rem, var(--seam) 2.6rem, var(--seam) calc(2.6rem + 1px), transparent calc(2.6rem + 1px));
+}
+
+.prompt-sheet pre,
+.prompt-sheet code {
+  font-family: var(--mono) !important;
+  background: transparent !important;
+}
+
+.prompt-sheet .linenumber {
+  color: var(--muted) !important;
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes axis-y-in {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+
+.MuiPopover-paper {
+  animation: axis-y-in 180ms var(--ease);
+  transform-origin: top center;
+}
+
+.section-kicker {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.14em !important;
+  font-variant-caps: all-small-caps;
+  color: var(--muted) !important;
+}

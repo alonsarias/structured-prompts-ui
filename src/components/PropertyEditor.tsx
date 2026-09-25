@@ -352,7 +352,7 @@ const ComponentPropertyEditor: React.FC<ComponentPropertyEditorProps> = ({
         <Stack spacing={2.5}>
           {muiComponent?.acceptsText && (
             <Box>
-              <Typography variant="subtitle2" component="h3" gutterBottom>
+              <Typography className="section-kicker" variant="subtitle2" component="h3" gutterBottom>
                 Content
               </Typography>
               <TextField
@@ -371,7 +371,7 @@ const ComponentPropertyEditor: React.FC<ComponentPropertyEditorProps> = ({
 
           {basicProps.length > 0 && (
             <Box>
-              <Typography variant="subtitle2" component="h3" gutterBottom>
+              <Typography className="section-kicker" variant="subtitle2" component="h3" gutterBottom>
                 Basic
               </Typography>
               <Stack spacing={2}>{basicProps.map(renderPropEditor)}</Stack>
@@ -395,7 +395,7 @@ const ComponentPropertyEditor: React.FC<ComponentPropertyEditorProps> = ({
                 expandIcon={<ExpandMoreIcon />}
                 sx={{ px: 0, minHeight: 40 }}
               >
-                <Typography variant="subtitle2" component="h3">
+                <Typography className="section-kicker" variant="subtitle2" component="h3">
                   Advanced
                   {advancedSetCount > 0 ? ` (${advancedSetCount} set)` : ""}
                 </Typography>
@@ -408,7 +408,7 @@ const ComponentPropertyEditor: React.FC<ComponentPropertyEditorProps> = ({
 
           <Divider />
           <Box>
-            <Typography variant="subtitle2" component="h3" gutterBottom>
+            <Typography className="section-kicker" variant="subtitle2" component="h3" gutterBottom>
               Component info
             </Typography>
             <Stack spacing={0.5}>

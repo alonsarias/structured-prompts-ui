@@ -1,0 +1,246 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-25T13:48:00.000Z",
+  "title": "Design System: SPUIG",
+  "extensions": {
+    "colorMeta": {
+      "ground": {
+        "role": "neutral",
+        "displayName": "Graphite Ground",
+        "canonical": "#0D1117",
+        "tonalRamp": ["#080B11", "#20242B", "#3E434A", "#5E646B", "#81878F", "#A5ABB4", "#C8CED7", "#E9EFF8"]
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "Graphite Panel",
+        "canonical": "#151A22",
+        "tonalRamp": ["#070B13", "#1F242D", "#3D434C", "#5D646E", "#808791", "#A4ABB6", "#C7CEDA", "#E8EFFB"]
+      },
+      "elevated": {
+        "role": "neutral",
+        "displayName": "Raised Graphite",
+        "canonical": "#1B212B",
+        "tonalRamp": ["#060B14", "#1E242E", "#3C434E", "#5C6470", "#7F8793", "#A3ABB9", "#C6CEDC", "#E7EFFD"]
+      },
+      "seam": {
+        "role": "neutral",
+        "displayName": "Seam",
+        "canonical": "#262C36",
+        "tonalRamp": ["#070B14", "#1E242E", "#3C434D", "#5D646F", "#7F8793", "#A4ABB8", "#C6CEDB", "#E7EFFD"]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Ash",
+        "canonical": "#8B949E",
+        "tonalRamp": ["#060C13", "#1E252D", "#3B434C", "#5C646E", "#7E8791", "#A3ACB6", "#C5CFDA", "#E6F0FB"]
+      },
+      "text": {
+        "role": "neutral",
+        "displayName": "Paper",
+        "canonical": "#E6EDF3",
+        "tonalRamp": ["#070C10", "#202529", "#3E4348", "#5E6469", "#81878C", "#A5ACB1", "#C8CFD5", "#E8EFF5"]
+      },
+      "keyword": {
+        "role": "primary",
+        "displayName": "Syntax Keyword",
+        "canonical": "#79C0FF",
+        "tonalRamp": ["#000338", "#002357", "#00457B", "#1D67A1", "#458CC7", "#6BB1EF", "#8DD5FF", "#AEF6FF"]
+      },
+      "keyword-light": {
+        "role": "primary",
+        "displayName": "Keyword Lift",
+        "canonical": "#9DCEFF",
+        "tonalRamp": ["#00082D", "#00254B", "#16456E", "#396792", "#5C8AB8", "#80B0DF", "#A2D3FF", "#C2F4FF"]
+      },
+      "string": {
+        "role": "syntax",
+        "displayName": "Syntax String",
+        "canonical": "#56D364",
+        "tonalRamp": ["#001700", "#003600", "#005800", "#007C00", "#0FA232", "#4AC95A", "#72ED7D", "#94FF9D"]
+      },
+      "number": {
+        "role": "syntax",
+        "displayName": "Syntax Number",
+        "canonical": "#C678DD",
+        "tonalRamp": ["#230035", "#410054", "#641478", "#883D9E", "#AE61C5", "#D586ED", "#FAA9FF", "#FFCAFF"]
+      },
+      "warning": {
+        "role": "syntax",
+        "displayName": "Syntax Warning",
+        "canonical": "#E3B341",
+        "tonalRamp": ["#230000", "#411600", "#633800", "#875A00", "#AC7E00", "#D2A32C", "#F7C657", "#FFE77A"]
+      },
+      "destructive": {
+        "role": "syntax",
+        "displayName": "Syntax Destructive",
+        "canonical": "#F85149",
+        "tonalRamp": ["#400000", "#670000", "#910000", "#BC0012", "#E8413B", "#FF6B60", "#FF9082", "#FFB2A2"]
+      }
+    },
+    "typographyMeta": {
+      "headline": { "displayName": "Headline", "purpose": "The empty-state product name." },
+      "title": { "displayName": "Title", "purpose": "The property drawer heading." },
+      "body": { "displayName": "Body", "purpose": "The empty-state sentence." },
+      "body-compact": { "displayName": "Body compact", "purpose": "Secondary sentences, field values, and helper text." },
+      "label": { "displayName": "Label", "purpose": "40px panel titles in small-caps." },
+      "button": { "displayName": "Button", "purpose": "Text controls. No uppercase transform." },
+      "code": { "displayName": "Code", "purpose": "The prompt, including its line numbers." },
+      "code-name": { "displayName": "Code name", "purpose": "Component names in the tree." }
+    },
+    "shadows": [
+      {
+        "name": "none",
+        "value": "none",
+        "purpose": "Surfaces stay flat. Depth is a graphite step or a 1px seam."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Shared easing for the tree expand, the add popover, and the property drawer."
+      },
+      {
+        "name": "tree-expand",
+        "value": "grid-template-rows 200ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Opening a tree branch."
+      },
+      {
+        "name": "popover-in",
+        "value": "clip-path 180ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Add popover entrance, from the top edge."
+      },
+      {
+        "name": "drawer",
+        "value": "transform 220ms cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Property drawer slide."
+      }
+    ],
+    "breakpoints": [
+      { "name": "drawer-fullscreen", "value": "600px" },
+      { "name": "columns", "value": "1200px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Keyword Button",
+      "kind": "button",
+      "refersTo": "button-keyword",
+      "description": "The empty-state fill. Keyword is the only button fill.",
+      "html": "<button class=\"ds-btn-keyword\">Add first component</button>",
+      "css": ".ds-btn-keyword { background: var(--keyword, #79C0FF); color: var(--ground, #0D1117); font-family: var(--sans, \"Lexend Variable\", \"Lexend\", sans-serif); font-size: 0.8125rem; font-weight: 560; letter-spacing: 0.01em; font-variant-numeric: tabular-nums; line-height: 1.75; text-transform: none; border: 0; border-radius: 4px; padding: 6px 16px; box-shadow: none; } .ds-btn-keyword:hover { background: var(--keyword-light, #9DCEFF); } .ds-btn-keyword:focus-visible { outline: 1px solid var(--keyword, #79C0FF); outline-offset: 2px; } .ds-btn-keyword:disabled { background: rgba(121, 192, 255, 0.18); color: rgba(13, 17, 23, 0.55); }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "The add control inside the popover. An outline, not a fill.",
+      "html": "<button class=\"ds-btn-outline\">Add Button</button>",
+      "css": ".ds-btn-outline { background: transparent; color: var(--text, #E6EDF3); font-family: var(--sans, \"Lexend Variable\", \"Lexend\", sans-serif); font-size: 0.8125rem; font-weight: 560; letter-spacing: 0.01em; font-variant-numeric: tabular-nums; line-height: 1.75; text-transform: none; border: 1px solid var(--seam, #262C36); border-radius: 4px; padding: 6px 16px; width: 100%; box-shadow: none; } .ds-btn-outline:hover { border-color: var(--keyword, #79C0FF); background: rgba(121, 192, 255, 0.08); } .ds-btn-outline:focus-visible { outline: 1px solid var(--keyword, #79C0FF); outline-offset: 2px; } .ds-btn-outline:disabled { border-color: var(--seam, #262C36); color: rgba(139, 148, 158, 0.45); }"
+    },
+    {
+      "name": "Destructive Control",
+      "kind": "button",
+      "refersTo": "button-destructive",
+      "description": "Clear and delete. Dashed seam at rest; destructive red only on hover or focus.",
+      "html": "<button class=\"ds-btn-destructive\" aria-label=\"Clear all components\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><path d=\"M4 7h16M9 7V5h6v2M8 7l1 12h6l1-12\" stroke=\"currentColor\" stroke-width=\"1.5\"/></svg></button>",
+      "css": ".ds-btn-destructive { background: transparent; color: var(--muted, #8B949E); border: 1px dashed var(--seam, #262C36); border-radius: 4px; padding: 5px; display: inline-flex; box-shadow: none; } .ds-btn-destructive:hover, .ds-btn-destructive:focus-visible { border-color: var(--destructive, #F85149); color: var(--destructive, #F85149); background: transparent; outline: none; } .ds-btn-destructive:disabled { border-color: transparent; color: rgba(139, 148, 158, 0.4); }"
+    },
+    {
+      "name": "Copy Control",
+      "kind": "button",
+      "refersTo": "copy-control",
+      "description": "The prompt’s keyword fill. The other half of the two-fill rule.",
+      "html": "<button class=\"ds-btn-copy\" aria-label=\"Copy to clipboard\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" aria-hidden=\"true\"><rect x=\"8\" y=\"8\" width=\"11\" height=\"11\" rx=\"1\" stroke=\"currentColor\" stroke-width=\"1.5\"/><path d=\"M5 15V5h10\" stroke=\"currentColor\" stroke-width=\"1.5\"/></svg></button>",
+      "css": ".ds-btn-copy { background: var(--keyword, #79C0FF); color: var(--ground, #0D1117); border: 0; border-radius: 4px; padding: 5px; display: inline-flex; box-shadow: none; } .ds-btn-copy:hover { background: var(--keyword-light, #9DCEFF); } .ds-btn-copy:focus-visible { outline: 1px solid var(--keyword, #79C0FF); outline-offset: 2px; } .ds-btn-copy:disabled { background: rgba(121, 192, 255, 0.18); color: rgba(13, 17, 23, 0.45); }"
+    },
+    {
+      "name": "Field",
+      "kind": "input",
+      "refersTo": "field",
+      "description": "Property editor field. Ground interior, seam border, keyword on focus.",
+      "html": "<label class=\"ds-field\"><span>variant</span><input value=\"contained\" /></label>",
+      "css": ".ds-field { display: flex; flex-direction: column; gap: 4px; font-family: var(--sans, \"Lexend Variable\", \"Lexend\", sans-serif); font-size: 0.75rem; color: var(--muted, #8B949E); font-variant-numeric: tabular-nums; } .ds-field input { background: var(--ground, #0D1117); color: var(--text, #E6EDF3); border: 1px solid var(--seam, #262C36); border-radius: 4px; padding: 8.5px 14px; font-family: inherit; font-size: 0.875rem; font-variant-numeric: tabular-nums; } .ds-field input:hover { border-color: var(--muted, #8B949E); } .ds-field input:focus { border-color: var(--keyword, #79C0FF); outline: 1px solid var(--keyword, #79C0FF); outline-offset: 2px; }"
+    },
+    {
+      "name": "Category Chip",
+      "kind": "chip",
+      "refersTo": "chip-filled",
+      "description": "Category filter. Filled when selected, outlined when not.",
+      "html": "<span class=\"ds-chip\">Inputs</span><span class=\"ds-chip ds-chip-outline\">Data display</span>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; height: 24px; padding: 0 8px; margin-right: 8px; border-radius: 4px; background: rgba(121, 192, 255, 0.16); color: var(--keyword, #79C0FF); border: 1px solid transparent; font-family: var(--sans, \"Lexend Variable\", \"Lexend\", sans-serif); font-size: 0.8125rem; font-variant-numeric: tabular-nums; } .ds-chip-outline { background: transparent; color: var(--text, #E6EDF3); border-color: var(--seam, #262C36); }"
+    },
+    {
+      "name": "Panel Header",
+      "kind": "nav",
+      "refersTo": "panel-header",
+      "description": "40px small-caps title bar for the tree, the prompt, and the add popover.",
+      "html": "<header class=\"ds-panel-header\"><span>Component Tree</span></header>",
+      "css": ".ds-panel-header { height: 40px; display: flex; align-items: center; padding: 0 12px 0 16px; background: var(--panel, #151A22); border-bottom: 1px solid var(--seam, #262C36); } .ds-panel-header span { font-family: var(--sans, \"Lexend Variable\", \"Lexend\", sans-serif); font-size: 11px; font-weight: 600; letter-spacing: 0.14em; line-height: 1; font-variant-caps: all-small-caps; font-variant-numeric: tabular-nums; color: var(--muted, #8B949E); }"
+    },
+    {
+      "name": "Tree Row",
+      "kind": "custom",
+      "refersTo": "tree-row-selected",
+      "description": "A selected component name in the same face and keyword color as the prompt.",
+      "html": "<div class=\"ds-tree-row\"><span class=\"ds-tree-name\">Button</span><span class=\"ds-prop-count\">2</span><span class=\"ds-tree-text\">\"Save\"</span></div>",
+      "css": ".ds-tree-row { display: flex; align-items: center; gap: 8px; padding: 4px 8px; border-radius: 4px; border: 1px solid var(--keyword, #79C0FF); background: rgba(121, 192, 255, 0.14); } .ds-tree-name { font-family: var(--mono, \"Fira Code Variable\", \"Fira Code\", ui-monospace, monospace); font-size: 13px; letter-spacing: 0; color: var(--keyword, #79C0FF); font-weight: 560; } .ds-prop-count { font-family: var(--mono, \"Fira Code Variable\", \"Fira Code\", ui-monospace, monospace); font-size: 11px; font-variant-numeric: tabular-nums; color: var(--number, #C678DD); height: 16px; display: inline-flex; align-items: center; padding: 0 6px; border: 1px solid var(--seam, #262C36); border-radius: 4px; } .ds-tree-text { font-family: var(--mono, \"Fira Code Variable\", \"Fira Code\", ui-monospace, monospace); font-size: 12px; color: var(--string, #56D364); }"
+    },
+    {
+      "name": "Prompt Sheet",
+      "kind": "custom",
+      "refersTo": "code",
+      "description": "The prompt, with a 1px ruler beside tabular line numbers.",
+      "html": "<div class=\"ds-prompt\"><span class=\"ds-line\">1</span><code><span class=\"ds-kw\">Button</span> variant=<span class=\"ds-str\">\"contained\"</span></code></div>",
+      "css": ".ds-prompt { display: flex; gap: 12px; position: relative; padding: 8px 16px; font-family: var(--mono, \"Fira Code Variable\", \"Fira Code\", ui-monospace, monospace); font-size: 0.875rem; line-height: 1.5; color: var(--text, #E6EDF3); background: linear-gradient(to right, transparent 2.6rem, var(--seam, #262C36) 2.6rem, var(--seam, #262C36) calc(2.6rem + 1px), transparent calc(2.6rem + 1px)); } .ds-line { color: var(--muted, #8B949E); font-variant-numeric: tabular-nums; width: 2rem; } .ds-kw { color: var(--keyword, #79C0FF); } .ds-str { color: var(--string, #56D364); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Graphite Seam",
+    "overview": "SPUIG’s working surface is a graphite developer console. The component tree and the prompt preview sit on one panel plane and meet at a single 1px seam. Chrome stays in Lexend; component names and the prompt stay in Fira Code, so the tree and the prompt read as the same syntax.\n\nColor is syntax state. Keyword blue is the only fill, used for the empty-state “Add first component” control and the Copy control. String green, number violet, warning gold, and destructive red appear in code and validation. Graphite does the rest: ground, panel, and elevated, separated by the seam. Panels are square. Controls are 4px. There is no drop shadow.\n\nDestructive actions are a dashed outline in the seam color, held apart by empty space, and turn red only on hover or focus. Below 1200px the stage stacks the tree, then the preview. At 1200px and wider the tree and preview share the width one to two.",
+    "keyCharacteristics": [
+      "Graphite ground, panel, and elevated surfaces",
+      "One 1px seam between tree and prompt",
+      "Color only as syntax state; keyword is the only fill",
+      "Lexend for chrome, Fira Code for names and the prompt",
+      "Small-caps panel headers and tabular figures",
+      "4px controls, square panels, no shadows",
+      "Dashed destructive controls that turn red only on hover or focus"
+    ],
+    "rules": [
+      {
+        "name": "The Syntax-Only Rule",
+        "body": "Keyword is the only fill. String (#56D364) colors prompt strings and tree text content. Number (#C678DD) colors prompt numbers, booleans, and the property-count chip. Warning (#E3B341) and destructive (#F85149) color validation. None of them paint a surface.",
+        "section": "colors"
+      },
+      {
+        "name": "The Shared Syntax Rule",
+        "body": "Component names and the prompt use Fira Code Variable. Lexend does not appear inside the prompt or on a component name.",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Seam Rule",
+        "body": "Nothing casts a shadow. A change of graphite, or a 1px seam, is the whole depth system.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep surfaces on Graphite Ground, Graphite Panel, and Raised Graphite, split by a 1px seam.",
+      "Do use Syntax Keyword as the only fill, and only for “Add first component” and Copy.",
+      "Do make the popover add control an outline with a seam border.",
+      "Do draw destructive actions as a dashed seam outline, isolated by empty space, turning destructive red only on hover or focus.",
+      "Do set component names and the prompt in Fira Code Variable, and chrome in Lexend Variable, with tabular figures.",
+      "Do set panel titles in the 40px bar: 11px, weight 600, tracking 0.14em, small-caps, ash.",
+      "Do use a 4px radius on controls and a square corner on panels.",
+      "Do stack the tree above the preview below 1200px, and split them one to two from 1200px up."
+    ],
+    "donts": [
+      "Don't paint a panel, header, or large region in keyword, string, number, warning, or destructive.",
+      "Don't add a drop shadow. Depth is a graphite step or a 1px seam.",
+      "Don't round panels, the header, or scrollbar thumbs.",
+      "Don't show destructive red on a control that is at rest.",
+      "Don't set a second accent. The theme’s secondary and info roles are aliases of keyword, not another hue.",
+      "Don't put a small-caps eyebrow above a heading or a form group. Small-caps belong to the 40px panel title."
+    ]
+  }
+}

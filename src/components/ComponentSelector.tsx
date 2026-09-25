@@ -87,7 +87,7 @@ const ComponentSelector: React.FC<ComponentSelectorProps> = ({
       }}
     >
       <Paper elevation={0} sx={{ p: 2, backgroundColor: 'background.paper' }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+        <Box className="panel-header" sx={{ mx: -2, mt: -2, mb: 2, px: 2 }}>
           <Typography variant="h6">
             Add Component
           </Typography>
@@ -189,12 +189,19 @@ const ComponentSelector: React.FC<ComponentSelectorProps> = ({
 
           {/* Add Button */}
           <Button
-            variant="contained"
-            color='secondary'
+            variant="outlined"
             startIcon={<AddIcon />}
             onClick={handleAddComponent}
             disabled={!selectedComponent}
             fullWidth
+            sx={{
+              borderColor: "divider",
+              color: "text.primary",
+              "&.Mui-disabled": {
+                borderColor: "divider",
+                color: "text.disabled",
+              },
+            }}
           >
             Add {selectedComponent?.displayName || 'Component'}
           </Button>

@@ -60,19 +60,10 @@ const SpuigPreview: React.FC = () => {
 
   return (
     <Paper
-      elevation={1}
-      sx={{ height: "100%", display: "flex", flexDirection: "column" }}
+      elevation={0}
+      sx={{ height: "100%", display: "flex", flexDirection: "column", backgroundColor: "transparent" }}
     >
-      <Box
-        sx={{
-          p: 2,
-          borderBottom: "1px solid",
-          borderColor: "divider",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
+      <Box className="panel-header">
         <Typography variant="h6">Prompt Preview</Typography>
 
         <Stack direction="row" spacing={1} alignItems="center">
@@ -107,8 +98,17 @@ const SpuigPreview: React.FC = () => {
               <IconButton
                 onClick={handleCopy}
                 size="small"
-                color="inherit"
                 disabled={!hasPrompt}
+                sx={{
+                  color: "background.default",
+                  backgroundColor: "primary.main",
+                  borderRadius: "4px",
+                  "&:hover": { backgroundColor: "primary.light" },
+                  "&.Mui-disabled": {
+                    backgroundColor: "rgba(121, 192, 255, 0.18)",
+                    color: "rgba(13, 17, 23, 0.45)",
+                  },
+                }}
               >
                 <CopyIcon />
               </IconButton>
@@ -133,10 +133,12 @@ const SpuigPreview: React.FC = () => {
       <Box sx={{ flexGrow: 1, overflow: "auto", minWidth: 0 }}>
         {hasPrompt ? (
           <Suspense fallback={codeHighlighterFallback}>
-            <CodeHighlighter
-              code={`Convert the following structure into a component:\n\n${spuigSyntax}`}
-              wrap={wrapLines}
-            />
+            <Box className="prompt-sheet" sx={{ minHeight: "100%" }}>
+              <CodeHighlighter
+                code={`Convert the following structure into a component:\n\n${spuigSyntax}`}
+                wrap={wrapLines}
+              />
+            </Box>
           </Suspense>
         ) : (
           <Box sx={{ p: 3, maxWidth: "42ch" }}>

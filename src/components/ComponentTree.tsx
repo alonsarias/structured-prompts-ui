@@ -168,6 +168,7 @@ function ChildNodeActions() {
       </Tooltip>
       <Tooltip title="Delete component">
         <IconButton
+          className="console-destructive"
           size="small"
           onClick={(e) => {
             e.stopPropagation();
@@ -175,7 +176,6 @@ function ChildNodeActions() {
             builderActions.removeComponent(component.id);
           }}
           sx={{ p: 0.25 }}
-          color="inherit"
         >
           <DeleteIcon fontSize="small" />
         </IconButton>
@@ -209,6 +209,7 @@ function ChildNodeHeader() {
     <Box sx={{ flexGrow: 1, minWidth: 0 }}>
       <Stack direction="row" alignItems="center" spacing={1}>
         <Typography
+          className="tree-name"
           variant="body2"
           fontWeight={isSelected ? "medium" : "normal"}
           noWrap
@@ -217,22 +218,18 @@ function ChildNodeHeader() {
         </Typography>
         {Object.keys(component.props).length > 0 && (
           <Chip
+            className="prop-count"
             label={Object.keys(component.props).length}
             size="small"
             variant="outlined"
-            sx={{ height: 16, fontSize: "0.625rem" }}
           />
         )}
         {component.textContent && (
           <Typography
+            className="tree-text"
             variant="caption"
-            color="text.secondary"
-            sx={{
-              fontStyle: "italic",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              maxWidth: 100,
-            }}
+            noWrap
+            sx={{ maxWidth: 100 }}
           >
             "{component.textContent}"
           </Typography>
@@ -385,7 +382,7 @@ function TreeNode({
             ml: level * 2,
             borderRadius: 1,
             backgroundColor: isSelected ? "action.selected" : "transparent",
-            border: isSelected ? "1px solid" : "1px solid transparent",
+            border: "1px solid",
             borderColor: isSelected ? "primary.main" : "transparent",
             cursor: "pointer",
             "&:hover": {
@@ -417,15 +414,17 @@ function TreeNode({
         </Box>
 
         {/* Children - Consider <Activity mode={...}> when upgrading to React 19.2+ to preserve state when collapsing */}
-        {expanded && hasChildren && (
-          <Box>
-            {component.children.map((child) => (
-              <TreeNodeContainer
-                key={child.id}
-                component={child}
-                level={level + 1}
-              />
-            ))}
+        {hasChildren && (
+          <Box className={expanded ? "axis-y is-open" : "axis-y"}>
+            <Box className="axis-y-inner">
+              {component.children.map((child) => (
+                <TreeNodeContainer
+                  key={child.id}
+                  component={child}
+                  level={level + 1}
+                />
+              ))}
+            </Box>
           </Box>
         )}
 
@@ -483,10 +482,10 @@ const ComponentTree: React.FC = () => {
 
   return (
     <Paper
-      elevation={1}
-      sx={{ height: "100%", display: "flex", flexDirection: "column" }}
+      elevation={0}
+      sx={{ height: "100%", display: "flex", flexDirection: "column", backgroundColor: "transparent" }}
     >
-      <Box sx={{ p: 2, borderBottom: "1px solid", borderColor: "divider" }}>
+      <Box className="panel-header">
         <Typography variant="h6">Component Tree</Typography>
       </Box>
 
@@ -504,7 +503,7 @@ const ComponentTree: React.FC = () => {
       {isFirstRun && root ? (
         <EmptyTreeState rootId={root.id} />
       ) : (
-        <Box sx={{ flexGrow: 1, overflow: "auto", p: 1 }}>
+        <Box className="tree-canvas" sx={{ flexGrow: 1, overflow: "auto", p: 1 }}>
           {components.map((component) => (
             <TreeNodeContainer
               key={component.id}

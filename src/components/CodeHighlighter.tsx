@@ -1,6 +1,30 @@
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
+const syntaxStyle = {
+  ...vscDarkPlus,
+  'code[class*="language-"]': {
+    ...vscDarkPlus['code[class*="language-"]'],
+    color: "#E6EDF3",
+    background: "transparent",
+  },
+  'pre[class*="language-"]': {
+    ...vscDarkPlus['pre[class*="language-"]'],
+    color: "#E6EDF3",
+    background: "transparent",
+  },
+  keyword: { color: "#79C0FF" },
+  tag: { color: "#79C0FF" },
+  function: { color: "#79C0FF" },
+  "class-name": { color: "#79C0FF" },
+  string: { color: "#56D364" },
+  number: { color: "#C678DD" },
+  boolean: { color: "#C678DD" },
+  comment: { color: "#8B949E" },
+  punctuation: { color: "#8B949E" },
+  operator: { color: "#E6EDF3" },
+};
+
 interface CodeHighlighterProps {
   code: string;
   wrap?: boolean;
@@ -21,7 +45,7 @@ export default function CodeHighlighter({
   return (
     <SyntaxHighlighter
       language="jsx"
-      style={vscDarkPlus}
+      style={syntaxStyle}
       wrapLines={wrap}
       wrapLongLines={wrap}
       showLineNumbers
