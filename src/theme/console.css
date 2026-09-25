@@ -231,7 +231,6 @@ body {
   overflow: hidden;
   min-height: 0;
   margin-left: 22px;
-  border-left: 1px solid var(--seam);
 }
 
 .preview-shell {
@@ -316,14 +315,16 @@ body {
 }
 
 .prompt-sheet {
+  --code-gutter: 3.25rem;
+  --code-gap: 0.75rem;
   position: relative;
   min-height: 100%;
   background: linear-gradient(
     to right,
-    transparent 2.6rem,
-    var(--seam) 2.6rem,
-    var(--seam) calc(2.6rem + 1px),
-    transparent calc(2.6rem + 1px)
+    transparent var(--code-gutter),
+    var(--seam) var(--code-gutter),
+    var(--seam) calc(var(--code-gutter) + 1px),
+    transparent calc(var(--code-gutter) + 1px)
   );
 }
 
@@ -333,7 +334,22 @@ body {
   background: transparent !important;
 }
 
+.prompt-sheet .prompt-line {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  padding-left: calc(var(--code-gutter) + var(--code-gap));
+}
+
 .prompt-sheet .linenumber {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: var(--code-gutter);
+  min-width: 0 !important;
+  padding-right: 0.75rem;
+  box-sizing: border-box;
+  text-align: right;
   color: var(--muted) !important;
   font-variant-numeric: tabular-nums;
 }

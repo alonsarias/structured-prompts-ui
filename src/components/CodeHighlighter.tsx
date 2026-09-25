@@ -30,13 +30,20 @@ interface CodeHighlighterProps {
   wrap?: boolean;
 }
 
-const wrapLineStyle = {
-  display: "block",
-  whiteSpace: "pre-wrap",
-  wordBreak: "break-word" as const,
-  overflowWrap: "anywhere" as const,
+const lineNumberStyle = {
   minWidth: 0,
+  paddingRight: "0.75rem",
 };
+
+function lineStyle(wrap: boolean) {
+  return {
+    display: "block" as const,
+    whiteSpace: wrap ? ("pre-wrap" as const) : ("pre" as const),
+    wordBreak: wrap ? ("break-word" as const) : ("normal" as const),
+    overflowWrap: wrap ? ("anywhere" as const) : ("normal" as const),
+    minWidth: 0,
+  };
+}
 
 export default function CodeHighlighter({
   code,
@@ -46,11 +53,13 @@ export default function CodeHighlighter({
     <SyntaxHighlighter
       language="jsx"
       style={syntaxStyle}
-      wrapLines={wrap}
+      wrapLines
       wrapLongLines={wrap}
       showLineNumbers
+      lineNumberStyle={lineNumberStyle}
       customStyle={{
         margin: 0,
+        padding: "12px 16px 12px 0",
         height: "100%",
         maxWidth: "100%",
         minWidth: 0,
@@ -71,15 +80,12 @@ export default function CodeHighlighter({
               display: "block",
               minWidth: 0,
             }
-          : { whiteSpace: "pre" },
+          : { whiteSpace: "pre", display: "block" },
       }}
-      lineProps={
-        wrap
-          ? {
-              style: wrapLineStyle,
-            }
-          : undefined
-      }
+      lineProps={{
+        className: "prompt-line",
+        style: lineStyle(wrap),
+      }}
     >
       {code}
     </SyntaxHighlighter>
