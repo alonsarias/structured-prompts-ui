@@ -4,7 +4,7 @@ A tool for generating structured prompts that help AI create UI components with 
 
 🚀 **[Live Demo](https://spuig.vercel.app/)**
 
-![SPUIG Screenshot](https://github.com/user-attachments/assets/6442e267-205b-48a7-bffa-c0e2085edd41)
+![SPUIG Screenshot](https://github.com/user-attachments/assets/f8d9c16d-17df-46b1-bd4c-5c8e8ff6a3de)
 
 ## Table of Contents
 
