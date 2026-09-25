@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
@@ -9,13 +9,14 @@ import UndoIcon from "@mui/icons-material/Undo";
 import RedoIcon from "@mui/icons-material/Redo";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from "@vercel/analytics/react";
 
-import { SpuigBuilderProvider } from './contexts/SpuigBuilderProvider';
-import { useSpuigBuilderContext } from './contexts/SpuigBuilderContext';
-import { theme } from './theme';
-import ComponentTree from './components/ComponentTree';
-import SpuigPreview from './components/SpuigPreview';
+import { SpuigBuilderProvider } from "./contexts/SpuigBuilderProvider";
+import { useSpuigBuilderContext } from "./contexts/SpuigBuilderContext";
+import { theme } from "./theme";
+import ComponentTree from "./components/ComponentTree";
+import SpuigPreview from "./components/SpuigPreview";
+import ConfirmActionDialog from "./components/ConfirmActionDialog";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
 
 function AppContent() {
   const { state, actions } = useSpuigBuilderContext();
+  const [confirmClear, setConfirmClear] = useState(false);
 
   return (
     <Box className="console-shell">
@@ -42,7 +44,11 @@ function AppContent() {
           className="console-mark"
         />
 
-        <Stack direction="row" className="console-header-actions" alignItems="center">
+        <Stack
+          direction="row"
+          className="console-header-actions"
+          alignItems="center"
+        >
           <Tooltip title="Undo">
             <span>
               <IconButton
@@ -72,9 +78,10 @@ function AppContent() {
           <Tooltip title="Clear all components">
             <IconButton
               className="console-destructive"
-              onClick={actions.clearAll}
+              onClick={() => setConfirmClear(true)}
               size="small"
               sx={{ marginLeft: 0 }}
+              aria-label="Clear all components"
             >
               <DeleteSweepIcon />
             </IconButton>
@@ -103,6 +110,18 @@ function AppContent() {
           <SpuigPreview />
         </Box>
       </Box>
+
+      <ConfirmActionDialog
+        open={confirmClear}
+        title="Clear all components"
+        description="This removes every component from the tree. You can undo this afterward."
+        confirmLabel="Clear all"
+        onClose={() => setConfirmClear(false)}
+        onConfirm={() => {
+          actions.clearAll();
+          setConfirmClear(false);
+        }}
+      />
     </Box>
   );
 }

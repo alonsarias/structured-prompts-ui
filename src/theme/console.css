@@ -29,7 +29,10 @@ body {
   font-family: var(--sans);
   font-variant-numeric: tabular-nums;
   background-color: var(--ground);
-  background-image: radial-gradient(rgba(230, 237, 243, 0.045) 0.6px, transparent 0.65px);
+  background-image: radial-gradient(
+    rgba(230, 237, 243, 0.045) 0.6px,
+    transparent 0.65px
+  );
   background-size: 3px 3px;
 }
 
@@ -111,6 +114,7 @@ body {
 .console-panel {
   min-width: 0;
   min-height: 0;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   background: var(--panel);
@@ -230,11 +234,97 @@ body {
   border-left: 1px solid var(--seam);
 }
 
+.preview-shell {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: transparent;
+}
+
+.preview-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  min-width: 0;
+  overflow: auto;
+}
+
+.preview-usage {
+  flex-shrink: 0;
+  padding: 16px;
+  border-top: 1px solid var(--seam);
+  background: var(--ground);
+}
+
+.tree-row {
+  position: relative;
+}
+
+.tree-actions-reveal {
+  position: absolute;
+  right: 4px;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.tree-row:hover .tree-actions-reveal,
+.tree-row:focus-within .tree-actions-reveal,
+.tree-row[data-selected="true"] .tree-actions-reveal {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.tree-row:hover .tree-row-main,
+.tree-row:focus-within .tree-row-main,
+.tree-row[data-selected="true"] .tree-row-main {
+  margin-right: 148px;
+}
+
+.component-search {
+  position: relative;
+  padding-top: 16px;
+  overflow: visible;
+}
+
+.component-search .MuiFormControl-root,
+.component-search .MuiAutocomplete-root,
+.component-search .MuiOutlinedInput-root {
+  overflow: visible;
+}
+
+.component-search .MuiInputLabel-root {
+  z-index: 2;
+  overflow: visible;
+}
+
+.component-search .MuiInputLabel-outlined.MuiInputLabel-shrink {
+  line-height: 1.2;
+  overflow: visible;
+  background-color: var(--elevated);
+  padding: 0 4px;
+  transform: translate(14px, -12px) scale(0.75);
+}
+
+.add-component-dialog {
+  animation: axis-y-in 180ms var(--ease);
+  transform-origin: top center;
+}
+
 .prompt-sheet {
   position: relative;
   min-height: 100%;
-  background:
-    linear-gradient(to right, transparent 2.6rem, var(--seam) 2.6rem, var(--seam) calc(2.6rem + 1px), transparent calc(2.6rem + 1px));
+  background: linear-gradient(
+    to right,
+    transparent 2.6rem,
+    var(--seam) 2.6rem,
+    var(--seam) calc(2.6rem + 1px),
+    transparent calc(2.6rem + 1px)
+  );
 }
 
 .prompt-sheet pre,

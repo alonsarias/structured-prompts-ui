@@ -23,11 +23,11 @@ export const muiComponents: MuiComponentDefinition[] = [
 ] as MuiComponentDefinition[];
 
 const muiComponentsByName = new Map(
-  muiComponents.map((comp) => [comp.name, comp])
+  muiComponents.map((comp) => [comp.name, comp]),
 );
 
 export const getMuiComponentByName = (
-  name: string
+  name: string,
 ): MuiComponentDefinition | undefined => {
   return muiComponentsByName.get(name);
 };
@@ -40,12 +40,27 @@ export const getAllCategories = (): string[] => {
   return [...categorySet].sort();
 };
 
+/** Case, spaces, and punctuation folded so TextField matches Text Field. */
+export const normalizeComponentQuery = (value: string): string =>
+  value.toLowerCase().replace(/[^a-z0-9]/g, "");
+
 export const searchComponents = (query: string): MuiComponentDefinition[] => {
-  const lowerQuery = query.toLowerCase();
-  return muiComponents.filter(
-    (comp) =>
+  const trimmed = query.trim();
+  if (!trimmed) return muiComponents;
+
+  const normalizedQuery = normalizeComponentQuery(trimmed);
+  const lowerQuery = trimmed.toLowerCase();
+
+  return muiComponents.filter((comp) => {
+    const nameMatch =
+      normalizedQuery.length > 0 &&
+      [comp.name, comp.displayName, comp.description].some((value) =>
+        normalizeComponentQuery(value).includes(normalizedQuery),
+      );
+    const rawMatch =
       comp.name.toLowerCase().includes(lowerQuery) ||
       comp.displayName.toLowerCase().includes(lowerQuery) ||
-      comp.description.toLowerCase().includes(lowerQuery)
-  );
+      comp.description.toLowerCase().includes(lowerQuery);
+    return nameMatch || rawMatch;
+  });
 };

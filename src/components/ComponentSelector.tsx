@@ -1,45 +1,51 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo } from "react";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import Popover from "@mui/material/Popover";
+import Dialog from "@mui/material/Dialog";
 import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
-import { muiComponents, getAllCategories, searchComponents } from '../data/muiComponents';
-import type { MuiComponentDefinition } from '../types';
-import { useSpuigBuilderContext } from '../contexts/SpuigBuilderContext';
+import {
+  muiComponents,
+  getAllCategories,
+  searchComponents,
+} from "../data/muiComponents";
+import type { MuiComponentDefinition } from "../types";
+import { useSpuigBuilderContext } from "../contexts/SpuigBuilderContext";
 
 interface ComponentSelectorProps {
   selectedParentId?: string | null;
   open: boolean;
-  anchorEl: HTMLElement | null;
   onClose: () => void;
 }
 
 const ComponentSelector: React.FC<ComponentSelectorProps> = ({
   selectedParentId,
   open,
-  anchorEl,
   onClose,
 }) => {
   const { actions } = useSpuigBuilderContext();
-  const [selectedComponent, setSelectedComponent] = useState<MuiComponentDefinition | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [selectedComponent, setSelectedComponent] =
+    useState<MuiComponentDefinition | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   const categories = useMemo(() => getAllCategories(), []);
 
   const filteredComponents = useMemo(() => {
-    let components = searchQuery ? searchComponents(searchQuery) : muiComponents;
+    let components = searchQuery
+      ? searchComponents(searchQuery)
+      : muiComponents;
 
     if (selectedCategory) {
-      components = components.filter(comp => comp.category === selectedCategory);
+      components = components.filter(
+        (comp) => comp.category === selectedCategory,
+      );
     }
 
     return components;
@@ -47,57 +53,66 @@ const ComponentSelector: React.FC<ComponentSelectorProps> = ({
 
   const handleAddComponent = () => {
     if (selectedComponent) {
-      actions.addComponent(selectedComponent.name, selectedParentId || undefined);
+      actions.addComponent(
+        selectedComponent.name,
+        selectedParentId || undefined,
+      );
       setSelectedComponent(null);
-      setSearchQuery('');
+      setSearchQuery("");
       onClose();
     }
   };
 
   const handleClose = () => {
     setSelectedComponent(null);
-    setSearchQuery('');
-    setSelectedCategory('');
+    setSearchQuery("");
+    setSelectedCategory("");
     onClose();
   };
 
+  const noMatchQuery = searchQuery.trim();
+
   return (
-    <Popover
+    <Dialog
       open={open}
-      anchorEl={anchorEl}
       onClose={handleClose}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'left',
-      }}
+      aria-labelledby="add-component-title"
+      scroll="paper"
       slotProps={{
-        backdrop: {
-          style: { backgroundColor: 'transparent' }
-        }
-      }}
-      sx={{
-        '& .MuiPopover-paper': {
-          width: 400,
-          maxHeight: 500,
-        }
+        paper: {
+          className: "add-component-dialog",
+          sx: {
+            width: 400,
+            maxWidth: "calc(100vw - 32px)",
+            maxHeight: "min(560px, calc(100dvh - 32px))",
+            m: 2,
+            backgroundColor: "var(--elevated)",
+            backgroundImage: "none",
+            border: "1px solid var(--seam)",
+            borderRadius: "4px",
+            overflow: "hidden",
+            display: "flex",
+            flexDirection: "column",
+          },
+        },
       }}
     >
-      <Paper elevation={0} sx={{ p: 2, backgroundColor: 'background.paper' }}>
-        <Box className="panel-header" sx={{ mx: -2, mt: -2, mb: 2, px: 2 }}>
-          <Typography variant="h6">
-            Add Component
-          </Typography>
-          <IconButton size="small" color="inherit" onClick={handleClose}>
-            <CloseIcon fontSize="small" />
-          </IconButton>
-        </Box>
+      <Box className="panel-header">
+        <Typography id="add-component-title" variant="h6" component="h2">
+          Add Component
+        </Typography>
+        <IconButton
+          size="small"
+          color="inherit"
+          onClick={handleClose}
+          aria-label="Close"
+        >
+          <CloseIcon fontSize="small" />
+        </IconButton>
+      </Box>
 
+      <Box sx={{ p: 2, overflow: "auto", minHeight: 0 }}>
         <Stack spacing={2}>
-          {/* Category Filter */}
           <Box>
             <Typography variant="subtitle2" gutterBottom>
               Category
@@ -105,17 +120,19 @@ const ComponentSelector: React.FC<ComponentSelectorProps> = ({
             <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
               <Chip
                 label="All"
-                variant={selectedCategory === '' ? 'filled' : 'outlined'}
-                color={selectedCategory === '' ? 'primary' : 'default'}
-                onClick={() => setSelectedCategory('')}
+                variant={selectedCategory === "" ? "filled" : "outlined"}
+                color={selectedCategory === "" ? "primary" : "default"}
+                onClick={() => setSelectedCategory("")}
                 size="small"
               />
-              {categories.map(category => (
+              {categories.map((category) => (
                 <Chip
                   key={category}
                   label={category}
-                  variant={selectedCategory === category ? 'filled' : 'outlined'}
-                  color={selectedCategory === category ? 'primary' : 'default'}
+                  variant={
+                    selectedCategory === category ? "filled" : "outlined"
+                  }
+                  color={selectedCategory === category ? "primary" : "default"}
                   onClick={() => setSelectedCategory(category)}
                   size="small"
                 />
@@ -123,22 +140,36 @@ const ComponentSelector: React.FC<ComponentSelectorProps> = ({
             </Stack>
           </Box>
 
-          {/* Component Search and Selection */}
           <Autocomplete
+            className="component-search"
             options={filteredComponents}
+            filterOptions={(options) => options}
             getOptionLabel={(option) => option.displayName}
+            isOptionEqualToValue={(option, value) => option.name === value.name}
             value={selectedComponent}
             onChange={(_, newValue) => setSelectedComponent(newValue)}
             inputValue={searchQuery}
             onInputChange={(_, newValue) => setSearchQuery(newValue)}
+            slotProps={{
+              popper: {
+                placement: "bottom-start",
+                modifiers: [
+                  { name: "offset", options: { offset: [0, 8] } },
+                  { name: "flip", enabled: false },
+                ],
+                sx: { zIndex: (theme) => theme.zIndex.modal + 1 },
+              },
+              listbox: { style: { maxHeight: 240 } },
+            }}
             sx={{
-              '& .MuiAutocomplete-popupIndicator': {
-                color: 'inherit'
-              }
+              "& .MuiAutocomplete-popupIndicator": {
+                color: "inherit",
+              },
             }}
             renderInput={(params) => (
               <TextField
                 {...params}
+                autoFocus
                 label="Search Components"
                 placeholder="Type to search components..."
                 fullWidth
@@ -165,12 +196,23 @@ const ComponentSelector: React.FC<ComponentSelectorProps> = ({
                 </Box>
               );
             }}
-            noOptionsText="No components found"
+            noOptionsText={
+              noMatchQuery
+                ? `No components match “${noMatchQuery}”. Names ignore spaces and punctuation, so Text Field and TextField are the same.`
+                : "No components match this search."
+            }
           />
 
-          {/* Selected Component Details */}
           {selectedComponent && (
-            <Box sx={{ p: 2, bgcolor: 'background.default', borderRadius: 1, border: '1px solid', borderColor: 'divider' }}>
+            <Box
+              sx={{
+                p: 2,
+                bgcolor: "background.default",
+                borderRadius: 1,
+                border: "1px solid",
+                borderColor: "divider",
+              }}
+            >
               <Typography variant="subtitle2" gutterBottom>
                 {selectedComponent.displayName}
               </Typography>
@@ -179,15 +221,14 @@ const ComponentSelector: React.FC<ComponentSelectorProps> = ({
               </Typography>
               <Box sx={{ mt: 1 }}>
                 <Typography variant="caption" color="text.secondary">
-                  Category: {selectedComponent.category} •
-                  Children: {selectedComponent.acceptsChildren ? 'Yes' : 'No'} •
-                  Text: {selectedComponent.acceptsText ? 'Yes' : 'No'}
+                  Category: {selectedComponent.category} • Children:{" "}
+                  {selectedComponent.acceptsChildren ? "Yes" : "No"} • Text:{" "}
+                  {selectedComponent.acceptsText ? "Yes" : "No"}
                 </Typography>
               </Box>
             </Box>
           )}
 
-          {/* Add Button */}
           <Button
             variant="outlined"
             startIcon={<AddIcon />}
@@ -203,11 +244,11 @@ const ComponentSelector: React.FC<ComponentSelectorProps> = ({
               },
             }}
           >
-            Add {selectedComponent?.displayName || 'Component'}
+            Add {selectedComponent?.displayName || "Component"}
           </Button>
         </Stack>
-      </Paper>
-    </Popover>
+      </Box>
+    </Dialog>
   );
 };
 

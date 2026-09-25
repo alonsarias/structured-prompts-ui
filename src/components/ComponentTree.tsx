@@ -22,6 +22,7 @@ import { getMuiComponentByName } from "../data/muiComponents";
 import { canMoveComponentUp, canMoveComponentDown } from "../utils/spuigUtils";
 import ComponentSelector from "./ComponentSelector";
 import PropertyEditor from "./PropertyEditor";
+import ConfirmActionDialog from "./ConfirmActionDialog";
 import { useSpuigBuilderContext } from "../contexts/SpuigBuilderContext";
 import {
   TreeNodeContext,
@@ -74,8 +75,11 @@ function EmptyTreeState({ rootId }: { rootId: string }) {
       </Button>
       <ComponentSelector
         open={Boolean(anchorEl)}
-        anchorEl={anchorEl}
-        onClose={() => setAnchorEl(null)}
+        onClose={() => {
+          const opener = anchorEl;
+          setAnchorEl(null);
+          window.setTimeout(() => opener?.focus(), 0);
+        }}
         selectedParentId={rootId}
       />
     </Box>
@@ -108,11 +112,12 @@ function ChildNodeActions() {
     actions: { onAddChildClick, onEditClick },
   } = useTreeNodeContext();
   const { actions: builderActions } = useSpuigBuilderContext();
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const muiComponent = getMuiComponentByName(component.componentName);
   const muiAcceptsChildren = muiComponent?.acceptsChildren ?? false;
 
   return (
-    <Stack direction="row" spacing={0.5}>
+    <Stack className="tree-actions-reveal" direction="row" spacing={0.5}>
       <Tooltip title="Edit properties">
         <IconButton
           size="small"
@@ -174,17 +179,29 @@ function ChildNodeActions() {
         <IconButton
           className="console-destructive"
           size="small"
+          aria-label={`Delete ${component.componentName}`}
           onClick={(e) => {
             e.stopPropagation();
             if (!isSelected)
               builderActions.setSelectedComponentId(component.id);
-            builderActions.removeComponent(component.id);
+            setConfirmDelete(true);
           }}
           sx={{ p: 0.25 }}
         >
           <DeleteIcon fontSize="small" />
         </IconButton>
       </Tooltip>
+      <ConfirmActionDialog
+        open={confirmDelete}
+        title={`Delete ${component.componentName}`}
+        description={`This removes ${component.componentName} and anything nested inside it. You can undo this afterward.`}
+        confirmLabel="Delete"
+        onClose={() => setConfirmDelete(false)}
+        onConfirm={() => {
+          builderActions.removeComponent(component.id);
+          setConfirmDelete(false);
+        }}
+      />
     </Stack>
   );
 }
@@ -203,9 +220,10 @@ function ChildNodeHeader() {
   const {
     state: { component, isSelected, componentErrors, hasErrors, hasWarnings },
   } = useTreeNodeContext();
+  const propCount = Object.keys(component.props).length;
 
   return (
-    <Box sx={{ flexGrow: 1, minWidth: 0 }}>
+    <Box className="tree-row-main" sx={{ flexGrow: 1, minWidth: 0 }}>
       <Stack direction="row" alignItems="center" spacing={1}>
         <Typography
           className="tree-name"
@@ -215,13 +233,18 @@ function ChildNodeHeader() {
         >
           {component.componentName}
         </Typography>
-        {Object.keys(component.props).length > 0 && (
-          <Chip
-            className="prop-count"
-            label={Object.keys(component.props).length}
-            size="small"
-            variant="outlined"
-          />
+        {propCount > 0 && (
+          <Tooltip
+            title={`${propCount} ${propCount === 1 ? "property" : "properties"} set`}
+          >
+            <Chip
+              className="prop-count"
+              label={propCount}
+              size="small"
+              variant="outlined"
+              aria-label={`${propCount} ${propCount === 1 ? "property" : "properties"} set`}
+            />
+          </Tooltip>
         )}
         {component.textContent && (
           <Typography
@@ -305,8 +328,10 @@ function TreeNode({
   );
 
   const handleCloseSelectorDialog = () => {
+    const opener = selectorAnchorEl;
     setSelectorAnchorEl(null);
     setSelectedParentId(null);
+    window.setTimeout(() => opener?.focus(), 0);
   };
 
   const handleEditClick = useCallback(
@@ -370,6 +395,8 @@ function TreeNode({
         }}
       >
         <Box
+          className="tree-row"
+          data-selected={isSelected ? "true" : "false"}
           sx={{
             display: "flex",
             alignItems: "center",
@@ -390,6 +417,12 @@ function TreeNode({
           {!isRoot && hasChildren && (
             <IconButton
               size="small"
+              aria-expanded={expanded}
+              aria-label={
+                expanded
+                  ? `Collapse ${component.componentName}`
+                  : `Expand ${component.componentName}`
+              }
               onClick={(e) => {
                 e.stopPropagation();
                 onToggleExpanded();
@@ -427,7 +460,6 @@ function TreeNode({
         {/* Component Selector Dialog */}
         <ComponentSelector
           open={Boolean(selectorAnchorEl)}
-          anchorEl={selectorAnchorEl}
           onClose={handleCloseSelectorDialog}
           selectedParentId={selectedParentId}
         />
