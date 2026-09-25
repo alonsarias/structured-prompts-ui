@@ -135,13 +135,37 @@ body {
   }
 
   .console-panel-tree {
-    flex: 1;
+    flex: 2;
     border-bottom: 0;
     border-right: 1px solid var(--seam);
   }
 
   .console-panel-preview {
-    flex: 2;
+    flex: 1;
+  }
+}
+
+.empty-tree {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 24px;
+}
+
+.empty-tree-copy {
+  width: min(100%, 440px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+@media (min-width: 1200px) {
+  .empty-tree-copy {
+    /* Panel starts below the app header (48px) and the panel header (40px). */
+    transform: translateY(calc(-1 * (48px + 40px) / 2));
   }
 }
 

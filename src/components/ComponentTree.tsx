@@ -36,52 +36,42 @@ function EmptyTreeState({ rootId }: { rootId: string }) {
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
   return (
-    <Box
-      sx={{
-        flexGrow: 1,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "flex-start",
-        px: 3,
-        py: 4,
-        gap: 2,
-        maxWidth: 440,
-      }}
-    >
-      <Box
-        component="img"
-        src="/spuig.svg"
-        alt=""
-        sx={{ height: 36, width: 36 }}
-      />
-      <Box>
-        <Typography variant="h5" component="h2">
-          SPUIG
+    <Box className="empty-tree">
+      <Box className="empty-tree-copy">
+        <Box
+          component="img"
+          src="/spuig.svg"
+          alt=""
+          sx={{ height: 36, width: 36 }}
+        />
+        <Box>
+          <Typography variant="h5" component="h2">
+            SPUIG
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            Structured Prompts for UI Generation
+          </Typography>
+        </Box>
+        <Typography variant="body1" sx={{ maxWidth: "38ch" }}>
+          Build a MUI component tree and get an AI-ready structured prompt.
         </Typography>
-        <Typography variant="body1" color="text.secondary">
-          Structured Prompts for UI Generation
-        </Typography>
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+          onClick={(event) => setAnchorEl(event.currentTarget)}
+        >
+          Add first component
+        </Button>
+        <ComponentSelector
+          open={Boolean(anchorEl)}
+          onClose={() => {
+            const opener = anchorEl;
+            setAnchorEl(null);
+            window.setTimeout(() => opener?.focus(), 0);
+          }}
+          selectedParentId={rootId}
+        />
       </Box>
-      <Typography variant="body1" sx={{ maxWidth: "38ch" }}>
-        Build a MUI component tree and get an AI-ready structured prompt.
-      </Typography>
-      <Button
-        variant="contained"
-        startIcon={<AddIcon />}
-        onClick={(event) => setAnchorEl(event.currentTarget)}
-      >
-        Add first component
-      </Button>
-      <ComponentSelector
-        open={Boolean(anchorEl)}
-        onClose={() => {
-          const opener = anchorEl;
-          setAnchorEl(null);
-          window.setTimeout(() => opener?.focus(), 0);
-        }}
-        selectedParentId={rootId}
-      />
     </Box>
   );
 }
