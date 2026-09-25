@@ -137,10 +137,11 @@ const SpuigPreview: React.FC = () => {
                 size="small"
                 aria-label="Fit width"
                 sx={{
+                  height: 34,
                   px: 1.25,
-                  py: 0.25,
+                  py: 0,
                   textTransform: "none",
-                  lineHeight: 1.4,
+                  lineHeight: 1,
                 }}
               >
                 Fit width
