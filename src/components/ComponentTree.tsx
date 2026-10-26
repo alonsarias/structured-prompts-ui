@@ -509,7 +509,9 @@ const ComponentTree: React.FC = () => {
       }}
     >
       <Box className="panel-header">
-        <Typography variant="h6">Component Tree</Typography>
+        <Typography variant="h6" component="h2">
+          Component Tree
+        </Typography>
       </Box>
 
       {/* Global Errors */}

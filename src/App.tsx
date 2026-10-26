@@ -49,24 +49,26 @@ function AppContent() {
           className="console-header-actions"
           alignItems="center"
         >
-          <Tooltip title="Undo">
-            <span>
+          <Tooltip title="Undo" describeChild>
+            <span style={{ display: "inline-flex" }}>
               <IconButton
                 onClick={actions.undo}
                 disabled={!state.canUndo}
                 size="small"
+                aria-label="Undo"
               >
                 <UndoIcon />
               </IconButton>
             </span>
           </Tooltip>
 
-          <Tooltip title="Redo">
-            <span>
+          <Tooltip title="Redo" describeChild>
+            <span style={{ display: "inline-flex" }}>
               <IconButton
                 onClick={actions.redo}
                 disabled={!state.canRedo}
                 size="small"
+                aria-label="Redo"
               >
                 <RedoIcon />
               </IconButton>
@@ -89,12 +91,14 @@ function AppContent() {
 
           <span className="console-gap" aria-hidden="true" />
 
-          <Tooltip title="View on GitHub">
+          <Tooltip title="View on GitHub" describeChild>
             <IconButton
               component="a"
               href="https://github.com/alonsarias/structured-prompts-ui"
               target="_blank"
+              rel="noopener noreferrer"
               size="small"
+              aria-label="View on GitHub"
             >
               <GitHubIcon />
             </IconButton>

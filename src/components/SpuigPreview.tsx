@@ -119,7 +119,9 @@ const SpuigPreview: React.FC = () => {
   return (
     <Paper elevation={0} className="preview-shell">
       <Box className="panel-header">
-        <Typography variant="h6">Prompt Preview</Typography>
+        <Typography variant="h6" component="h2">
+          Prompt Preview
+        </Typography>
 
         <Stack direction="row" spacing={1} alignItems="center">
           {hasPrompt && (
