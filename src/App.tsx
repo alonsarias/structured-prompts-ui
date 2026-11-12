@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
-import { visuallyHidden } from "@mui/utils";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Stack from "@mui/material/Stack";
@@ -18,6 +17,18 @@ import { theme } from "./theme";
 import ComponentTree from "./components/ComponentTree";
 import SpuigPreview from "./components/SpuigPreview";
 import ConfirmActionDialog from "./components/ConfirmActionDialog";
+
+const visuallyHiddenSx = {
+  position: "absolute",
+  width: 1,
+  height: 1,
+  padding: 0,
+  margin: -1,
+  overflow: "hidden",
+  clip: "rect(0 0 0 0)",
+  whiteSpace: "nowrap",
+  border: 0,
+};
 
 function App() {
   return (
@@ -38,7 +49,7 @@ function AppContent() {
   return (
     <Box className="console-shell">
       <Box component="header" className="console-header">
-        <Box component="h1" sx={visuallyHidden}>
+        <Box component="h1" sx={visuallyHiddenSx}>
           SPUIG – Structured Prompts for UI Generation
         </Box>
         <Box
