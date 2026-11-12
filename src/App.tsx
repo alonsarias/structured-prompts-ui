@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
+import { visuallyHidden } from "@mui/utils";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Stack from "@mui/material/Stack";
@@ -37,6 +38,9 @@ function AppContent() {
   return (
     <Box className="console-shell">
       <Box component="header" className="console-header">
+        <Box component="h1" sx={visuallyHidden}>
+          SPUIG – Structured Prompts for UI Generation
+        </Box>
         <Box
           component="img"
           src="/spuig.svg"
