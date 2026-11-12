@@ -18,6 +18,18 @@ import ComponentTree from "./components/ComponentTree";
 import SpuigPreview from "./components/SpuigPreview";
 import ConfirmActionDialog from "./components/ConfirmActionDialog";
 
+const visuallyHiddenSx = {
+  position: "absolute",
+  width: "1px",
+  height: "1px",
+  padding: 0,
+  margin: "-1px",
+  overflow: "hidden",
+  clip: "rect(0 0 0 0)",
+  whiteSpace: "nowrap",
+  border: 0,
+};
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -37,6 +49,9 @@ function AppContent() {
   return (
     <Box className="console-shell">
       <Box component="header" className="console-header">
+        <Box component="h1" sx={visuallyHiddenSx}>
+          SPUIG – Structured Prompts for UI Generation
+        </Box>
         <Box
           component="img"
           src="/spuig.svg"
